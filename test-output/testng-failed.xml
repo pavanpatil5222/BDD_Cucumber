@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
+<suite thread-count="3" parallel="tests" name="Failed suite [DI_UIUX_APPLICATION]" guice-stage="DEVELOPMENT">
+  <parameter name="browser" value="CH"/>
+  <parameter name="excelPath" value="./src/test/resources/testdata.xlsx"/>
+  <test parallel="tests" name="DI_JAVA_Regression_Suite(failed)">
+    <parameter name="browser" value="CH"/>
+    <parameter name="excelPath" value="./src/test/resources/testdata.xlsx"/>
+    <classes>
+      <class name="support.RunTests">
+        <methods>
+          <include name="tearDown"/>
+          <include name="setUp"/>
+          <include name="run"/>
+        </methods>
+      </class> <!-- support.RunTests -->
+    </classes>
+  </test> <!-- DI_JAVA_Regression_Suite(failed) -->
+</suite> <!-- Failed suite [DI_UIUX_APPLICATION] -->
