@@ -25,7 +25,7 @@ public class Tab_LiteratureSearch extends Controller{
 	@FindBy(xpath="//app-cluster-map/section/mat-expansion-panel/mat-expansion-panel-header")
 	private WebElement linkSuggestedKeyword;
 	
-	@FindBy(xpath="//*[@id='txt_0']")
+	@FindBy(xpath="//*[@id='plus_txt_0']")
 	private WebElement Keyword;
 	
 	@FindBy(xpath="//*[@id='chemexp']/section[2]/app-page-search-result/div/app-result-search-bar/section/section/div[2]")
@@ -34,7 +34,7 @@ public class Tab_LiteratureSearch extends Controller{
 	@FindBy(xpath="(//mat-card-title[@class='literature-title mat-card-title'])[1]")
 	private WebElement linkLiteratureRecord;
 	
-	@FindBy(xpath="(//span[contains(.,'close')])[3]")
+	@FindBy(xpath="//span[@class='material-icons'][contains(.,'close')]")
 	private WebElement closeLiteratureRecord;
 	
 	@FindBy(xpath="//app-result-count-bar//section//span[@class='result-count']")
@@ -93,6 +93,21 @@ public class Tab_LiteratureSearch extends Controller{
 	
 	@FindBy(xpath="//div/h2[text()='Language']")
     WebElement label_Langauge;
+	
+	@FindBy(xpath="//div/section/app-result-count-bar/section/section[3]")
+    WebElement btn_TabInsights;
+	
+	@FindBy(xpath="//app-result-count-bar/section/section[3]/button")
+    WebElement btn_Insights;	
+	
+	@FindBy(css="#label_txt_0")
+	private WebElement literatureInsightsKeyword;
+
+	@FindBy(css="div:nth-child(1) > button > span > mat-icon")
+	private WebElement thumsUpIcon;
+	
+	@FindBy(css="section > mat-card > mat-card-content > section:nth-child(3) > div > div:nth-child(2) > button > span > mat-icon")
+	private WebElement thumbsDownIcon;
 		
 	public Tab_LiteratureSearch(Controller controller) {
 	super(controller);
@@ -112,22 +127,21 @@ public class Tab_LiteratureSearch extends Controller{
 		return Integer.parseInt(totaltxt);
 	}
 	
-	public void clickOnLiteratureRecord() throws Exception {
-		try {
-			waitUntilElementIsDisplayed(linkLiteratureRecord);
-			jsClick(linkLiteratureRecord);
-			controller.waitUntilProgressBarToDisappears();
-		} catch (Exception ex) {
-			throw new Exception("clickOnLiteratureRecord is not working" + ex);
+	public void clickOnLiteratureRecord(int rowNumber) throws Exception {
+		try{
+			WebElement ele = driver.findElement(By.cssSelector("app-result-set:nth-child("+rowNumber+") > section > mat-card > mat-card-header > div > mat-card-subtitle"));
+			ele.click();
+			controller.waitUntilProgressBarToDisappears();				
+			} catch (Exception ex) {
+				throw new Exception("clickOnLiteratureRecord is not working" + ex);
+			}
 		}
-	}
 	
 	
 	public void clickOnCloseLiteratureRecordView() throws Exception {
 		try {
 			waitUntilElementIsDisplayed(closeLiteratureRecord);
 			jsClick(closeLiteratureRecord);
-			controller.waitUntilProgressBarToDisappears();
 			} catch (Exception ex) {
 			throw new Exception("clickOnCloseLiteratureRecord is not working" + ex);
 		}
@@ -149,10 +163,17 @@ public class Tab_LiteratureSearch extends Controller{
 	}
 	}
 	
-	public void clickOnFirstKeyWord() throws Exception {
+	public void clickOnButtonFirstKeyWord() throws Exception {
+		try
+		{
 		 waitUntilElementIsDisplayed(Keyword);
 		 click(Keyword);
+		
 		}
+	 catch (Exception ex) {
+			throw new Exception("clickOnButtonFirstKeyWord is not working" + ex);
+		}
+	}
 	
 	public void clickOnTabLiteratureSearch() throws Exception{
 		try {
@@ -387,7 +408,7 @@ public class Tab_LiteratureSearch extends Controller{
 	
 	public boolean isDisplayedTitle(int rowNumber) throws Exception {
 		try{
-			List<WebElement> ele=driver.findElements(By.xpath("//mat-card-title[@class='literature-title mat-card-title']"));
+			List<WebElement> ele=driver.findElements(By.xpath("//mat-card-subtitle[@class='title ul mat-card-subtitle']"));
 			
 			WebElement eleTitle=ele.get(rowNumber);
 			boolean blnChkTitle=controller.isElementDisplayed(eleTitle);
@@ -418,4 +439,221 @@ public class Tab_LiteratureSearch extends Controller{
 			}
 		
 	}
+	
+	public void clickOnButtonInsights() throws Exception{
+		try {
+			if (!btn_TabInsights.getAttribute("ng-reflect-fx-flex").toLowerCase().contains("385px")) {
+				controller.jsClick(btn_Insights);
+				
+			} else {
+				controller.Logger.addsubStep(LogStatus.INFO, "TAB INSIGHTS IS SELECTED ALREADY", false);
+			}
+		} catch (Exception ex) {
+			throw new Exception("click on Button Tab Insights is not working for :: "+ ex);
+		}
+	}
+	
+	
+	public String getTextLiteratureInsightsKeyword() throws Exception {
+		String keyword;
+		 waitUntilElementIsDisplayed(literatureInsightsKeyword);
+		 keyword = getText(literatureInsightsKeyword);
+		 return(keyword);
+		}
+
+	public void clickOnThumbsUpIcon() throws Exception {
+		try {
+			String iconStatus;
+			waitUntilElementIsDisplayed(thumsUpIcon);
+			jsClick(thumsUpIcon);
+			iconStatus=getElementAttribute(thumsUpIcon, "ng-reflect-svg-icon");
+			if(iconStatus.contains("thumbup-filled"))
+			{
+			controller.Logger.addsubStep(LogStatus.PASS,"THUMBS UP ICON CHANGED TO SOLID GREEN COLOR", false); 
+			}
+			else
+			{
+			controller.Logger.addsubStep(LogStatus.FAIL,"THUMBS UP ICON DIDNT CHANGED TO SOLID GREEN COLOR", false);	
+			}
+				
+		} catch (Exception ex) {
+			throw new Exception("clickOnThumbsUpIcon is not working" + ex);
+		}
+	}
+	
+	
+	public String checkThumbsUpHollowState() throws Exception {
+		try {
+			String iconStatus;
+			waitUntilElementIsDisplayed(thumsUpIcon);
+			iconStatus=getElementAttribute(thumsUpIcon, "ng-reflect-svg-icon");
+			return(iconStatus);
+			} catch (Exception ex) {
+			throw new Exception("clickOnThumbsUpIcon is not working" + ex);
+		}
+	}
+	
+	public String checkThumbsDownHollowState() throws Exception {
+		try {
+			String iconStatus;
+			waitUntilElementIsDisplayed(thumbsDownIcon);
+			iconStatus=getElementAttribute(thumbsDownIcon, "ng-reflect-svg-icon");
+			return(iconStatus);
+			} catch (Exception ex) {
+			throw new Exception("checkThumbsDownHollowState is not working" + ex);
+		}
+	}
+	
+	public void clickOnThumbsDownIcon() throws Exception {
+		try {
+			String iconStatus;
+			waitUntilElementIsDisplayed(thumbsDownIcon);
+			jsClick(thumbsDownIcon);
+			iconStatus=getElementAttribute(thumbsDownIcon, "ng-reflect-svg-icon");
+			if(iconStatus.contains("thumbdown-filled"))
+			{
+			controller.Logger.addsubStep(LogStatus.PASS,"THUMBS DOWN ICON CHANGED TO SOLID GREEN COLOR", false); 
+			}
+			else
+			{
+			controller.Logger.addsubStep(LogStatus.FAIL,"THUMBS DOWN ICON DIDNT CHANGED TO SOLID GREEN COLOR", false);	
+			}
+				
+		} catch (Exception ex) {
+			throw new Exception("clickOnThumbsDownIcon is not working" + ex);
+		}
+	}		
+	
+	public boolean isDisplayedLiteratureThumbsUpIcon() throws Exception {
+		int j=1;
+		boolean status=true;
+		try {
+			List<WebElement> thumbsUpIcons = driver.findElements(By.xpath("//section/div[2]/div[1]/button"));
+			System.out.println("size" + thumbsUpIcons.size());
+			if (thumbsUpIcons.size() > 0) {
+				for (WebElement ele : thumbsUpIcons) {
+					if(controller.isElementDisplayed(driver.findElement(By.xpath("//section/div[2]/div[1]/button")))) {
+					controller.Logger.addsubStep(LogStatus.PASS,"THUMBS UP ICON IS DISPLAYED FOR THE RECORD:"+(j)+"", false);
+					j=j+1;
+				}
+				else 
+				{
+				controller.Logger.addsubStep(LogStatus.FAIL,"THUMBS UP ICON IS NOT DISPLAYED FOR THE RECORD:"+(j)+"", true);
+				status=false;
+				}	
+			}
+		  }
+		}
+		 catch (Exception e) {
+			throw new Exception("isDisplayedLiteratureThumbsUpIcon is not working" + e);
+		}
+		return status;
+	}
+
+	public boolean isDisplayedLiteratureThumbsDownIcon() throws Exception {
+		int j=1;
+		boolean status=true;
+		try {
+			List<WebElement> thumbsDownIcons = driver.findElements(By.xpath("//section/div[2]/div[2]/button"));
+			System.out.println("size" + thumbsDownIcons.size());
+			if (thumbsDownIcons.size() > 0) {
+				for (WebElement ele : thumbsDownIcons) {
+					if(controller.isElementDisplayed(driver.findElement(By.xpath("//section/div[2]/div[2]/button")))) {
+					controller.Logger.addsubStep(LogStatus.PASS,"THUMBS DOWN ICON IS DISPLAYED FOR THE RECORD:"+(j)+"", false);
+					j=j+1;
+				}
+				else 
+				{
+				controller.Logger.addsubStep(LogStatus.FAIL,"THUMBS DOWN ICON IS NOT DISPLAYED FOR THE RECORD:"+(j)+"", true);
+				status=false;
+				}	
+			}
+		  }
+		}
+		 catch (Exception e) {
+			throw new Exception("isDisplayedLiteratureThumbsDownIcon is not working" + e);
+		}
+		return status;
+	}
+		
+	
+	public int getCountOfHighlightedTextInRS(String searchText) throws Exception {
+		try {
+			String lowerCasesearchText=searchText.toLowerCase();
+			List<WebElement> elements;
+			elements = driver.findElements(By.xpath("//mark[contains(text(),'"+lowerCasesearchText+"')]"));
+			return elements.size();
+		}catch (Exception e) {
+			 throw new Exception("getCountOfHighlightedTextInRS is not working.." + e);
+		}
+	}
+	
+
+	public void clickOnButtonThumsUp(int recordNumber) throws Exception
+	{
+		try {
+			WebElement listOfThumsUp = driver.findElement(By.cssSelector("app-result-set:nth-child("+recordNumber+") > section > mat-card > mat-card-content > section:nth-child(3) > div > div:nth-child(1) > button > span > mat-icon"));
+			controller.jsClick(listOfThumsUp);
+			controller.Logger.addsubStep(LogStatus.INFO,"Clicked On Thumbs Up Button Successfully", false);
+			}
+			catch(Exception e) 
+			{
+				throw new Exception("clickOnButtonThumsUp is not working.." + e);
+			}
+	}
+	
+	public boolean isDisplayedButtonThumsUpWithFillColor(int recordNumber) throws Exception
+	{
+		try 
+		{
+			WebElement listOfThumsUp = driver.findElement(By.cssSelector("app-result-set:nth-child("+recordNumber+") > section > mat-card > mat-card-content > section:nth-child(3) > div > div:nth-child(1) > button > span > mat-icon"));
+			if(controller.getElementAttribute(listOfThumsUp, "ng-reflect-svg-icon").contains("filled")) 
+			{
+				return true;
+			}else 
+			{
+				return false;
+			}
+			
+		}
+		catch(Exception e) 
+		{
+			return false;
+		}
+		
+	}
+	
+	public boolean isDisplayedButtonThumsDownWithFillColor(int recordNumber) throws Exception
+	{
+		try 
+		{
+			WebElement listOfThumsDown = driver.findElement(By.cssSelector("app-result-set:nth-child("+recordNumber+") > section > mat-card > mat-card-content > section:nth-child(3) > div > div:nth-child(2) > button > span > mat-icon"));
+			if(controller.getElementAttribute(listOfThumsDown, "ng-reflect-svg-icon").contains("filled")) 
+			{
+				return true;
+			}else 
+			{
+				return false;
+			}
+			
+		}
+		catch(Exception e) 
+		{
+			return false;
+		}
+	}
+	
+	public void clickOnButtonThumsDown(int recordNumber) throws Exception
+	{
+		try {
+		WebElement listOfThumsDown = driver.findElement(By.cssSelector("app-result-set:nth-child("+recordNumber+") > section > mat-card > mat-card-content > section:nth-child(3) > div > div:nth-child(2) > button > span > mat-icon"));
+		controller.jsClick(listOfThumsDown);
+		controller.Logger.addsubStep(LogStatus.INFO,"Clicked On Thumbs Down Button Successfully", false);
+		}
+		catch(Exception e) 
+		{
+			throw new Exception("clickOnButtonThumsDown is not working.." + e);
+		}
+	}
+	
 }
