@@ -32,7 +32,6 @@ import support.Controller;
  *
  */
 public class TestUtil extends Controller{
-
 	static Folder inbox;
 	static BodyPart p;
 	

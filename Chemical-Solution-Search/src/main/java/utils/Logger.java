@@ -27,7 +27,6 @@ import support.Controller;
  *
  */
 public class Logger {
-
 	public ExtentTest Parent;
 	public ExtentTest Logger;
 	public ExtentTest ChildLogger;
