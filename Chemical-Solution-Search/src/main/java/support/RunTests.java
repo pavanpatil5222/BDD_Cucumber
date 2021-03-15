@@ -36,7 +36,7 @@ import utils.Xls_Reader;
 @SuppressWarnings("unused")
 public class RunTests {
 
-	Controller Application = null;
+	 Controller Application = null;
 	String Path = "";
 	String browser = "";
 	Object result;

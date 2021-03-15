@@ -13,7 +13,7 @@ import support.Controller;
 public class Page_LogOut extends Controller {
 	
 	@FindBy(css="div[class='logout-title']")
-	WebElement logouttitle;
+	 WebElement logouttitle;
 	@FindBy(css="div[class='logout-text']")
 	WebElement logouttext;
 	@FindBy(xpath=".//button[contains(.,'Product Login')]")
