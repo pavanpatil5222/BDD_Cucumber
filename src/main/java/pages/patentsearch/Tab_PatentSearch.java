@@ -32,21 +32,26 @@ public class Tab_PatentSearch extends Controller{
 	@FindBy(xpath="//app-cluster-map/section/mat-expansion-panel/mat-expansion-panel-header")
 	private WebElement linkSuggestedKeyword;
 	
-	@FindBy(xpath="//*[@id='txt_0']")
+	@FindBy(xpath="//*[@id='plus_txt_0']")
 	private WebElement Keyword;
 	
 	@FindBy(xpath="//span[contains(text(),'Apply filters')]/parent::button")
     WebElement button_ApplyFilter;
 	
-	@FindBy(xpath="//span[@class='mat-button-wrapper'][contains(.,'Clear all filters')]")
+	
+	
+	@FindBy(xpath="//span[@class='mat-button-wrapper'][contains(.,'Clear all')]")
     WebElement button_ClearAllFilter;
+	
 	
 	@FindBy(xpath="(//mat-card-subtitle[contains(@class,'title mat-card-subtitle')])[1]")
 	private WebElement linkPatenRecord;
 			
-	@FindBy(xpath="(//span[contains(.,'close')])[3]")
-	private WebElement closePatentRecord;
-	
+	@FindBy(xpath="//span[@class='material-icons'][contains(.,'close')]")
+	private WebElement closePatentRecord;	
+
+	@FindBy(css="div > svg > g > text:nth-child(31)")
+	private WebElement patnetInsightsKeyword;
 
 	@FindBy(xpath="//app-result-count-bar//section//span[@class='result-count']")
 	private WebElement getResultsCount;
@@ -54,7 +59,7 @@ public class Tab_PatentSearch extends Controller{
 	@FindBy(xpath="//app-result-search-bar/section/section/div[2]/div[2]/div[2]")
 	private WebElement getLiteratureResultsCount;
 	
-	@FindBy(xpath = "//*[@id='mat-input-1']")
+	@FindBy(xpath = "//textarea[@ng-reflect-maxlength='2000']")
 	private WebElement txtSearchBox;
 	
 	@FindBy(xpath = "//app-keyword-search/section/div[3]/button[2]/span/mat-icon")
@@ -195,6 +200,18 @@ public class Tab_PatentSearch extends Controller{
 	@FindBy(xpath="//mat-panel-title[contains(text(),'Abstract')]/ancestor::mat-expansion-panel-header")
     WebElement field_Abstract;
 	
+	@FindBy(xpath="//div/section/app-result-count-bar/section/section[3]")
+    WebElement btn_TabInsights;
+	
+	@FindBy(xpath="//app-result-count-bar/section/section[3]/button")
+    WebElement btn_Insights;	
+
+	@FindBy(css="section > div > span:nth-child(1) > button > span > mat-icon")
+	private WebElement thumsUpIcon;
+	
+	@FindBy(css="section > div > span:nth-child(2) > button > span > mat-icon")
+	private WebElement thumbsDownIcon;
+	
 		public Tab_PatentSearch(Controller controller) {
 			super(controller);
 			PageFactory.initElements(driver, this);
@@ -217,11 +234,11 @@ public class Tab_PatentSearch extends Controller{
 			}
 		}
 		
-		public void clickOnPatentRecord() throws Exception {
-			try {
-				waitUntilElementIsDisplayed(linkPatenRecord);
-				jsClick(linkPatenRecord);
-				controller.waitUntilProgressBarToDisappears();
+		public void clickOnPatentRecord(int rowNumber) throws Exception {
+			try{
+			WebElement ele = driver.findElement(By.cssSelector("app-result-set:nth-child("+rowNumber+") > section > mat-card > mat-card-header > div > mat-card-subtitle"));
+			ele.click();
+			controller.waitUntilProgressBarToDisappears();				
 			} catch (Exception ex) {
 				throw new Exception("clickOnPatentRecord is not working" + ex);
 			}
@@ -231,7 +248,6 @@ public class Tab_PatentSearch extends Controller{
 			try {
 				waitUntilElementIsDisplayed(closePatentRecord);
 				jsClick(closePatentRecord);
-				controller.waitUntilProgressBarToDisappears();
 				} catch (Exception ex) {
 				throw new Exception("clickOnClosePatentRecordView is not working" + ex);
 			}
@@ -279,14 +295,22 @@ public class Tab_PatentSearch extends Controller{
 		}
 		}
 		
-		public void clickOnFirstKeyWord() throws Exception {
+		public void clickOnButtonFirstKeyWord() throws Exception {
+			try
+			{
 			 waitUntilElementIsDisplayed(Keyword);
 			 click(Keyword);
+			
 			}
+		 catch (Exception ex) {
+				throw new Exception("clickOnButtonFirstKeyWord is not working" + ex);
+			}
+		}
+		
 		
 		public boolean isDisplayedTitle(int rowNumber) throws Exception {
 			try{
-				List<WebElement> ele=driver.findElements(By.xpath("//mat-card-subtitle[@class='title mat-card-subtitle']"));
+				List<WebElement> ele=driver.findElements(By.xpath("//mat-card-subtitle[@class='title ul mat-card-subtitle']"));
 				
 				WebElement eleTitle=ele.get(rowNumber);
 				boolean blnChkTitle=controller.isElementDisplayed(eleTitle);
@@ -383,8 +407,7 @@ public class Tab_PatentSearch extends Controller{
 		
 		public boolean isDisplayedImg(int rowNumber) throws Exception {
 			try {
-			List<WebElement> ele=driver.findElements(By.xpath("//div[@class='image']//img"));
-			WebElement eleImage=ele.get(rowNumber);
+			WebElement eleImage=driver.findElement(By.cssSelector("app-result-set:nth-child("+rowNumber+") > section > mat-card > aside > div > img"));
 			boolean blnChkImage=controller.isElementDisplayed(eleImage);
 			if (blnChkImage)
 				return true;
@@ -456,26 +479,23 @@ public class Tab_PatentSearch extends Controller{
 			}
 		}
 		
-		public int getCountOfHighlightedKeyword(String searchText) throws Exception {
-			try {
-				String lowerCasesearchText=searchText.toLowerCase();
-				List<WebElement> elements;
-				elements = driver.findElements(By.xpath("//div[@class='ng-star-inserted' and @style='flex: 1 1 100%; box-sizing: border-box; max-width: 100%;']//mark[contains(text(),'"+lowerCasesearchText+"')]"));
-				return elements.size();
-			 }catch (Exception e) {
-				 throw new Exception("getCountOfHighlightedKeyword is not working.." + e);
-			}
-		}
+		/*
+		 * public int getCountOfHighlightedKeyword(String searchText) throws Exception {
+		 * try { String lowerCasesearchText=searchText.toLowerCase(); List<WebElement>
+		 * elements; elements =
+		 * driver.findElements(By.xpath("//mark[contains(text(),'"+lowerCasesearchText+
+		 * "')]")); return elements.size(); }catch (Exception e) { throw new
+		 * Exception("getCountOfHighlightedKeyword is not working.." + e); } }
+		 */
 		
 		public int getCountOfHighlightedTextInRS(String searchText) throws Exception {
 			try {
-				String lowersearchText=searchText.toLowerCase();
+				String lowerCasesearchText=searchText.toLowerCase();
 				List<WebElement> elements;
-				elements = driver.findElements(By.xpath("//mat-card[@class='mat-card' and @style='flex: 1 1 100%; box-sizing: border-box; max-width: 100%;']//mark[contains(text(),'"+lowersearchText+"')]"));
-				return elements.size();		
-				
-			 }catch (Exception e) {
-				 throw new Exception("getCountOfHighlightedKeyword is not working.." + e);
+				elements = driver.findElements(By.xpath("//mark[contains(text(),'"+lowerCasesearchText+"')]"));
+				return elements.size();
+			}catch (Exception e) {
+				 throw new Exception("getCountOfHighlightedTextInRS is not working.." + e);
 			}
 		}
 		
@@ -547,17 +567,15 @@ public class Tab_PatentSearch extends Controller{
 	                      }
 	           }
 		
-		
-		public boolean isDisplayedFetchRecordProgressBar() throws Exception {
-	          try {
-	                      waitTime(2);
-	                      return controller.isElementDisplayed(element_FetchRecord);
-	                         
-	                 } catch (Exception e) {
-	                	 throw new Exception(" FetchRecordProgressBar is not displaying.." + e);
-
-	                              }
-	           }
+				
+				  public boolean isDisplayedFetchRecordProgressBar() throws Exception { try {
+				  waitTime(2); return controller.isElementDisplayed(element_FetchRecord);
+				  
+				  } catch (Exception e) { throw new
+				  Exception(" FetchRecordProgressBar is not displaying.." + e);
+				  
+				  } }
+				 
 		
 		
 		public int numberOfMajorPlayersAssigneeDisplayedForPatent() throws Exception {
@@ -726,7 +744,7 @@ public class Tab_PatentSearch extends Controller{
 				String nextRange=paginationValue[1].trim();
 				int j=Integer.parseInt(nextRange); 
 				String firstRange=paginationValue[0].trim();
-				String[] firstRangeAfterSplit= firstRange.split("–");
+				String[] firstRangeAfterSplit= firstRange.split("â€“");
 				String valueForFirstRange=firstRangeAfterSplit[1].trim(); 
 				int i=Integer.parseInt(valueForFirstRange);
 				String selectedDropdownValue=getValueFromItemsPerPageDropdown();
@@ -1505,5 +1523,210 @@ public class Tab_PatentSearch extends Controller{
 				}
 			}
 			
+			public void clickOnButtonInsights() throws Exception{
+				try {
+					controller.waitTime(2);
+					if (!btn_TabInsights.getAttribute("ng-reflect-fx-flex").toLowerCase().contains("385px")) {
+						controller.jsClick(btn_Insights);
 						
+					} else {
+						controller.Logger.addsubStep(LogStatus.INFO, "TAB INSIGHTS IS SELECTED ALREADY", false);
+					}
+				} catch (Exception ex) {
+					throw new Exception("click on Button Tab Insights is not working for :: "+ ex);
+				}
+			}
+			
+			public String getTextPatentInsightsKeyword() throws Exception {
+				String keyword;
+				 waitUntilElementIsDisplayed(patnetInsightsKeyword);
+				 keyword = getText(patnetInsightsKeyword);
+				 return(keyword);
+				}
+			
+			
+			public void clickOnThumbsUpIcon() throws Exception {
+				try {
+					String iconStatus;
+					waitUntilElementIsDisplayed(thumsUpIcon);
+					jsClick(thumsUpIcon);
+					iconStatus=getElementAttribute(thumsUpIcon, "ng-reflect-svg-icon");
+					if(iconStatus.contains("thumbup-filled"))
+					{
+					controller.Logger.addsubStep(LogStatus.PASS,"THUMBS UP ICON CHANGED TO SOLID GREEN COLOR", false); 
+					}
+					else
+					{
+					controller.Logger.addsubStep(LogStatus.FAIL,"THUMBS UP ICON DIDNT CHANGED TO SOLID GREEN COLOR", false);	
+					}
+						
+				} catch (Exception ex) {
+					throw new Exception("clickOnThumbsUpIcon is not working" + ex);
+				}
+			}
+			
+			
+			public String checkThumbsUpHollowState() throws Exception {
+				try {
+					String iconStatus;
+					waitUntilElementIsDisplayed(thumsUpIcon);
+					iconStatus=getElementAttribute(thumsUpIcon, "ng-reflect-svg-icon");
+					return(iconStatus);
+					} catch (Exception ex) {
+					throw new Exception("clickOnThumbsUpIcon is not working" + ex);
+				}
+			}
+			
+			public String checkThumbsDownHollowState() throws Exception {
+				try {
+					String iconStatus;
+					waitUntilElementIsDisplayed(thumbsDownIcon);
+					iconStatus=getElementAttribute(thumbsDownIcon, "ng-reflect-svg-icon");
+					return(iconStatus);
+					} catch (Exception ex) {
+					throw new Exception("checkThumbsDownHollowState is not working" + ex);
+				}
+			}
+			
+			public void clickOnThumbsDownIcon() throws Exception {
+				try {
+					String iconStatus;
+					waitUntilElementIsDisplayed(thumbsDownIcon);
+					jsClick(thumbsDownIcon);
+					iconStatus=getElementAttribute(thumbsDownIcon, "ng-reflect-svg-icon");
+					if(iconStatus.contains("thumbdown-filled"))
+					{
+					controller.Logger.addsubStep(LogStatus.PASS,"THUMBS DOWN ICON CHANGED TO SOLID GREEN COLOR", false); 
+					}
+					else
+					{
+					controller.Logger.addsubStep(LogStatus.FAIL,"THUMBS DOWN ICON DIDNT CHANGED TO SOLID GREEN COLOR", false);	
+					}
+						
+				} catch (Exception ex) {
+					throw new Exception("clickOnThumbsDownIcon is not working" + ex);
+				}
+			}
+			
+			public boolean isDisplayedPatentThumbsUpIcon() throws Exception {
+				int j=1;
+				boolean status=true;
+				try {
+					List<WebElement> thumbsUpIcons = driver.findElements(By.xpath("//section/div[3]/div[1]/button"));
+					System.out.println("size" + thumbsUpIcons.size());
+					if (thumbsUpIcons.size() > 0) {
+						for (WebElement ele : thumbsUpIcons) {
+							if(controller.isElementDisplayed(driver.findElement(By.xpath("//section/div[3]/div[1]/button")))) {
+							controller.Logger.addsubStep(LogStatus.PASS,"THUMBS UP ICON IS DISPLAYED FOR THE RECORD:"+(j)+"", false);
+							j=j+1;
+						}
+						else 
+						{
+						controller.Logger.addsubStep(LogStatus.FAIL,"THUMBS UP ICON IS NOT DISPLAYED FOR THE RECORD:"+(j)+"", true);
+						status=false;
+						}	
+					}
+				  }
+				}		
+				 catch (Exception e) {
+					throw new Exception("isDisplayedPatentThumbsUpIcon is not working" + e);
+				}
+				return status;
+			}
+			
+			
+			public boolean isDisplayedPatentThumbsDownIcon() throws Exception {
+				int j=1;
+				boolean status=true;
+				try {
+					List<WebElement> thumbsDownIcons = driver.findElements(By.xpath("//section/div[3]/div[2]/button"));
+					System.out.println("size" + thumbsDownIcons.size());
+					if (thumbsDownIcons.size() > 0) {
+						for (WebElement ele : thumbsDownIcons) {
+							if(controller.isElementDisplayed(driver.findElement(By.xpath("//section/div[3]/div[2]/button")))) {
+							controller.Logger.addsubStep(LogStatus.PASS,"THUMBS DOWN ICON IS DISPLAYED FOR THE RECORD:"+(j)+"", false);
+							j=j+1;
+						}
+						else 
+						{
+						controller.Logger.addsubStep(LogStatus.FAIL,"THUMBS DOWN ICON IS NOT DISPLAYED FOR THE RECORD:"+(j)+"", true);
+						status=false;
+						}	
+					}
+				  }
+				}		
+				 catch (Exception e) {
+					throw new Exception("isDisplayedLiteratureThumbsDownIcon is not working" + e);
+				}
+				return status;
+			}
+			
+
+			public void clickOnButtonThumsUp(int recordNumber) throws Exception
+			{
+				try {
+					//WebElement listOfThumsUp = driver.findElement(By.xpath("(//img[contains(@alt,'vote as relevant') and contains(@src,'/assets/images/thumbup')])["+recordNumber+"]"));
+					WebElement listOfThumsUp = driver.findElement(By.cssSelector("app-result-set:nth-child("+recordNumber+") > section > mat-card > mat-card-content > section > div > span:nth-child(1) > button > span > mat-icon"));
+					controller.jsClick(listOfThumsUp);
+					controller.Logger.addsubStep(LogStatus.INFO,"Clicked On Thumbs Up Button Successfully", false);
+					}
+					catch(Exception e) 
+					{
+						throw new Exception("clickOnButtonThumsUp is not working.." + e);
+					}
+			}
+			
+			public boolean isDisplayedButtonThumsUpWithFillColor(int recordNumber) throws Exception
+			{
+				try 
+				{
+					WebElement listOfThumsUp = driver.findElement(By.cssSelector("app-result-set:nth-child("+recordNumber+") > section > mat-card > mat-card-content > section > div > span:nth-child(1) > button > span > mat-icon"));
+					if(controller.getElementAttribute(listOfThumsUp, "ng-reflect-svg-icon").contains("filled")) 
+					{
+						return true;
+					}else 
+					{
+						return false;
+					}
+					
+				}
+				catch(Exception e) 
+				{
+					return false;
+				}
+				
+			}
+			
+			public boolean isDisplayedButtonThumsDownWithFillColor(int recordNumber) throws Exception
+			{
+				try 
+				{
+					WebElement listOfThumsDown = driver.findElement(By.cssSelector("app-result-set:nth-child("+recordNumber+") > section > mat-card > mat-card-content > section > div > span:nth-child(2) > button > span > mat-icon"));
+					if(controller.getElementAttribute(listOfThumsDown, "ng-reflect-svg-icon").contains("filled")) 
+					{
+						return true;
+					}else 
+					{
+						return false;
+					}
+					
+				}
+				catch(Exception e) 
+				{
+					return false;
+				}
+			}
+			
+			public void clickOnButtonThumsDown(int recordNumber) throws Exception
+			{
+				try {
+					WebElement listOfThumsDown = driver.findElement(By.cssSelector("app-result-set:nth-child("+recordNumber+") > section > mat-card > mat-card-content > section > div > span:nth-child(2) > button > span > mat-icon"));
+				controller.jsClick(listOfThumsDown);
+				controller.Logger.addsubStep(LogStatus.INFO,"Clicked On Thumbs Down Button Successfully", false);
+				}
+				catch(Exception e) 
+				{
+					throw new Exception("clickOnButtonThumsDown is not working.." + e);
+				}
+			}		
 }

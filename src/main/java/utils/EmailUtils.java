@@ -32,6 +32,7 @@ import javax.mail.search.SubjectTerm;
  */
 public class EmailUtils {	
 
+	
 	private static Folder folder;
 
 	public static void connectToEmailServer(String username, String password) throws Exception {

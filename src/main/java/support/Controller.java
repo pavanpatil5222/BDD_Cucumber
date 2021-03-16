@@ -41,7 +41,7 @@ import io.github.bonigarcia.wdm.WebDriverManager;
  *
  */
 public class Controller {
-/*	public static WebDriver driver = null;
+/*	 public static WebDriver driver = null;
 	public Properties properties;
 	public String browser;
 	String WorkingDir;

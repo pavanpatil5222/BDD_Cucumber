@@ -27,16 +27,31 @@ import support.Controller;
 public class Page_ChemicalSearchResults extends Controller{
 
 
-	@FindBy(xpath="//app-result-count-bar//section/span[1]")
+	@FindBy(xpath="//div[@class='result-count']")
 	private WebElement getResultsCount;
-		
-	@FindBy(xpath = "//textarea[@id='mat-input-1']")
+	
+	@FindBy(xpath = " //button/span[text()=' Cluster map ']")
+	private WebElement linkClustermap;
+	
+	@FindBy(xpath = " //div[@class='chart']//*[name()='svg']//*[name()='circle']")
+	//div[@class='chart']//*[name()='svg']//*[name()='circle']]3
+	private WebElement circleClustermap;
+	
+	@FindBy(xpath = "//textarea[@ng-reflect-maxlength='2000']")
 	private WebElement txtSearchBox;
+	
+	@FindBy(xpath = "//section[@class='filter-section']//div[@class='ng-star-inserted']//mat-expansion-panel[1]")
+	private WebElement collapseExpand;
+
+
+	@FindBy(xpath = "(//section[@class='filter-details']//div[@class='mat-form-field-infix']//mat-icon)[1]")
+	private WebElement xMark;
+	
 	
 	@FindBy(xpath = "//span[text()='Filtered by 1 fields']")
 	private WebElement label_filteredByOneFields;
 			
-	@FindBy(xpath = "//span[text()='Filtered by 0 fields']")
+	@FindBy(xpath = "//span[text()=Filtered by 0 fields']")
 	private WebElement label_filteredByZeroFields;
 	
 	@FindBy(xpath = "//mat-error[contains(@class,'mat-error')]")
@@ -48,15 +63,12 @@ public class Page_ChemicalSearchResults extends Controller{
 	@FindBy(xpath = "//*[@id='mat-chip-list-0']/div/mat-chip[1]")
 	private WebElement keyWordMouseHover;
 		
+	@FindBy(xpath = "(//span[@class='cdx-chip-name'])[1]")
+	private WebElement mouseHoverFirstKeyWord;
+	
 	@FindBy(xpath="(//span[@class='cdx-chip-name'])[3]")
-	private WebElement KeywordPillText;
-	
-	@FindBy(xpath="(//img[@role='img'])[3]")
-	private WebElement thumsUpIcon;
-	
-	@FindBy(xpath="(//img[@role='img'])[4]")
-	private WebElement thumbsDownIcon;
-	
+	private WebElement KeywordPillText;	
+		
 	@FindBy(xpath="//app-result-search-bar/section/section/div[1]/div[2]/div[2]")
 	private WebElement getPatentResultsCount;
 	
@@ -84,7 +96,7 @@ public class Page_ChemicalSearchResults extends Controller{
 	@FindBy(xpath = "//button[contains(@title,'clear search')]")
 	private WebElement buttonCrossMark;
 
-	@FindBy(css = "input[id^=mat-chip-list-input-]")
+	@FindBy(xpath = "//input[@maxlength='40']")
 	private WebElement txtKeyWord;
 	
 	@FindBy(xpath = "//input[contains(@class,'fromDateInput')]/parent::div/following-sibling::div//button")
@@ -129,6 +141,9 @@ public class Page_ChemicalSearchResults extends Controller{
 	
 	@FindBy(css = "#cluster-map > svg > g > text:nth-child(32)")
 	private WebElement suggestedKeyword;
+	
+	@FindBy(xpath = "//a[@href='#/home']")
+	private WebElement chemExpHomePage;
 	
 	public Page_ChemicalSearchResults(Controller controller) {
 		super(controller);
@@ -181,69 +196,6 @@ public class Page_ChemicalSearchResults extends Controller{
 		}
 	}
 	
-	public void clickOnThumbsUpIcon() throws Exception {
-		try {
-			String iconStatus;
-			waitUntilElementIsDisplayed(thumsUpIcon);
-			jsClick(thumsUpIcon);
-			iconStatus=getElementAttribute(thumsUpIcon, "src");
-			if(iconStatus.contains("filled"))
-			{
-			controller.Logger.addsubStep(LogStatus.PASS,"THUMBS UP ICON CHANGED TO SOLID GREEN COLOR", false); 
-			}
-			else
-			{
-			controller.Logger.addsubStep(LogStatus.FAIL,"THUMBS UP ICON DIDNT CHANGED TO SOLID GREEN COLOR", false);	
-			}
-				
-		} catch (Exception ex) {
-			throw new Exception("clickOnThumbsUpIcon is not working" + ex);
-		}
-	}
-	
-	
-	public String checkThumbsUpHollowState() throws Exception {
-		try {
-			String iconStatus;
-			waitUntilElementIsDisplayed(thumsUpIcon);
-			iconStatus=getElementAttribute(thumsUpIcon, "src");
-			return(iconStatus);
-			} catch (Exception ex) {
-			throw new Exception("clickOnThumbsUpIcon is not working" + ex);
-		}
-	}
-	
-	public String checkThumbsDownHollowState() throws Exception {
-		try {
-			String iconStatus;
-			waitUntilElementIsDisplayed(thumbsDownIcon);
-			iconStatus=getElementAttribute(thumbsDownIcon, "src");
-			return(iconStatus);
-			} catch (Exception ex) {
-			throw new Exception("checkThumbsDownHollowState is not working" + ex);
-		}
-	}
-	
-	public void clickOnThumbsDownIcon() throws Exception {
-		try {
-			String iconStatus;
-			waitUntilElementIsDisplayed(thumbsDownIcon);
-			jsClick(thumbsDownIcon);
-			iconStatus=getElementAttribute(thumbsDownIcon, "src");
-			if(iconStatus.contains("filled"))
-			{
-			controller.Logger.addsubStep(LogStatus.PASS,"THUMBS DOWN ICON CHANGED TO SOLID GREEN COLOR", false); 
-			}
-			else
-			{
-			controller.Logger.addsubStep(LogStatus.FAIL,"THUMBS DOWN ICON DIDNT CHANGED TO SOLID GREEN COLOR", false);	
-			}
-				
-		} catch (Exception ex) {
-			throw new Exception("clickOnThumbsDownIcon is not working" + ex);
-		}
-	}
-	
 	public void setKeyWords(List <String> keywords) throws Exception {
 		try {
 		 List<String> keywordtxt = new ArrayList<String>();
@@ -252,12 +204,52 @@ public class Page_ChemicalSearchResults extends Controller{
 		}
 		for(int i=0;i<keywordtxt.size();i++)
 			 {
-				 setText(txtKeyWord, keywordtxt.get(i));
+			waitUntilElementIsDisplayed(mouseHoverFirstKeyWord);
+			Actions action = new Actions(driver);
+			action.moveToElement(mouseHoverFirstKeyWord).perform();
+				txtKeyWord.click();
+				setText(txtKeyWord, keywordtxt.get(i));
 				 new Actions(driver).sendKeys(Keys.ENTER).build().perform();
 				 controller.waitTime(1);
 			 }
 			} catch (Exception e) {
 			throw new Exception("setKeyWords is not working.." + e);
+		}
+	}
+	
+	public void setFirstKeyWord(List <String> keywords) throws Exception {
+		try {
+		 List<String> keywordtxt = new ArrayList<String>();
+		for (String keys: keywords) {
+		keywordtxt.add(keys);
+		}
+		for(int i=0;i<keywordtxt.size();i++)
+			 {
+				txtKeyWord.click();
+				setText(txtKeyWord, keywordtxt.get(i));
+				 new Actions(driver).sendKeys(Keys.ENTER).build().perform();
+				 controller.waitTime(1);
+			 }
+			} catch (Exception e) {
+			throw new Exception("setKeyWords is not working.." + e);
+		}
+	}
+	
+	public void AddKeyWordsBottomSection(List <String> keywords) throws Exception {
+		try {
+		 List<String> keywordtxt = new ArrayList<String>();
+		for (String keys: keywords) {
+		keywordtxt.add(keys);
+		}
+		for(int i=0;i<keywordtxt.size();i++)
+			 {
+				txtKeyWord.click();
+				setText(txtKeyWord, keywordtxt.get(i));
+				 new Actions(driver).sendKeys(Keys.ENTER).build().perform();
+				 controller.waitTime(1);
+			 }
+			} catch (Exception e) {
+			throw new Exception("AddKeyWordsBottomSection is not working.." + e);
 		}
 	}
 	
@@ -268,86 +260,6 @@ public class Page_ChemicalSearchResults extends Controller{
 		 return(keyword);
 		}
 	
-	public boolean isDisplayedThumbsUpIcon() throws Exception {
-		int j=1;
-		int i=3;
-		boolean status=true;
-		try {
-			while(j<15)
-			{
-			if(controller.isElementDisplayed(driver.findElement(By.xpath("(//img[@role='img'])["+i+"]")))) {
-			controller.Logger.addsubStep(LogStatus.PASS,"THUMBS UP ICON IS DISPLAYED FOR THE RECORD:"+(j)+"", false);
-			i=i+3;
-			j++;
-			} 
-			
-			else 
-			{
-			controller.Logger.addsubStep(LogStatus.FAIL,"THUMBS UP ICON IS NOT DISPLAYED FOR THE RECORD:"+(j)+"", true);
-			status=false;
-			}
-			}
-		}
-		 catch (Exception e) {
-			throw new Exception("isDisplayedThumbsUpIcon is not working" + e);
-		}
-		return status;
-	}
-	
-	
-	public boolean isDisplayedPatentThumbsDownIcon() throws Exception {
-		int j=1;
-		int i=4;
-		boolean status=true;
-		try {
-			while(j<15)
-			{
-			if(controller.isElementDisplayed(driver.findElement(By.xpath("(//img[@role='img'])["+i+"]")))) {
-			controller.Logger.addsubStep(LogStatus.PASS,"THUMBS DOWN ICON IS DISPLAYED FOR THE RECORD:"+(j)+"", false);
-			i=i+3;
-			j++;
-			} 
-			
-			else 
-			{
-			controller.Logger.addsubStep(LogStatus.FAIL,"THUMBS DOWN ICON IS NOT DISPLAYED FOR THE RECORD:"+(j)+"", true);
-			status=false;
-			}
-			}
-		}
-		 catch (Exception e) {
-			throw new Exception("isDisplayedLiteratureThumbsDownIcon is not working" + e);
-		}
-		return status;
-	}
-	
-	
-	
-	public boolean isDisplayedLiteratureThumbsDownIcon() throws Exception {
-		int j=1;
-		int i=4;
-		boolean status=true;
-		try {
-			while(j<15)
-			{
-			if(controller.isElementDisplayed(driver.findElement(By.xpath("(//img[@role='img'])["+i+"]")))) {
-			controller.Logger.addsubStep(LogStatus.PASS,"THUMBS DOWN ICON IS DISPLAYED FOR THE RECORD:"+(j)+"", false);
-			i=i+2;
-			j++;
-			} 
-			
-			else 
-			{
-			controller.Logger.addsubStep(LogStatus.FAIL,"THUMBS DOWN ICON IS NOT DISPLAYED FOR THE RECORD:"+(j)+"", true);
-			status=false;
-			}
-			}
-		}
-		 catch (Exception e) {
-			throw new Exception("isDisplayedLiteratureThumbsDownIcon is not working" + e);
-		}
-		return status;
-	}
 	
 	
 	public int getPatentResultsCount() throws Exception {
@@ -365,15 +277,15 @@ public class Page_ChemicalSearchResults extends Controller{
 	}
 	
 	public String getTabPatentResultsCount() throws Exception,NumberFormatException {
-		 waitUntilElementIsDisplayed(driver.findElement(By.xpath("//div[@ng-reflect-klass='tab tab-1']//div[@class='ng-star-inserted']")));
-		String totaltxt = getText(driver.findElement(By.xpath("//div[@ng-reflect-klass='tab tab-1']//div[@class='ng-star-inserted']"))).trim();
+		 waitUntilElementIsDisplayed(driver.findElement(By.xpath("//app-result-search-bar/section/section/div[1]/div[2]/div[2]")));
+		String totaltxt = getText(driver.findElement(By.xpath("//app-result-search-bar/section/section/div[1]/div[2]/div[2]"))).trim();
 		totaltxt = totaltxt.replaceAll(" ", "");
 		return totaltxt;
 	}
 	
 	public String getTabLiteratureResultsCount() throws Exception {
-		 waitUntilElementIsDisplayed(driver.findElement(By.xpath("//div[@ng-reflect-klass='tab tab-2']//div[@class='ng-star-inserted']")));
-		String totaltxt = getText(driver.findElement(By.xpath("//div[@ng-reflect-klass='tab tab-2']//div[@class='ng-star-inserted']"))).trim();
+		 waitUntilElementIsDisplayed(driver.findElement(By.xpath("//app-result-search-bar/section/section/div[2]/div[2]/div[2]")));
+		String totaltxt = getText(driver.findElement(By.xpath("//app-result-search-bar/section/section/div[2]/div[2]/div[2]"))).trim();
 		totaltxt = totaltxt.replaceAll(" ", "");
 		return totaltxt;
 	}
@@ -393,72 +305,7 @@ public class Page_ChemicalSearchResults extends Controller{
 		}
 	}*/
 	
-	public void clickOnButtonThumsUp(int recordNumber) throws Exception
-	{
-		try {
-			WebElement listOfThumsUp = driver.findElement(By.xpath("(//img[contains(@alt,'vote as relevant') and contains(@src,'/assets/images/thumbup')])["+recordNumber+"]"));
-			controller.jsClick(listOfThumsUp);
-			controller.Logger.addsubStep(LogStatus.INFO,"Clicked On Thumbs Up Button Successfully", false);
-			}
-			catch(Exception e) 
-			{
-				throw new Exception("setKeyWords is not working.." + e);
-			}
-	}
-	
-	public boolean isDisplayedButtonThumsUpWithFillColor(int recordNumber) throws Exception
-	{
-		try 
-		{
-			WebElement listOfThumsUp = driver.findElement(By.xpath("(//img[contains(@alt,'vote as relevant') and contains(@src,'/assets/images/thumbup')])["+recordNumber+"]"));
-			if(controller.getElementAttribute(listOfThumsUp, "src").contains("/assets/images/thumbup-filled.svg")) 
-			{
-				return true;
-			}else 
-			{
-				return false;
-			}
-			
-		}
-		catch(Exception e) 
-		{
-			return false;
-		}
-		
-	}
-	
-	public boolean isDisplayedButtonThumsDownWithFillColor(int recordNumber) throws Exception
-	{
-		try 
-		{
-			WebElement listOfThumsUp = driver.findElement(By.xpath("(//img[contains(@alt,'vote as relevant') and contains(@src,'/assets/images/thumbdown')])["+recordNumber+"]"));
-			if(controller.getElementAttribute(listOfThumsUp, "src").contains("/assets/images/thumbdown-filled.svg")) 
-			{
-				return true;
-			}else 
-			{
-				return false;
-			}
-			
-		}
-		catch(Exception e) 
-		{
-			return false;
-		}
-	}
-	
-	public void clickOnButtonThumsDown(int recordNumber) throws Exception
-	{
-		try {
-		WebElement listOfThumsDown = driver.findElement(By.xpath("(//img[contains(@alt,'vote as relevant') and contains(@src,'/assets/images/thumbdown')])["+recordNumber+"]"));
-		controller.jsClick(listOfThumsDown);
-		controller.Logger.addsubStep(LogStatus.INFO,"Clicked On Thumbs Down Button Successfully", false);
-		}
-		catch(Exception e) 
-		{
-			throw new Exception("setKeyWords is not working.." + e);
-		}
-	}
+
 	/*public void setKeyWords(List<String> keywords) throws Exception {
 		try {
 		 List<String> keywordtxt = new ArrayList<String>();
@@ -497,7 +344,27 @@ public class Page_ChemicalSearchResults extends Controller{
 		}
 	}
 	
+	public void clickOnXMark() {
+		try {
+			waitUntilElementIsDisplayed(xMark);
+			xMark.click();
+			//waitUntilElementIsDisplayed(toastMessage);
+		} catch (Exception e) {
+			controller.Logger.addException("clickOnExpandDropdown is not working "+e.getMessage());
+		}
+	}
 	
+	
+	public void hoverOnPhraseSection() throws Exception {
+		try {
+			waitUntilElementIsDisplayed(txtSearchBox);
+			Actions action = new Actions(driver);
+			action.moveToElement(txtSearchBox).perform();
+			} catch (Exception ex) {
+			throw new Exception("hoverOnPhraseSection is not working" + ex);
+		}
+	}
+
 	public void clickOnLinkFilters() throws Exception {
 		try {
 			//super.waitUntilElementIsDisplayed(btnClearAll);
@@ -506,7 +373,6 @@ public class Page_ChemicalSearchResults extends Controller{
 			throw new Exception("clickOnlink Filters is not working" + ex);
 		}
 	}
-
 	
 	public void clickOnFiltersPublicationDate() throws Exception {
 		try {
@@ -605,8 +471,7 @@ public class Page_ChemicalSearchResults extends Controller{
 		try {
 			waitUntilElementIsDisplayed(getResultsCount);
 		    WebElement ele=driver.findElement(By.xpath("//button[@title='make a search']"));
-		    System.out.println(ele.getCssValue("color"));
-			return ele.getCssValue("color");	
+		 	return ele.getAttribute("ng-reflect-disabled");	
 		 }catch (Exception e) {
 			 throw new Exception("getColorOfSerachIcon is not working.." + e);
 		}
@@ -615,10 +480,8 @@ public class Page_ChemicalSearchResults extends Controller{
 	public String getColorOfPillBox(int pillNumber) throws Exception {
 		try {
 			waitUntilElementIsDisplayed(getResultsCount);
-			waitUntilElementIsDisplayed(getResultsCount);
 			WebElement ele=driver.findElement(By.xpath("(//mat-chip[contains(@class,'mat-chip mat-primary mat-standard-chip')])["+pillNumber+"]"));
-		    System.out.println(ele.getCssValue("border-color"));
-			return ele.getCssValue("border-color");	
+		    return ele.getAttribute("ng-reflect-ng-class");
 		 }catch (Exception e) {
 			 throw new Exception("getColorOfPillBox is not working.." + e);
 		}
@@ -664,6 +527,15 @@ public class Page_ChemicalSearchResults extends Controller{
 		}
 	}
 	
+	public void clickOnExpandDropdown() {
+		try {
+			waitUntilElementIsDisplayed(collapseExpand);
+			collapseExpand.click();
+			//waitUntilElementIsDisplayed(toastMessage);
+		} catch (Exception e) {
+			controller.Logger.addException("clickOnExpandDropdown is not working "+e.getMessage());
+		}
+	}
 	public boolean isDisplayedActionTextUndo() throws Exception {
 		try {
 			waitUntilElementIsDisplayed(getResultsCount);
@@ -679,6 +551,7 @@ public class Page_ChemicalSearchResults extends Controller{
 			waitUntilElementIsDisplayed(getResultsCount);
 			WebElement phraseElement=driver.findElement(By.xpath("//textarea[contains(@placeholder,'Enter keywords, phrases or text blocks to search...')]"));
 			phraseElement.click();
+			phraseElement.clear();
 			phraseElement.sendKeys(phrase);
 		 }catch (Exception e) {
 			 throw new Exception("setTextPhrase is not working.." + e);
@@ -722,6 +595,7 @@ public class Page_ChemicalSearchResults extends Controller{
 		try {
 			super.click(format_FromDateInput);
 			setText(format_FromDateInput, dateFormat);
+			driver.findElement(By.xpath("//html")).click();
 			} catch (Exception e) {
 			throw new Exception("setting value to from date input is not working.." + e);
 		}
@@ -731,6 +605,7 @@ public class Page_ChemicalSearchResults extends Controller{
 		try {
 			super.click(format_ToDateInput);
 			setText(format_ToDateInput, dateFormat);
+			driver.findElement(By.xpath("//html")).click();
 			} catch (Exception e) {
 			throw new Exception("setting value to from date input is not working.." + e);
 		}
@@ -750,7 +625,12 @@ public class Page_ChemicalSearchResults extends Controller{
 			    controller.Logger.addsubStep(LogStatus.PASS, "Tab Literature is selected successfully.", false);
 				
 			}
-			waitUntilProgressBarToDisappears();
+			try {
+				waitUntilProgressBarToDisappears();
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		} catch (Exception e) {
 			controller.Logger.addException("clickOnTabLiterature is not working"+e.getMessage());
 		}
@@ -786,6 +666,13 @@ public class Page_ChemicalSearchResults extends Controller{
 		}
 	}
 	
+	public void clickOnChemExpHomePage() {
+		try {
+			chemExpHomePage.click();
+			} catch (Exception e) {
+			controller.Logger.addException("clickOnChemExpHomePage is not working "+e.getMessage());
+		}
+	}
 	
 	public String getTopSectionBarText() throws Exception {
 		try 
@@ -820,7 +707,7 @@ public class Page_ChemicalSearchResults extends Controller{
 		try 
 		{
 			waitUntilElementIsDisplayed(getResultsCount);
-			WebElement ele=driver.findElement(By.xpath("(//div[@class='cdx-chip-block']//span[@class='cdx-chip-name'])["+pillNumber+"]"));
+			WebElement ele=driver.findElement(By.xpath("//span[@class='cdx-chip-name']["+pillNumber+"]"));
 		    boolean toDateInput=controller.isElementDisplayed(ele);
 			return toDateInput;	
 		 }
@@ -919,7 +806,8 @@ public class Page_ChemicalSearchResults extends Controller{
 		try 
 		{
 			waitUntilElementIsDisplayed(getResultsCount);
-			WebElement ele=driver.findElement(By.xpath("(//div[@class='cdx-chip-block']//span[@class='cdx-chip-name'])["+numPill+"]"));
+			//WebElement ele=driver.findElement(By.xpath("(//div[@class='cdx-chip-block']//span[@class='cdx-chip-name'])["+numPill+"]"));
+			WebElement ele=driver.findElement(By.xpath("(//span[@class='cdx-chip-name'])["+numPill+"]"));
 			new Actions(driver).moveToElement(ele).build().perform();
 		 }
 		catch (Exception e) 
@@ -933,7 +821,7 @@ public class Page_ChemicalSearchResults extends Controller{
 		try 
 		{
 			waitUntilElementIsDisplayed(getResultsCount);
-			List<WebElement> ele=driver.findElements(By.xpath("//div[@class='cdx-chip-block']//span[@class='cdx-chip-name']"));
+			List<WebElement> ele=driver.findElements(By.xpath("//span[@class='cdx-chip-name']"));
 			int noOfPillBoxes=ele.size();
 			return noOfPillBoxes;
 		 }
@@ -1330,7 +1218,7 @@ public void selectTemplateFromTemplateDropDown(String templateName) throws Excep
 
 public void clickOnLinkPdf() throws Exception {
 	try {
-		List<WebElement> listOfPdfLink = driver.findElements(By.xpath("//a/img[@alt='PDF']"));
+		List<WebElement> listOfPdfLink = driver.findElements(By.cssSelector("section > div > span:nth-child(3) > button > span > mat-icon"));
 		for(WebElement firstLink:listOfPdfLink) {
 			super.jsClick(firstLink);
 			break;
@@ -1424,6 +1312,27 @@ public Tab_LiteratureSearch tabLiterature() {
 
 public Tab_PatentSearch tabPatent() {
 	return new Tab_PatentSearch(controller);
+}
+
+public void clickOnClustermapLink() throws Exception {
+			try {
+				waitUntilElementIsDisplayed(linkClustermap);
+				jsClick(linkClustermap);
+				//controller.waitUntilProgressBarToDisappears();
+			} catch (Exception ex) {
+				throw new Exception("clickOnClustermapLink is not working" + ex);
+			}
+		}
+		
+
+public void clickOnBubble() throws Exception {
+	try {
+		waitUntilElementIsDisplayed(circleClustermap);
+		jsClick(circleClustermap);
+		//controller.waitUntilProgressBarToDisappears();
+	} catch (Exception ex) {
+		throw new Exception("clickOnClustermapLink is not working" + ex);
+	}
 }
 }
 

@@ -18,7 +18,7 @@ import support.Controller;
  */
 	public class Page_ChemicalSearchLandingPage extends Controller{
 		
-		@FindBy(xpath = "//*[@id='chemexp']//section[2]//button[1]")
+		@FindBy(xpath = "(//span[contains(.,'close')])[2]")
 		private WebElement btnClearAll;
 			
 		@FindBy(xpath = "//*[@id='chemexp']/section[2]//div[3]/button")
@@ -27,9 +27,11 @@ import support.Controller;
 		@FindBy(xpath = "//*[@id='chemexp']/section[2]//div[3]/button[2]")
 		private WebElement btnSearchIcon;
 		
-		@FindBy(xpath = "//textarea[@id='mat-input-0']")
+		@FindBy(xpath = " //textarea[@placeholder='Enter keywords, phrases or text blocks to search...']")
 		private WebElement txtSearchBox;
 		
+		
+			
 		@FindBy(xpath = "//*[@id='mat-hint-0']/span")
 		private WebElement txtLimitMsg;
 										
@@ -88,6 +90,8 @@ import support.Controller;
 			}
 		}
 		
+		
+		
 		public void setTextSearchTextBox(String value) throws Exception {
 			try {
 				waitUntilElementIsDisplayed(txtSearchBox);
@@ -98,7 +102,7 @@ import support.Controller;
 			}
 		}
 		
-		
+
 		public String getTextSearchTextBox() throws Exception {
 			try {
 				String expMsg="";
@@ -110,7 +114,6 @@ import support.Controller;
 				throw new Exception("getTextSearchTextBox is not working.." + e);
 			}
 		}
-		
 		
 		public void deleteTextSearchTextBox() throws Exception {
 			try {
