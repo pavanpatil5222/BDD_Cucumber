@@ -10,6 +10,9 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
+
+import com.relevantcodes.extentreports.LogStatus;
+
 import support.Controller;
 /**
  * 
@@ -28,9 +31,7 @@ import support.Controller;
 		private WebElement btnSearchIcon;
 		
 		@FindBy(xpath = " //textarea[@placeholder='Enter keywords, phrases or text blocks to search...']")
-		private WebElement txtSearchBox;
-		
-		
+		private WebElement txtSearchBox;		
 			
 		@FindBy(xpath = "//*[@id='mat-hint-0']/span")
 		private WebElement txtLimitMsg;
@@ -52,6 +53,15 @@ import support.Controller;
 		
 		@FindBy(xpath = "//textarea[contains(@placeholder,'How can we improve?')]")
 		private WebElement feedback_Textarea;
+		
+		@FindBy(css = "#mat-slide-toggle-1-input")
+		private WebElement supportTipsOnOff;
+						
+		@FindBy(css = "div.links > button:nth-child(4) > span")
+		private WebElement supportLink;
+		
+		@FindBy(css = "div > div > button:nth-child(3) > span")
+		private WebElement showTipsTxt;
 						
 		public Page_ChemicalSearchLandingPage(Controller controller) {
 			super(controller);
@@ -79,12 +89,11 @@ import support.Controller;
 			}
 		}
 		
-		
 		public void clickOnSearchIcon() throws Exception {
 			try {
 				waitUntilElementIsDisplayed(btnSearchIcon);
 				jsClick(btnSearchIcon);
-				controller.waitUntilProgressBarToDisappears();
+				controller.waitUntilFectchRecordProgressBarToDisappears();
 			} catch (Exception ex) {
 				throw new Exception("clickOnSearchIcon is not working" + ex);
 			}
@@ -151,56 +160,6 @@ import support.Controller;
 			
 		}
 		
-		public void enterTextAnywhereInSearchBox(String typeText,int positionToTypeText) {
-
-			 
-
-			WebElement textarea=driver.findElement(By.xpath("//textarea[contains(@placeholder,'Enter keywords, phrases or text blocks to search...')]"));;
-	 
-
-	        insert(textarea, typeText, positionToTypeText);
-	    }
-	    
-	    public void insert(WebElement textElement, String insertText, int offset) {
-	    	Robot robot = null; 
-	        String currentText = textElement.getAttribute("innerh");
-	        int len = currentText.length();
-	        if (len < offset) {
-	            throw new IllegalArgumentException(String.format("len(%d) < offset(%d)", len, offset));
-	        }
-	        
-	        try
-	        {
-	        robot = new Robot();
-	        //robot.mouseMove(50, 50);
-	        }
-	        catch (AWTException e)
-	        {
-	        e.printStackTrace();
-	        }
-	       
-	        robot.setAutoDelay(20);
-	        // On focus.
-	        textElement.click();
-	        // Move cursor for head.
-	        type(robot, KeyEvent.VK_CONTROL, KeyEvent.VK_HOME);
-	        for (int i = 0; i < offset; i++) {
-	            type(robot, KeyEvent.VK_RIGHT);
-	        }
-	        textElement.sendKeys(insertText);
-	    }
-
-	 
-
-	    public void type(Robot robot, int... keycodes) {
-	        for (int keycode : keycodes) {
-	            robot.keyPress(keycode);
-	        }
-	        for (int keycode : keycodes) {
-	            robot.keyRelease(keycode);
-	        }
-	    }
-	
 		public boolean isDisabledSearchIcon() throws Exception{
 			boolean searchIcon = false;
 			try {
@@ -319,6 +278,66 @@ import support.Controller;
 					return expMsg;
 					} catch (Exception e) {
 					throw new Exception("setSearchText is not working.." + e);
+				}
+			}
+			
+			public String getTextShowTips() throws Exception {
+				try {
+					String expMsg="";
+					waitUntilElementIsDisplayed(showTipsTxt);
+					if(controller.isElementDisplayed(showTipsTxt))
+					expMsg= controller.getText(showTipsTxt);
+					return expMsg;
+					} catch (Exception e) {
+					throw new Exception("getTextShowTips is not working.." + e);
+				}
+			}
+			
+			public void clickOnLinkSupportMenu() throws Exception {
+				try {
+					waitUntilElementIsDisplayed(supportLink);
+					jsClick(supportLink);
+					controller.waitUntilFectchRecordProgressBarToDisappears();
+				} catch (Exception ex) {
+					throw new Exception("clickOnSupportLink is not working" + ex);
+				}
+			}
+			
+				public void setToolTipsOptionON() throws Exception {
+				try {
+					boolean toolTip=false;
+					waitUntilElementIsDisplayed(supportTipsOnOff);
+					String toolTipStatus  = controller.getElementAttribute(supportTipsOnOff, "aria-checked");
+					toolTip = Boolean.parseBoolean(toolTipStatus);
+					if(!toolTip)
+					{
+						jsClick(supportTipsOnOff);
+					}
+					else
+					{
+						controller.Logger.Logger.log(LogStatus.PASS, "Support tool tip is already set ON"); 
+					}
+				} catch (Exception ex) {
+					throw new Exception("setToolTipsOptionON is not working" + ex);
+				}
+			}
+			
+			public void setToolTipsOptionOFF() throws Exception {
+				try {
+					boolean toolTip=true;
+					waitUntilElementIsDisplayed(supportTipsOnOff);
+					String toolTipStatus  = controller.getElementAttribute(supportTipsOnOff, "aria-checked");
+					toolTip = Boolean.parseBoolean(toolTipStatus);
+					if(toolTip)
+					{
+						jsClick(supportTipsOnOff);
+					}
+					else
+					{
+						controller.Logger.Logger.log(LogStatus.PASS, "Support tool tip is already set OFF"); 
+					}
+				} catch (Exception ex) {
+					throw new Exception("setToolTipsOptionOFF is not working" + ex);
 				}
 			}
 		

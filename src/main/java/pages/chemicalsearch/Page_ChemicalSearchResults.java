@@ -29,12 +29,8 @@ public class Page_ChemicalSearchResults extends Controller{
 
 	@FindBy(xpath="//div[@class='result-count']")
 	private WebElement getResultsCount;
-	
-	@FindBy(xpath = " //button/span[text()=' Cluster map ']")
-	private WebElement linkClustermap;
-	
+		
 	@FindBy(xpath = " //div[@class='chart']//*[name()='svg']//*[name()='circle']")
-	//div[@class='chart']//*[name()='svg']//*[name()='circle']]3
 	private WebElement circleClustermap;
 	
 	@FindBy(xpath = "//textarea[@ng-reflect-maxlength='2000']")
@@ -60,7 +56,7 @@ public class Page_ChemicalSearchResults extends Controller{
 	@FindBy(xpath = "//mat-icon[contains(.,'search')]")
 	private WebElement btnSearchIcon;
 	
-	@FindBy(xpath = "//*[@id='mat-chip-list-0']/div/mat-chip[1]")
+	@FindBy(xpath = "(//span[@class='cdx-chip-name'])[1]")
 	private WebElement keyWordMouseHover;
 		
 	@FindBy(xpath = "(//span[@class='cdx-chip-name'])[1]")
@@ -117,7 +113,6 @@ public class Page_ChemicalSearchResults extends Controller{
 	@FindBy(xpath = "//input[contains(@class,'fromDateInput')]")
 	private WebElement format_FromDateInput;
 	
-	//div//span[text()='to']
 	@FindBy(xpath = "//div//span[text()='to']")
 	private WebElement label_ToDate;
 	
@@ -142,8 +137,65 @@ public class Page_ChemicalSearchResults extends Controller{
 	@FindBy(css = "#cluster-map > svg > g > text:nth-child(32)")
 	private WebElement suggestedKeyword;
 	
-	@FindBy(xpath = "//a[@href='#/home']")
+	@FindBy(xpath = "//a[@class='company-name']")
 	private WebElement chemExpHomePage;
+	
+	@FindBy(xpath = "//section[contains(@class, 'major-player')] //span[@class='mat-button-wrapper'][contains(.,'Clear all')]")
+	WebElement button_ClearAllPlayers;
+	
+	@FindBy(xpath = "//section[contains(@class, 'major-inventor')] //span[@class='mat-button-wrapper'][contains(.,'Clear all')]")
+	WebElement button_ClearAllInventors;
+	
+	@FindBy(xpath = " //button/span[text()=' Cluster map ']")
+	private WebElement linkClustermap;
+	
+	@FindBy(xpath = " //div[@class='chart']//*[name()='svg']//*[name()='circle']")
+	private WebElement bubbleClustermap;
+	
+	@FindBy(xpath = " //div[contains(@class, 'sub-keyword')]//button[contains(@class, 'cdx-but-link')]")
+	private WebElement linkSubKeyword;
+	
+	@FindBy(xpath = " //div[@class='chart']//*[name()='svg']//*[name()='line']")
+	private WebElement bubbleLine;
+	
+	@FindBy(xpath = " //div[contains(normalize-space(text()), 'Players' )]")
+	private WebElement tabPlayers;
+	
+	@FindBy(xpath = " //div[contains(normalize-space(text()), 'Keywords' )]")
+	private WebElement tabKeywords;
+	
+	@FindBy(xpath = " //section[contains(@class, 'major-player')]//div[@class='chart']//*[name()='svg']//*[name()='rect']")
+	private WebElement barPlayers;
+	
+	@FindBy(xpath = " //section[contains(@class, 'major-player')]//div[@class='chart']//*[name()='svg']//*[name()='text']")
+	private WebElement textPlayers;
+	
+	@FindBy(xpath = " //section[contains(@class, 'major-inventor')]//div[@class='chart']//*[name()='svg']//*[name()='rect']")
+	private WebElement barAuthors;
+	
+	@FindBy(xpath = " //section[contains(@class, 'suggested-keyword')]//div[@class='chart']//*[name()='svg']//*[name()='rect']")
+	private WebElement barKeywords;
+	
+	@FindBy(xpath = "//section[contains(@class, 'suggested-keyword')]//div[@class='chart']//*[name()='svg']//*[name()='text']")
+	private WebElement textKeywords;
+	
+	@FindBy(xpath = " //section[contains(@class, 'major-inventor')]//div[@class='chart']//*[name()='svg']//*[name()='text']")
+	private WebElement textAuthors;
+	
+	@FindBy(xpath = " //section[@class='filter-section']//div[@class='ng-star-inserted']//mat-expansion-panel[1][contains(@class, 'disable-click')]")
+	private WebElement inventorFilterDisable;
+	
+	@FindBy(xpath = "//span[contains(.,'You are in Help mode. Use the toggle in the Support menu to turn the tips on and off any time.')]")
+	private WebElement guidedTipsToastMsg;
+	
+	@FindBy(css = "section > div:nth-child(2) > section.ng-star-inserted > app-tour-guide > section > div.hotspot > mat-icon")
+	private WebElement guidedTipsKeyword;
+	
+	@FindBy(css = "app-suggested-keyword > section > section.title > app-tour-guide > section > div.hotspot > mat-icon")
+	private WebElement guidedInsightsTipsKeyword;
+	
+	@FindBy(css = "app-result-count-bar > section > section.result-set > section > section > button > span")
+	private WebElement linkManageFields;
 	
 	public Page_ChemicalSearchResults(Controller controller) {
 		super(controller);
@@ -161,7 +213,6 @@ public class Page_ChemicalSearchResults extends Controller{
 		waitUntilElementIsDisplayed(getResultsCount);
 		String resultCount= controller.getText(getResultsCount);
 		String[] finalResultCount = resultCount.split(" "); 
-		//String totaltxt = finalResultCount[0].trim().replace(",", "").replaceAll("[\\D]", "");
 		return Integer.parseInt(finalResultCount[0]);
 	}
 	
@@ -174,11 +225,11 @@ public class Page_ChemicalSearchResults extends Controller{
 
 	public void closeAllExistingKeyWords() throws Exception{
 		controller.hoverOnWebelement(keyWordMouseHover);
-		List<WebElement> closekeywords = driver.findElements(By.cssSelector("#mat-chip-list-0 > div > mat-chip > mat-icon"));
+		List<WebElement> closekeywords = driver.findElements(By.cssSelector("#mat-chip-list-1 > div > mat-chip > mat-icon"));
 		System.out.println("size" + closekeywords.size());
 		if (closekeywords.size() > 0) {
 			for (WebElement ele : closekeywords) {
-				WebElement closekeyword = driver.findElement(By.cssSelector("#mat-chip-list-0 > div > mat-chip > mat-icon"));
+				WebElement closekeyword = driver.findElement(By.cssSelector("#mat-chip-list-1 > div > mat-chip > mat-icon"));
 				waitTime(1);
 				jsScrollToElement(closekeyword);
 				controller.jsClick(closekeyword);
@@ -190,7 +241,7 @@ public class Page_ChemicalSearchResults extends Controller{
 		try {
 			waitUntilElementIsDisplayed(btnSearchIcon);
 			jsClick(btnSearchIcon);
-			controller.waitUntilProgressBarToDisappears();
+			controller.waitUntilFectchRecordProgressBarToDisappears();
 		} catch (Exception ex) {
 			throw new Exception("clickOnSearchIcon is not working" + ex);
 		}
@@ -223,6 +274,7 @@ public class Page_ChemicalSearchResults extends Controller{
 		for (String keys: keywords) {
 		keywordtxt.add(keys);
 		}
+		
 		for(int i=0;i<keywordtxt.size();i++)
 			 {
 				txtKeyWord.click();
@@ -290,42 +342,6 @@ public class Page_ChemicalSearchResults extends Controller{
 		return totaltxt;
 	}
 	
-	
-	/*public void closeAllExistingKeyWords() throws Exception{
-		controller.hoverOnWebelement(keyWordMouseHover);
-		List<WebElement> closekeywords = driver.findElements(By.cssSelector("#mat-chip-list-0 > div > mat-chip > mat-icon"));
-		System.out.println("size" + closekeywords.size());
-		if (closekeywords.size() > 0) {
-			for (WebElement ele : closekeywords) {
-				WebElement closekeyword = driver.findElement(By.cssSelector("#mat-chip-list-0 > div > mat-chip > mat-icon"));
-				waitTime(1);
-				jsScrollToElement(closekeyword);
-				controller.jsClick(closekeyword);
-			}
-		}
-	}*/
-	
-
-	/*public void setKeyWords(List<String> keywords) throws Exception {
-		try {
-		 List<String> keywordtxt = new ArrayList<String>();
-		for (String keys: keywords) {
-		keywordtxt.add(keys);
-		}
-		for(int i=0;i<keywordtxt.size();i++)
-			 {
-		
-			setText(txtKeyWord, keywordtxt.get(i));
-				 new Actions(driver).sendKeys(Keys.ENTER).build().perform();
-				 controller.waitTime(1);
-			 }
-			} catch (Exception e) {
-			throw new Exception("setKeyWords is not working.." + e);
-		}
-	}*/
-	
-
-	
 	public boolean isDisplayedFilterFieldsInCollapsedState() throws Exception {
 		try {
 			boolean Status = true;
@@ -348,8 +364,7 @@ public class Page_ChemicalSearchResults extends Controller{
 		try {
 			waitUntilElementIsDisplayed(xMark);
 			xMark.click();
-			//waitUntilElementIsDisplayed(toastMessage);
-		} catch (Exception e) {
+			} catch (Exception e) {
 			controller.Logger.addException("clickOnExpandDropdown is not working "+e.getMessage());
 		}
 	}
@@ -364,10 +379,20 @@ public class Page_ChemicalSearchResults extends Controller{
 			throw new Exception("hoverOnPhraseSection is not working" + ex);
 		}
 	}
+	
+	
+	public void hoverOnFirstKeyword() throws Exception {
+		try {
+			waitUntilElementIsDisplayed(mouseHoverFirstKeyWord);
+			Actions action = new Actions(driver);
+			action.moveToElement(mouseHoverFirstKeyWord).perform();
+			} catch (Exception ex) {
+			throw new Exception("hoverOnFirstKeyword is not working" + ex);
+		}
+	}
 
 	public void clickOnLinkFilters() throws Exception {
 		try {
-			//super.waitUntilElementIsDisplayed(btnClearAll);
 			super.jsClick(linkFilters);
 			} catch (Exception ex) {
 			throw new Exception("clickOnlink Filters is not working" + ex);
@@ -376,7 +401,6 @@ public class Page_ChemicalSearchResults extends Controller{
 	
 	public void clickOnFiltersPublicationDate() throws Exception {
 		try {
-			//super.waitUntilElementIsDisplayed(btnClearAll);
 			controller.jsScrollToElement(filters_PublicationDate);
 			super.jsClick(filters_PublicationDate);
 			} catch (Exception ex) {
@@ -531,8 +555,7 @@ public class Page_ChemicalSearchResults extends Controller{
 		try {
 			waitUntilElementIsDisplayed(collapseExpand);
 			collapseExpand.click();
-			//waitUntilElementIsDisplayed(toastMessage);
-		} catch (Exception e) {
+			} catch (Exception e) {
 			controller.Logger.addException("clickOnExpandDropdown is not working "+e.getMessage());
 		}
 	}
@@ -613,22 +636,22 @@ public class Page_ChemicalSearchResults extends Controller{
 		
 	public void clickOnTabLiterature() {
 		try {
-			//WebElement ele=driver.findElement(By.xpath("//div[contains(@ng-reflect-klass,'tab tab-2')]"));
+		
 			WebElement ele=driver.findElement(By.xpath("//div[contains(@class,'tab tab-2')]"));
 			if(controller.getElementAttribute(ele,"class").contains("mat-ripple tab tab-2 active")) 
 			{
 				controller.Logger.addsubStep(LogStatus.INFO, "Tab Literature is already selected ", false);
 			}else 
 			{
-			   // controller.click(tabLiterature);
+			   
 				driver.findElement(By.xpath("//div[contains(@class,'tab tab-2')]")).click();
 			    controller.Logger.addsubStep(LogStatus.PASS, "Tab Literature is selected successfully.", false);
 				
 			}
 			try {
-				waitUntilProgressBarToDisappears();
+				waitUntilFectchRecordProgressBarToDisappears();
 			} catch (Exception e) {
-				// TODO Auto-generated catch block
+				
 				e.printStackTrace();
 			}
 		} catch (Exception e) {
@@ -638,7 +661,7 @@ public class Page_ChemicalSearchResults extends Controller{
 	
 	public void clickOnTabPatent() {
 		try {
-			//WebElement ele=driver.findElement(By.xpath("//div[contains(@ng-reflect-klass,'tab tab-1')]"));
+			
 			WebElement ele=driver.findElement(By.xpath("//div[contains(@class,'tab tab-1')]"));
 			
 			if(controller.getElementAttribute(ele,"class").contains("mat-ripple tab tab-1 active")) 
@@ -646,12 +669,12 @@ public class Page_ChemicalSearchResults extends Controller{
 				controller.Logger.addsubStep(LogStatus.INFO, "Tab Patent is already selected ", false);
 			}else 
 			{
-			   // controller.click(tabPatent);
+			
 			    driver.findElement(By.xpath("//div[contains(@class,'tab tab-1')]")).click();
 			    controller.Logger.addsubStep(LogStatus.PASS, "Tab Patent is selected successfully.", false);
 				
 			}
-			waitUntilProgressBarToDisappears();
+			waitUntilFectchRecordProgressBarToDisappears();
 		} catch (Exception e) {
 			controller.Logger.addException("clickOnTabPatent is not working"+e.getMessage());
 		}
@@ -660,8 +683,7 @@ public class Page_ChemicalSearchResults extends Controller{
 	public void clickOnClearAllMark() {
 		try {
 			buttonCrossMark.click();
-			//waitUntilElementIsDisplayed(toastMessage);
-		} catch (Exception e) {
+			} catch (Exception e) {
 			controller.Logger.addException("clickOnClearAllMark is not working "+e.getMessage());
 		}
 	}
@@ -721,10 +743,10 @@ public class Page_ChemicalSearchResults extends Controller{
 		try 
 		{
           waitUntilElementIsDisplayed(getResultsCount);
-			List<WebElement> ele=driver.findElements(By.xpath("//mat-chip[contains(@class,'mat-chip mat-primary mat-standard-chip')]"));
-			for(WebElement elem:ele)
+          List<WebElement> ele=driver.findElements(By.xpath("//*[@id='mat-chip-list-22']/div/mat-chip"));
+          for(WebElement elem:ele)
 			{
-				if(elem.getAttribute("disabled").equals("true")) 
+				if(elem.getAttribute("ng-reflect-disabled").equals("true")) 
 				{
 					controller.Logger.addsubStep(LogStatus.PASS,"Bottom Section text is in Disable Mode", false);
 				}
@@ -806,7 +828,6 @@ public class Page_ChemicalSearchResults extends Controller{
 		try 
 		{
 			waitUntilElementIsDisplayed(getResultsCount);
-			//WebElement ele=driver.findElement(By.xpath("(//div[@class='cdx-chip-block']//span[@class='cdx-chip-name'])["+numPill+"]"));
 			WebElement ele=driver.findElement(By.xpath("(//span[@class='cdx-chip-name'])["+numPill+"]"));
 			new Actions(driver).moveToElement(ele).build().perform();
 		 }
@@ -943,11 +964,7 @@ public class Page_ChemicalSearchResults extends Controller{
 	 
 	 public void clickOnFiltersBasedOnFiltersName(String filtersName) throws Exception {
 			try {
-				//super.waitUntilElementIsDisplayed(btnClearAll);
-				//WebElement filterName=driver.findElement(By.xpath("//span[@class='mat-content']//mat-icon[text()='arrow_drop_down']/following-sibling::span[text()='"+filtersName+"']"));
 				WebElement filterName=driver.findElement(By.xpath("//span[@class='mat-content']//div[contains(text(),'"+filtersName+"')]"));
-				//span[@class='mat-content']//div[contains(text(),'Publication year')]
-				
 				super.jsClick(filterName);
 				} catch (Exception ex) {
 				throw new Exception("clickOn filter is not working" + ex);
@@ -956,12 +973,8 @@ public class Page_ChemicalSearchResults extends Controller{
 	
 	 public void clickOnAnyCheckboxBasedOnFiltersName(String filtersName,int chkboxPostion) throws Exception {
 			try {
-				//super.waitUntilElementIsDisplayed(btnClearAll);
 				clickOnFiltersBasedOnFiltersName(filtersName);
-			//	WebElement chkboxName=driver.findElement(By.xpath("//span[text()='"+filtersName+"']/ancestor::mat-expansion-panel-header/following-sibling::div//mat-selection-list[@role='listbox']/mat-list-item[@role='listitem']["+chkboxPostion+"]"));
-				//span[text()='Publication country/region']/ancestor::mat-expansion-panel-header/following-sibling::div//mat-selection-list[@role='listbox']/mat-list-item[@role='listitem'][1]//input
 				WebElement chkboxName=driver.findElement(By.xpath("//div[contains(text(),'"+filtersName+"')]/ancestor::mat-expansion-panel-header/following-sibling::div//mat-selection-list[@role='listbox']/mat-list-item[@role='listitem']["+chkboxPostion+"]//label"));
-				//super.click(chkboxName);
 				super.jsClick(chkboxName);
 				} catch (Exception ex) {
 				throw new Exception("checkbox is not selected" + ex);
@@ -985,6 +998,10 @@ public class Page_ChemicalSearchResults extends Controller{
 	public Tab_LiteratureSearch tabLiteratureSearch() {
 		return new Tab_LiteratureSearch(controller);
 	}	
+	
+	public Page_ManageFields manageFields() {
+		return new Page_ManageFields(controller);
+	}
 	
 	public boolean isDisplayedFilterFieldsInCollapsedState(List<String> listOfFilters) throws Exception {
 		
@@ -1160,27 +1177,6 @@ public void clickOnCalenderIconToDateInput() throws Exception {
 	}
 }
 
-
-public boolean isDisplayedInventorWithMoreThanOneRecord() throws Exception {
-	try {
-		boolean Status = true;
-		String filterFieldsAttribute;
-		List<WebElement> listOfFilteredFields = driver.findElements(By.xpath("//section[text()='Inventor']//following-sibling::div/span[contains(@class,'pipe-sep')]"));
-		for (WebElement ele:listOfFilteredFields) {
-			
-			
-		filterFieldsAttribute=controller.getElementAttribute(ele, "aria-expanded");
-		if(!filterFieldsAttribute.contentEquals("false"))
-		{
-			return false;
-		}
-		} 
-		return Status ;
-	 }catch (Exception e) {
-	return false;
-	}
-}
-
 public String getTextNoResultsPage() throws Exception {
 	try {
 		return controller.getText(errorMessage_NoResultsPage);
@@ -1200,11 +1196,6 @@ public void clickOnLinkFeedback() throws Exception {
 public void selectTemplateFromTemplateDropDown(String templateName) throws Exception {
 	try {
 		super.switchToIFrame(super.element_iframe);
-	//	controller.jsClick(this.dropdown_Template);
-	//	controller.waitUntilElementIsDisplayed(this.menuItem_template);
-		// click(menuItem_template);
-	//	String xpath = "//li[@title ='" + templateName + "']";
-		
 		String xpath = "//mat-select[contains(@placeholder,'Choose a topic')]//div//span[text()='" + templateName + "']";
 		System.out.println(xpath);
 		WebElement selectTemplate = driver.findElement(By.xpath(xpath));
@@ -1236,103 +1227,246 @@ public String getTextPdfNotAvailable() throws Exception {
 	}
 }
 
-public boolean isDisplayedScrollBarForWhoAreTheMajorPlayers() throws Exception{
-	try {
-	  
-	  JavascriptExecutor javascript = (JavascriptExecutor) driver;
-	  Boolean scrollBarStatus = (Boolean) javascript.executeScript("return document.getElementById('major-player').scrollWidth>document.getElementById('major-player').clientWidth;");
-	  return scrollBarStatus;  
-	}catch (Exception ex) {
-			throw new Exception("scrollbar is not present");
-		}
-}
-
-public boolean isDisplayedScrollBarForWhoAreTheMajorInventors() throws Exception{
-	try {
-	  
-	  JavascriptExecutor javascript = (JavascriptExecutor) driver;
-	  Boolean scrollBarStatus = (Boolean) javascript.executeScript("return document.getElementById('major-inventor').scrollWidth>document.getElementById('major-inventor').clientWidth;");
-	  return scrollBarStatus;  
-	}catch (Exception ex) {
-			throw new Exception("scrollbar is not present");
-		}
-}
-
-public boolean isDisplayedWhoAreTheMajorPlayersInCollapsedState() throws Exception {
-	try {
-		System.out.println();
-		boolean Status = true;
-		String filterFieldsAttribute;
-		WebElement listOfFilteredFields = driver.findElement(By.xpath("//section[@class='major-player']//mat-expansion-panel-header"));
-		filterFieldsAttribute=controller.getElementAttribute(listOfFilteredFields, "aria-expanded");
-		if(filterFieldsAttribute.contentEquals("true"))
-		{
-			listOfFilteredFields.click();
-			super.waitTime(2);
-			filterFieldsAttribute=controller.getElementAttribute(listOfFilteredFields, "aria-expanded");
-			if(!filterFieldsAttribute.contentEquals("false"))
-			{
-			return false;
-			}
-		}
-		return Status;
-	 }catch (Exception e) {
-	return false;
-	}
-}
-
-public boolean isDisplayedWhoAreTheMajorInventorsInCollapsedState() throws Exception {
-	try {
-		System.out.println();
-		boolean Status = true;
-		String filterFieldsAttribute;
-		WebElement listOfFilteredFields = driver.findElement(By.xpath("//section[@class='major-inventor']//mat-expansion-panel-header"));
-		filterFieldsAttribute=controller.getElementAttribute(listOfFilteredFields, "aria-expanded");
-		if(filterFieldsAttribute.contentEquals("true"))
-		{
-			listOfFilteredFields.click();
-			super.waitTime(2);
-			filterFieldsAttribute=controller.getElementAttribute(listOfFilteredFields, "aria-expanded");
-			if(!filterFieldsAttribute.contentEquals("false"))
-			{
-			return false;
-			}
-		}
-		return Status;
-	 }catch (Exception e) {
-	return false;
-	}
-}
-
-
-
-public Tab_LiteratureSearch tabLiterature() {
-	return new Tab_LiteratureSearch(controller);
-}
-
-public Tab_PatentSearch tabPatent() {
-	return new Tab_PatentSearch(controller);
-}
-
 public void clickOnClustermapLink() throws Exception {
-			try {
-				waitUntilElementIsDisplayed(linkClustermap);
-				jsClick(linkClustermap);
-				//controller.waitUntilProgressBarToDisappears();
-			} catch (Exception ex) {
-				throw new Exception("clickOnClustermapLink is not working" + ex);
-			}
-		}
-		
-
-public void clickOnBubble() throws Exception {
 	try {
-		waitUntilElementIsDisplayed(circleClustermap);
-		jsClick(circleClustermap);
-		//controller.waitUntilProgressBarToDisappears();
+		waitUntilElementIsDisplayed(linkClustermap);
+		jsClick(linkClustermap);
 	} catch (Exception ex) {
 		throw new Exception("clickOnClustermapLink is not working" + ex);
 	}
 }
+
+
+public void clickOnBubble() throws Exception {
+try {
+	waitUntilElementIsDisplayed(bubbleClustermap);
+	Actions builder = new Actions(driver);
+	builder.click(bubbleClustermap).build().perform();
+} 	catch (Exception ex) {
+	throw new Exception("clickOnBubble is not working" + ex);
+	}
+}
+
+public void clickOnSubKeyword() throws Exception {
+try {
+	waitUntilElementIsDisplayed(linkSubKeyword);
+	Actions builder = new Actions(driver);
+	builder.click(linkSubKeyword).build().perform();
+	} catch (Exception ex) {
+		throw new Exception("subkeywordLink is not working" + ex);
+}
+}
+public void clickOnBubbleLine() throws Exception {
+try {
+	waitUntilElementIsDisplayed(bubbleLine);
+	Actions builder = new Actions(driver);
+	builder.click(bubbleLine).build().perform();
+	} catch (Exception ex) {
+		throw new Exception("line between bubble  is not working" + ex);
+}
+}
+
+
+public void clickOnPlayersTab() throws Exception {
+try {
+	waitUntilElementIsDisplayed(tabPlayers);
+	jsClick(tabPlayers);
+	} catch (Exception ex) {
+		throw new Exception("clickOnClustermapLink is not working" + ex);
+	}
+	}
+public void clickOnPlayersBar() throws Exception {
+try {
+	waitUntilElementIsDisplayed(barPlayers);
+	Actions builder = new Actions(driver);
+	builder.click(barPlayers).build().perform();
+	} catch (Exception ex) {
+		throw new Exception("line between bubble  is not working" + ex);
+}
+}
+
+public void clickOnPlayersText() throws Exception {
+	try {
+		waitUntilElementIsDisplayed(textPlayers);
+		Actions builder = new Actions(driver);
+		builder.click(textPlayers).build().perform();
+	} catch (Exception ex) {
+		throw new Exception("line between bubble  is not working" + ex);
+}
+}
+
+public boolean isDisabledFilterInventorField() throws Exception {
+	try {
+		super.jsScrollToElement(inventorFilterDisable);
+		return true;
+	} catch (Exception e) {
+		return false;
+	}
+}
+
+public void clickOnKeywordsTab() throws Exception {
+	try {
+		waitUntilElementIsDisplayed(tabKeywords);
+		jsClick(tabKeywords);
+	} catch (Exception ex) {
+		throw new Exception("clickOnTab is not working" + ex);
+}
+	}
+
+public void clickOnKeywordsBar() throws Exception {
+	try {
+		waitUntilElementIsDisplayed(barKeywords);
+		jsClick(tabKeywords);
+	} catch (Exception ex) {
+		throw new Exception("clickOnTab is not working" + ex);
+}
+}
+public void clickOnKeywordsText() throws Exception {
+
+try {
+	waitUntilElementIsDisplayed(textKeywords);
+	Actions builder = new Actions(driver);
+	builder.click(textKeywords).build().perform();
+}	 catch (Exception ex) {
+	throw new Exception("Click on text not working" + ex);
+}
+
+}
+
+public void clickOnClearAllPlayers() throws Exception {
+	try {
+		controller.jsScrollToElement(button_ClearAllPlayers);
+		super.jsClick(button_ClearAllPlayers);
+	} catch (Exception ex) {
+		throw new Exception("clickOn ClearAll Filters is not working" + ex);
+}
+}
+
+public void clickOnClearAllInventors() throws Exception {
+	try {
+		controller.jsScrollToElement(button_ClearAllInventors);
+		super.jsClick(button_ClearAllInventors);
+	} catch (Exception ex) {
+		throw new Exception("clickOn ClearAll Filters is not working" + ex);
+	}
+	}
+
+public String getTextGuidedTipsToastMessage() throws Exception {
+	try {
+		String expMsg="";
+		waitUntilElementIsDisplayed(guidedTipsToastMsg);
+		if(controller.isElementDisplayed(guidedTipsToastMsg))
+		expMsg= controller.getText(guidedTipsToastMsg);
+		return expMsg;
+		} catch (Exception e) {
+		throw new Exception("getTextGuidedTipsToastMessage is not working.." + e);
+	}
+}
+
+public boolean isDisplayedGuidedTipsKeywordCue() throws Exception {
+	try {
+		waitUntilElementIsDisplayed(guidedTipsKeyword);
+		return controller.isElementDisplayed(guidedTipsKeyword);			
+	} catch (Exception e) {
+		return false;
+		
+	}
+}
+
+
+public boolean isDisplayedInsightsGuidedTipsKeywordCue() throws Exception {
+	try {
+		waitUntilElementIsDisplayed(guidedInsightsTipsKeyword);
+		return controller.isElementDisplayed(guidedInsightsTipsKeyword);	
+	} catch (Exception e) {
+		return false;
+		
+	}
+}
+
+public boolean isNotDisplayedGuidedTipsKeywordCue() throws Exception {
+	try {
+		Boolean isPresent = driver.findElements(By.cssSelector("section > div:nth-child(2) > section.ng-star-inserted > app-tour-guide > section > div.hotspot > mat-icon")).size() < 0;
+		return isPresent;
+		} catch (Exception e) {
+		return false;
+		
+	}
+}
+
+public boolean isNotDisplayedInsightsGuidedTipsKeywordCue() throws Exception {
+	try {
+		Boolean isPresent = driver.findElements(By.cssSelector("app-suggested-keyword > section > section.title > app-tour-guide > section > div.hotspot > mat-icon")).size() < 0;
+		return isPresent;
+		} catch (Exception e) {
+		return false;
+		
+	}
+}
+
+public void clickOnLinkManageFields() throws Exception {
+	try {
+		waitUntilElementIsDisplayed(linkManageFields);
+		jsClick(linkManageFields);
+		} catch (Exception ex) {
+		throw new Exception("clickOnLinkManageFields is not working" + ex);
+	}
+}
+
+public boolean isDisplayedPublished(int recordnumber) throws Exception {
+	try {
+		WebElement published = controller.driver.findElement(By.xpath("//app-result-set["+recordnumber+"]/section/mat-card/mat-card-content/div[1]/h2[1]"));
+		waitUntilElementIsDisplayed(published);
+		return controller.isElementDisplayed(published);			
+	} catch (Exception e) {
+		return false;
+		
+	}
+}
+
+public boolean isDisplayedEarliestFamily(int recordnumber) throws Exception {
+	try {
+		WebElement earliestFamily = controller.driver.findElement(By.xpath("//app-result-set["+recordnumber+"]/section/mat-card/mat-card-content/div[1]/h2[2]"));
+		waitUntilElementIsDisplayed(earliestFamily);
+		return controller.isElementDisplayed(earliestFamily);			
+	} catch (Exception e) {
+		return false;
+		
+	}
+}
+
+public boolean isDisplayedAdvantage(int recordnumber) throws Exception {
+	try {
+		WebElement advantage = controller.driver.findElement(By.xpath("//app-result-set["+recordnumber+"]/section/mat-card/mat-card-content/div[2]/section"));
+		waitUntilElementIsDisplayed(advantage);
+		return controller.isElementDisplayed(advantage);			
+	} catch (Exception e) {
+		return false;
+		
+	}
+}
+
+public boolean isDisplayedFirstClaim(int recordnumber) throws Exception {
+	try {
+		WebElement firstclaim = controller.driver.findElement(By.xpath("//app-result-set["+recordnumber+"]/section/mat-card/mat-card-content/div[3]/section"));
+		waitUntilElementIsDisplayed(firstclaim);
+		return controller.isElementDisplayed(firstclaim);			
+	} catch (Exception e) {
+		return false;
+		
+	}
+}
+
+public String getTextImageSize(int recordnumber) throws Exception {
+	try {
+		String size;
+		WebElement img = controller.driver.findElement(By.xpath("//app-result-set["+recordnumber+"]/section/aside/div[2]/img"));
+		size=controller.getElementAttribute(img, "src");
+		return size;
+		} catch (Exception ex) {
+		throw new Exception("getTextImageSize is not working" + ex);
+	}
+}
+
 }
 

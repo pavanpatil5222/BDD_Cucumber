@@ -3,6 +3,7 @@ import java.util.List;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 
@@ -109,6 +110,33 @@ public class Tab_LiteratureSearch extends Controller{
 	@FindBy(css="section > mat-card > mat-card-content > section:nth-child(3) > div > div:nth-child(2) > button > span > mat-icon")
 	private WebElement thumbsDownIcon;
 		
+	@FindBy(xpath = " //div[contains(normalize-space(text()), 'Authors' )]")
+	private WebElement tabAuthors;
+	
+	@FindBy(xpath = " //section[contains(@class, 'major-inventor')]//div[@class='chart']//*[name()='svg']//*[name()='rect']")
+	private WebElement barAuthors;
+
+	@FindBy(xpath = " //section[contains(@class, 'major-inventor')]//div[@class='chart']//*[name()='svg']//*[name()='text']")
+	private WebElement textAuthors;
+	
+	@FindBy(xpath="//app-publication-year/section/mat-expansion-panel/mat-expansion-panel-header/span[2]")
+    private WebElement linkPublicationYear;
+	
+	@FindBy(xpath="//app-publication-year/section/mat-expansion-panel/mat-expansion-panel-header/span[1]")
+    private WebElement publicationYearLabel;
+	
+	@FindBy(xpath="//app-publication-year/section/mat-expansion-panel/div/div/section/button[1]/span/mat-icon")
+    private WebElement publicationYearLeftArrow;
+	
+	@FindBy(xpath="//app-publication-year/section/mat-expansion-panel/div/div/section/button[2]/span/mat-icon")
+    private WebElement publicationYearRightArrow;
+	
+	@FindBy(xpath="//div[contains(text(),'Publication year')]/ancestor::mat-expansion-panel-header")
+    private WebElement publicationYearFilter;
+	
+	@FindBy(xpath="//div[@class='publ-year-chart']")
+    private WebElement publicationYearFilterDisable;
+		
 	public Tab_LiteratureSearch(Controller controller) {
 	super(controller);
 	PageFactory.initElements(driver, this);
@@ -131,7 +159,7 @@ public class Tab_LiteratureSearch extends Controller{
 		try{
 			WebElement ele = driver.findElement(By.cssSelector("app-result-set:nth-child("+rowNumber+") > section > mat-card > mat-card-header > div > mat-card-subtitle"));
 			ele.click();
-			controller.waitUntilProgressBarToDisappears();				
+			controller.waitUntilFectchRecordProgressBarToDisappears();				
 			} catch (Exception ex) {
 				throw new Exception("clickOnLiteratureRecord is not working" + ex);
 			}
@@ -174,17 +202,7 @@ public class Tab_LiteratureSearch extends Controller{
 			throw new Exception("clickOnButtonFirstKeyWord is not working" + ex);
 		}
 	}
-	
-	public void clickOnTabLiteratureSearch() throws Exception{
-		try {
-		waitUntilElementIsDisplayed(tabLiterature);
-		jsClick(tabLiterature);
-		controller.waitUntilProgressBarToDisappears();
-			} catch (Exception ex) {
-		throw new Exception("clickOnTabLiteratureSearch is not working for :: "+ ex);
-		}
-	}
-	
+
 	public boolean isDisplayedLiteratureRecordCloseIcon() throws Exception {
 		try {
 			if (!controller.isElementDisplayed(closeLiteratureRecord)) {
@@ -194,215 +212,6 @@ public class Tab_LiteratureSearch extends Controller{
 			}
 		} catch (Exception e) {
 			throw new Exception("isDisplayedLiteratureRecordCloseIcon is not working" + e);
-		}
-	}
-	
-	
-	public int numberOfMajorPlayersAssigneeDisplayedForLiterature() throws Exception {
-		try {
-			int playersCount=0;
-			controller.jsScrollToElement(label_WhoAreTheMajorPlayers);
-			List<WebElement> listOfMajorPlayers = driver.findElements(By.xpath("//*[@id='major-player']//*[name()='svg']//*[name()='g' ]//*[name()='text']"));
-			
-			for(WebElement ele:listOfMajorPlayers)
-			{
-				if(controller.isElementDisplayed(ele))
-				{
-					playersCount++;
-					if(playersCount==8)
-						break;
-				}
-		    }
-			return playersCount;
-			} catch (Exception ex) {
-			throw new Exception("records are not displaying" + ex);
-		}
-	}
-	
-	
-	public int numberOfMajorInventorsAssigneeDisplayedForLiterature() throws Exception {
-		try {
-			int playersCount=0;
-			controller.jsScrollToElement(label_WhoAreTheMajorInventors);
-			List<WebElement> listOfMajorPlayers = driver.findElements(By.xpath("//*[@id='major-inventor']//*[name()='svg']//*[name()='g']//*[name()='text']"));
-			
-			for(WebElement ele:listOfMajorPlayers)
-			{
-				if(controller.isElementDisplayed(ele))
-				{
-					playersCount++;
-					if(playersCount==8)
-						break;
-				}
-		    }
-			return playersCount;
-			} catch (Exception ex) {
-			throw new Exception("records are not displaying" + ex);
-		}
-	}
-	
-	public boolean isDisplayedLabelSource() throws Exception {
-		try {
-		    boolean status=controller.isElementDisplayed(labelSource);
-			return status;	
-		 }catch (Exception e) {
-		return false;
-		}
-	}
-	
-	public boolean isDisplayedLabelSourceJournal() throws Exception {
-		try {
-		    boolean status=controller.isElementDisplayed(label_SourceJournal);
-			return status;	
-		 }catch (Exception e) {
-		return false;
-		}
-	}
-	
-	public boolean isDisplayedLiteratureRecordViewField() throws Exception {
-		try {
-			boolean status=false;
-            List<WebElement> listOfSourceData = driver.findElements(By.xpath("//div/h2[contains(text(),'Source')]/following-sibling::section/span"));
-			for (WebElement sourceData:listOfSourceData)
-			{
-				String sourceValue =sourceData.getText();
-				if (sourceValue.split(":")[0].trim().equalsIgnoreCase("Volume"))	
-				{
-					if (sourceValue.split(":")[1].trim().contains("-"))
-					{
-						controller.Logger.addsubStep(LogStatus.INFO, "volume does not have value", false);
-						status=true;
-					}
-					else
-					controller.Logger.addsubStep(LogStatus.INFO, "volume does have value", false);
-					status=true;	
-				}
-				if (sourceValue.split(":")[0].trim().equalsIgnoreCase("Issue"))	
-				{
-					if (sourceValue.split(":")[1].trim().contains("-"))
-					{
-						controller.Logger.addsubStep(LogStatus.INFO, "Issue does not have value", false);
-						status=true;
-					}
-					else
-					controller.Logger.addsubStep(LogStatus.INFO, "Issue does have value", false);
-					status=true;
-				}
-				
-				if (sourceValue.split(":")[0].trim().equalsIgnoreCase("Article Number"))	
-				{
-					if (sourceValue.split(":")[1].trim().contains("-"))
-					{
-						controller.Logger.addsubStep(LogStatus.INFO, "Article Number does not have value", false);
-						status=true;
-					}
-					else
-					controller.Logger.addsubStep(LogStatus.INFO, "Article number does have value", false);
-					status=true;
-				}
-				
-				if (sourceValue.split(":")[0].trim().equalsIgnoreCase("DOI"))	
-				{
-					if (sourceValue.split(":")[1].trim().contains("-"))
-					{
-						controller.Logger.addsubStep(LogStatus.INFO, "DOI does not have value", false);
-						status=true;
-					}
-					else
-					controller.Logger.addsubStep(LogStatus.INFO, "DOI does have value", false);
-					status=true;
-				}
-				
-				if (sourceValue.split(":")[0].trim().equalsIgnoreCase("Published"))	
-				{
-					if (sourceValue.split(":")[1].trim().contains("-"))
-					{
-						controller.Logger.addsubStep(LogStatus.INFO, "published does not have value", false);
-						status=true;
-					}
-					else
-					controller.Logger.addsubStep(LogStatus.INFO, "published does have value", false);
-					status=true;
-				}
-				
-				if (sourceValue.split(":")[0].trim().equalsIgnoreCase("Page"))	
-				{
-					if (sourceValue.split(":")[1].trim().contains("-"))
-					{
-						controller.Logger.addsubStep(LogStatus.INFO, "page does not have value", false);
-						status=true;
-					}
-					else
-					controller.Logger.addsubStep(LogStatus.INFO, "page does have value", false);
-					status=true;
-				}
-				
-			}
-			return status;
-			} catch (Exception ex) {
-			throw new Exception("clickOnlink Filters is not working" + ex);
-		}
-	}
-	
-	public boolean isDisplayedLabelOrganization() throws Exception {
-		try {
-			controller.jsScrollToElement(labelOrganization);
-		    boolean status=controller.isElementDisplayed(labelOrganization);
-			return status;	
-		 }catch (Exception e) {
-		return false;
-		}
-	}
-	
-	public boolean isValueForLabelOrganizationSeparatedBySemicolon() throws Exception {
-		try {
-			
-			boolean status=false;
-			controller.jsScrollToElement(labelOrganization);
-			List<WebElement> listOfOrganizationValue = driver.findElements(By.xpath("//h2[text()='Organization']/parent::div//span"));
-			List<String> listOfValues=controller.getListWebElementText(listOfOrganizationValue);
-			if (listOfValues.contains(";"))
-			{
-				status=true;
-			}
-			return status;
-			} catch (Exception ex) {
-			throw new Exception("semicolon has not found" + ex);
-		}
-	}
-	
-	
-	public boolean isDisplayedLabelOrganizationAddress() throws Exception {
-		try {
-			controller.jsScrollToElement(label_OrganizationAddr);
-		    boolean status=controller.isElementDisplayed(label_OrganizationAddr);
-			return status;	
-		 }catch (Exception e) {
-		return false;
-		}
-	}
-	
-	
-	public boolean isDisplayedLabelLanguage() throws Exception {
-		try {
-			controller.jsScrollToElement(label_Langauge);
-		    boolean status=controller.isElementDisplayed(label_Langauge);
-			return status;	
-		 }catch (Exception e) {
-		return false;
-		}
-	}
-	
-	public void clickOnTitle(int rowNumber) throws Exception {
-		try{
-			List<WebElement> ele=driver.findElements(By.xpath("//mat-card-title[@class='literature-title mat-card-title']"));
-			WebElement eleTitle=ele.get(rowNumber);
-			eleTitle.click();
-			waitUntilElementIsDisplayed(recordViewDetails);
-		}
-		catch (Exception e) 
-		{
-			throw new Exception("clickOnTitle is not working" + e);
 		}
 	}
 	
@@ -655,5 +464,208 @@ public class Tab_LiteratureSearch extends Controller{
 			throw new Exception("clickOnButtonThumsDown is not working.." + e);
 		}
 	}
+	
+	public void clickOnAuthorsTab() throws Exception {
+		try {
+			waitUntilElementIsDisplayed(tabAuthors);
+			jsClick(tabAuthors);
+		} catch (Exception ex) {
+			throw new Exception("clickOnAuthorsTab is not working" + ex);
+		}
+	}
+	public void clickOnAuthorsBar() throws Exception {
+		try {
+			waitUntilElementIsDisplayed(barAuthors);
+			Actions builder = new Actions(driver);
+			builder.click(barAuthors).build().perform();
+		} catch (Exception ex) {
+			throw new Exception("clickOnAuthorsBar is not working" + ex);
+		}
+	}
+	public void clickOnAuthorsText() throws Exception {
+		try {
+			waitUntilElementIsDisplayed(textAuthors);
+			Actions builder = new Actions(driver);
+			builder.click(textAuthors).build().perform();
+		} catch (Exception ex) {
+			throw new Exception("clickOnAuthorsText is not working" + ex);
+		}
+	}
+	
+	public boolean isDisplayedPublicationYearChartExpanded() throws Exception {
+		try {
+			controller.waitUntilElementIsDisplayed(linkPublicationYear);
+			String chart = controller.getElementAttribute(linkPublicationYear, "style");
+			if(chart.contains("180deg"))
+			{
+				return true;
+			}
+			else
+			{
+				return false;
+			}
+		} catch (Exception e) {
+			throw new Exception("isDisplayedPatentRecordCloseIcon is not working" + e);
+		}
+	}	
+	
+
+	public String getTextPublicationChartLabelName() throws Exception {
+		 waitUntilElementIsDisplayed(publicationYearLabel);
+		String label= controller.getText(publicationYearLabel);
+		return(label);
+	}
+	
+	
+	public void selectMultiplePublicationChartFilters() throws Exception
+	{
+		try {
+			driver.findElement(By.cssSelector("#publ_year_rect_2007")).click();
+			controller.waitUntilFectchRecordProgressBarToDisappears();
+			 driver.findElement(By.cssSelector("#publ_year_rect_2010")).click();
+			 controller.waitUntilFectchRecordProgressBarToDisappears();				
+		}
+		catch(Exception e) 
+		{
+			throw new Exception("selectMultiplePublicationChartFilters is not working.." + e);
+		}
+	}
+	
+	public void deSelectMultiplePublicationChartFilters() throws Exception
+	{
+		try {
+			 driver.findElement(By.cssSelector("#publ_year_rect_2007")).click();
+			controller.waitUntilFectchRecordProgressBarToDisappears();
+			 driver.findElement(By.cssSelector("#publ_year_rect_2010")).click();
+			 controller.waitUntilFectchRecordProgressBarToDisappears();				
+		}
+		catch(Exception e) 
+		{
+			throw new Exception("deSelectMultiplePublicationChartFilters is not working.." + e);
+		}
+	}
+	
+	public void clickOnPYChartExpandCollapseIcon() throws Exception {
+		try {
+			controller.waitUntilElementIsDisplayed(linkPublicationYear);
+			linkPublicationYear.click();				
+		} catch (Exception e) {
+			throw new Exception("clickOnPYChartExpandCollapseIcon is not working" + e);
+		}
+	}
+	
+	public void clickOnPYChartLeftArrow() throws Exception {
+		try {
+			controller.waitUntilElementIsDisplayed(publicationYearLeftArrow);
+			String color = controller.getElementAttribute(publicationYearLeftArrow, "style");
+			if(color.contains("black"))
+			publicationYearLeftArrow.click();				
+		} catch (Exception e) {
+			throw new Exception("clickOnPYChartLeftArrow is not working" + e);
+		}
+	}
+	
+	public boolean isEnabledPYChartRightArrow() throws Exception {
+		try {
+			controller.waitUntilElementIsDisplayed(publicationYearRightArrow);
+			String color = controller.getElementAttribute(publicationYearRightArrow, "style");
+			if(color.contains("black"))
+			{
+			return true;
+			}
+			else
+			{
+			return false;
+			}
+		} catch (Exception e) {
+			throw new Exception("isDisabledPYChartRightArrow is not working" + e);
+		}
+	}
+	
+	
+	public boolean isEnabledPYCharLeftArrow() throws Exception {
+		try {
+			controller.waitUntilElementIsDisplayed(publicationYearLeftArrow);
+			String color = controller.getElementAttribute(publicationYearLeftArrow, "style");
+			if(color.contains("black"))
+			{
+			return true;
+			}
+			else
+			{
+				return false;
+			}
+		} catch (Exception e) {
+			throw new Exception("isEnabledPYCharLeftArrow is not working" + e);
+		}
+	}
+	
+	
+	public boolean isDisabledPYChartRightArrow() throws Exception {
+		try {
+			controller.waitUntilElementIsDisplayed(publicationYearRightArrow);
+			String color = publicationYearRightArrow.getText();
+			if(color.contains("chevron_right"))
+			{
+			return true;
+			}
+			else
+			{
+			return false;
+			}
+		} catch (Exception e) {
+			throw new Exception("isDisabledPYChartRightArrow is not working" + e);
+		}
+	}
+	
+	
+	 public void clickOnPublicationYearFilter() throws Exception {
+			try {
+				Actions action = new Actions(driver);
+				action.moveToElement(publicationYearFilter).click().perform();
+				} catch (Exception ex) {
+				throw new Exception("clickOnPublicationYearFilter is not working" + ex);
+			}
+		}
+	 
+	 
+	 public boolean isDisabledPublicationYearFilter() throws Exception {
+			try {
+				String checkStatus;
+				controller.waitUntilElementIsDisplayed(publicationYearFilter);
+				checkStatus=controller.getElementAttribute(publicationYearFilter, "aria-expanded");
+				if(checkStatus.equals("false"))
+					return true;
+				else
+					return false;
+			} catch (Exception e) {
+				throw new Exception("isDisabledPublicationYearFilter is not working" + e);
+			}
+		}
+	 
+	 
+	 public void clickOnPublicationYearChart() throws Exception {
+			try {
+				Actions action = new Actions(driver);
+				action.moveToElement(publicationYearFilterDisable).click().perform();
+				} catch (Exception ex) {
+				throw new Exception("clickOnPublicationYearChart is not working" + ex);
+			}
+		}
+	 
+	 public boolean isDisabledPublicationYearChart() throws Exception {
+			try {
+				String checkStatus;
+				controller.waitUntilElementIsDisplayed(publicationYearFilterDisable);
+				checkStatus=controller.getElementAttribute(publicationYearFilterDisable, "style");
+				if(checkStatus.contains("cursor: not-allowed"))
+					return true;
+				else
+					return false;
+			} catch (Exception e) {
+				throw new Exception("isDisabledPublicationYearChart is not working" + e);
+			}
+		}
+	 
 	
 }

@@ -17,13 +17,13 @@ public class Page_Login extends Controller {
 		
 	 @FindBy(css="#mat-error-7")
 	WebElement loginerr;
-	@FindBy(xpath="//a[@href='#/home']")
-	WebElement dilogo;
+	 @FindBy(xpath="//a[@class='company-name']")
+	WebElement chemlogo;
 	@FindBy(css="#mat-input-0")
 	WebElement textbox_Email;
 	@FindBy(css="#mat-input-1")
 	WebElement textbox_Password;
-	@FindBy(xpath="//button[@ name = 'login-btn']")
+	@FindBy(xpath="//button[@title= 'Login']")
 	WebElement btn_Login;
 	
 	
@@ -56,8 +56,8 @@ public class Page_Login extends Controller {
         controller.waitTime(1);
         setCredentials(userName, password);
         clickOnButtonLogin();
-        controller.waitTime(1);
-		 boolean logostatus =  super.isElementDisplayed(dilogo);
+        controller.waitTime(2);
+		 boolean logostatus =  super.isElementDisplayed(chemlogo);
 		  if (logostatus)
 		  controller.Logger.Logger.log(LogStatus.PASS, "Login is happend"); 
 		 else

@@ -41,39 +41,7 @@ import io.github.bonigarcia.wdm.WebDriverManager;
  *
  */
 public class Controller {
-/*	 public static WebDriver driver = null;
-	public Properties properties;
-	public String browser;
-	String WorkingDir;
-	public String ErrorMsg = "";
-	public utils.Logger Logger;
-	public String appurl;
-	public String toolUrl;
-	public String LoginUser = "";
-	public String LoginPass = "";
-	public Controller controller;
-	public static String mainWindowHandleID;
-	public int themescapeloadtime;
 
-	@FindBy(css="div[class='loader-circle']")
-	WebElement lodingcircle;
-	@FindBy(css="iframe[id='frame']")
-	protected WebElement element_iframe;
-	@FindBy(css="#progressIndicator")
-	WebElement element_ReskinningLodingcircle;
-	
-	@FindBy(xpath="//div[@id='progressIndicator' and contains(@style,'block')]/div")
-	WebElement element_DottedLodingcircle;
-	
-	@FindBy(xpath = ".//*[@title='Your update is in progress.']")
-	private WebElement updateProgress;
-	
-	@FindBy(xpath="//img[@src='img/loading2.gif")
-    WebElement toolsloadingcircle;
-	
-	@FindBy(xpath="//*[contains(@class,'loader-wheel')]")
-    WebElement element_SBLodingcircle; */
-	
 	public static WebDriver driver = null;
 	public Properties properties;
 	public String browser;
@@ -118,9 +86,6 @@ public class Controller {
 		this.controller = controller;
 	}
 
-
-
-
 	public Controller(String browser) throws IOException {
 		properties = new Properties();
 		FileInputStream fn = new FileInputStream("./src/test/resources/config.properties");
@@ -133,8 +98,6 @@ public class Controller {
 		Logger.setWebDriver(this);
 		long implicitwait = new Long(properties.getProperty("implicitwait"));
 		long pageloadtime = new Long(properties.getProperty("PageLoading"));
-	//	themescapeloadtime = new Integer(properties.getProperty("ThemeScapeLoad"));
-		
 		driver.manage().timeouts().implicitlyWait(implicitwait, TimeUnit.SECONDS);
 		driver.manage().timeouts().pageLoadTimeout(pageloadtime, TimeUnit.SECONDS);
 		driver.manage().deleteAllCookies();
@@ -218,16 +181,6 @@ public class Controller {
 		((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView(true);", ele);
 	}
 
-	public void waitUntilReskiningProgressBarToDisappears() throws Exception {
-		try {
-			waitTime(2);
-			waitUntilElementIsNotDisplayed(element_ReskinningLodingcircle);
-			waitForPageLoad();
-		} catch (Exception e) {
-			throw new Exception("waitUntilProgressBarToDisappears is not working.." + e);
-		}
-	}
-	
 	public void waitUntilFectchRecordProgressBarToDisappears() throws Exception {
 		try {
 			waitTime(2);
@@ -237,10 +190,6 @@ public class Controller {
 			throw new Exception("waitUntilDottedProgressBarToDisappears is not working.." + e);
 		}
 	}
-
-
-
-	//Added by Mrityunjaya
 
 	public boolean isElementSelected(WebElement ele) throws Exception {
 		boolean status;
@@ -297,20 +246,6 @@ public class Controller {
 		}
 	}
 
-
-	
-
-//	public void setText(WebElement ele, String value,String elementDescription) throws Exception {
-//		try {
-//			this.clear(ele);
-//			ele.sendKeys(value);
-//			this.waitTime(1);
-//			Logger.addsubStep(LogStatus.INFO, "Entering text: "+value+" to textbox: "+elementDescription+" is Successful;", false);
-//		} catch (Exception e) {
-//			throw new Exception("setText is not working for :: " + ele + " " + e);
-//		}
-//	}
-
 	public void waitUntilElementClickable(WebElement ele) throws Exception {
 		try {
 			new WebDriverWait(driver, 50).until(ExpectedConditions.elementToBeClickable(ele));
@@ -318,25 +253,6 @@ public class Controller {
 			throw new Exception("wait Until Element is Clickable:: " + ele + " " + e);
 		}
 	}
-	
-	/*public void waitUntilElementGetsEnabled(WebElement element,boolean blnStatus) throws Exception {
-		try {
-			(new WebDriverWait(driver, 50)).until(new ExpectedCondition<Boolean>() {
-				public Boolean apply(WebDriver d) {
-					try {
-						if(blnStatus)
-							return Boolean.valueOf(element != null && element.isDisplayed());
-						else
-							return Boolean.valueOf(element != null && !element.isDisplayed());
-					} catch (Exception e) {
-						return Boolean.valueOf(false);
-					}
-				}
-			});
-		} catch (Exception e) {
-			throw new Exception("waitUntilElementIsDisplayed is not working.. :: " + element + " " + e);
-		}
-	}*/
 	
 	public void click(WebElement ele) throws Exception {
 		try {
@@ -356,18 +272,6 @@ public class Controller {
 			throw new Exception("jsClick is not  working on:: " + ele + " " + e);
 		}
 	}
-
-//	public void jsClick(WebElement ele,String elementDescription) throws Exception {
-//		try {
-//			WebDriverWait wait = new WebDriverWait(driver, 50);
-//			WebElement element = wait.until(ExpectedConditions.elementToBeClickable(ele));
-//			JavascriptExecutor js = (JavascriptExecutor) driver;
-//			js.executeScript("arguments[0].click();", element);
-//			controller.Logger.addsubStep(LogStatus.INFO, "Click on element: "+elementDescription+" is Successful;", false);
-//		} catch (Exception e) {
-//			throw new Exception("jsClick is not  working on:: " + ele + " " + e);
-//		}
-//	}
 
 	public void waitUntilElementIsDisplayed(final WebElement element) throws Exception {
 		try {
@@ -405,47 +309,6 @@ public class Controller {
 	public void waitTime(final int secs) throws InterruptedException {
 		Thread.sleep(secs * 1000);
 	}
-
-	public void waitUntilProgressBarToDisappears() throws Exception {
-		try {
-			waitTime(2);
-			waitUntilElementIsNotDisplayed(element_FetchRecord);
-			waitForPageLoad();
-		} catch (Exception e) {
-			throw new Exception("waitUntilProgressBarToDisappears is not working.." + e);
-		}
-	}
-	
-	public void waitUntilProgressBarToAppear() throws Exception {
-		try {
-			waitTime(2);
-			waitUntilElementIsDisplayed(lodingcircle);
-			waitForPageLoad();
-		} catch (Exception e) {
-			throw new Exception("waitUntilProgressBarToAppear is not working.." + e);
-		}
-	}
-	
-	public void waitUntilUpdateResultCountProgressBarToDisappears() throws Exception {
-		try {
-			waitTime(2);
-			waitUntilElementIsNotDisplayed(updateProgress);
-			waitForPageLoad();
-		} catch (Exception e) {
-			throw new Exception("waitUntilUpdateResultCountProgressBarToDisappears is not working.." + e);
-		}
-	}
-	
-	public void waitUntilToolsUrlProgressBarToDisappears() throws Exception {
-        try {
-               waitTime(5);
-               waitUntilElementIsNotDisplayed(toolsloadingcircle);
-               waitForPageLoad();
-        } catch (Exception e) {
-               throw new Exception("waitUntilToolsUrlProgressBarToDisappears is not working.." + e);
-        }
-  }
-
 
 	public void switchToIFrame(WebElement ele_frame) throws Exception {
 		try {
@@ -601,7 +464,7 @@ public class Controller {
         } catch (Exception e) {
             throw new Exception("Unable to find alert Popup.." + e);
         }
-    //    return alertMsg;
+   
     }
     
     public void selectDropDownByValue(WebElement eleSelect,String strValue) throws Exception{
@@ -823,7 +686,7 @@ public class Controller {
 			waitUntilElementIsDisplayed(ele);                                                     	                                                                               
 			this.clear(ele);                                                      
 			ele.sendKeys(value);                                                  
-			this.waitTime(3);                     // Added now                    
+			this.waitTime(3);                         
 		} catch (Exception e) {                                                
 			throw new Exception("setText is not working for :: " + ele + " " + e);
 		}                                                                      

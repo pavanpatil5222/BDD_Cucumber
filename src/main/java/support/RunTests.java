@@ -197,7 +197,7 @@ public class RunTests {
 									Application.Logger.Parent.assignCategory(ModuleName);
 									// Application.Logger.Parent.assignCategory(browser);
 									try {
-										Application.Logger.addStep("prereq:Login in to Thomson Innovation", "");
+										Application.Logger.addStep("prereq:Login in to Chemistry Research", "");
 										if (Application.driver == null) {
 											Application.launchBrowser();
 											Application.Logger.setWebDriver(Application);

@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import com.relevantcodes.extentreports.LogStatus;
@@ -38,11 +39,20 @@ public class Tab_PatentSearch extends Controller{
 	@FindBy(xpath="//span[contains(text(),'Apply filters')]/parent::button")
     WebElement button_ApplyFilter;
 	
+	@FindBy(xpath = " //section[contains(@class, 'major-inventor')]//div[@class='chart']//*[name()='svg']//*[name()='rect']")
+	private WebElement barInventors;
 	
+   @FindBy(xpath = " //div[contains(normalize-space(text()), 'Inventors' )]")
+	private WebElement tabInventors;
+   
+   @FindBy(xpath = " //section[contains(@class, 'major-inventor')]//div[@class='chart']//*[name()='svg']//*[name()='text']")
+	private WebElement textInventors;
+	
+	@FindBy(xpath = " //section[@class='filter-section']//div[@class='ng-star-inserted']//mat-expansion-panel[1][contains(@class, 'disable-click')]")
+	private WebElement filterFieldDisable;	
 	
 	@FindBy(xpath="//span[@class='mat-button-wrapper'][contains(.,'Clear all')]")
-    WebElement button_ClearAllFilter;
-	
+    WebElement button_ClearAllFilter;	
 	
 	@FindBy(xpath="(//mat-card-subtitle[contains(@class,'title mat-card-subtitle')])[1]")
 	private WebElement linkPatenRecord;
@@ -212,6 +222,24 @@ public class Tab_PatentSearch extends Controller{
 	@FindBy(css="section > div > span:nth-child(2) > button > span > mat-icon")
 	private WebElement thumbsDownIcon;
 	
+	@FindBy(xpath="//app-publication-year/section/mat-expansion-panel/mat-expansion-panel-header/span[2]")
+    private WebElement linkPublicationYear;
+	
+	@FindBy(css="#mat-expansion-panel-header-8 > span.mat-content")
+    private WebElement publicationYearLabel;
+	
+	@FindBy(xpath="//app-publication-year/section/mat-expansion-panel/div/div/section/button[1]/span/mat-icon")
+    private WebElement publicationYearLeftArrow;
+	
+	@FindBy(xpath="//app-publication-year/section/mat-expansion-panel/div/div/section/button[2]/span/mat-icon")
+    private WebElement publicationYearRightArrow;
+	
+	@FindBy(xpath="//div[contains(text(),'Publication year')]/ancestor::mat-expansion-panel-header")
+    private WebElement publicationYearFilter;
+	
+	@FindBy(xpath=" //div[@class='publ-year-chart']")
+    private WebElement publicationYearFilterDisable;
+	
 		public Tab_PatentSearch(Controller controller) {
 			super(controller);
 			PageFactory.initElements(driver, this);
@@ -224,21 +252,11 @@ public class Tab_PatentSearch extends Controller{
 			return(patent);
 		}
 		
-		public void clickOnTabPatentSearch() throws Exception{
-			try {
-			waitUntilElementIsDisplayed(tabPatent);
-			jsClick(tabPatent);
-			controller.waitUntilProgressBarToDisappears();
-				} catch (Exception ex) {
-			throw new Exception("clickOnTabPatentSearch is not working for :: "+ ex);
-			}
-		}
-		
 		public void clickOnPatentRecord(int rowNumber) throws Exception {
 			try{
 			WebElement ele = driver.findElement(By.cssSelector("app-result-set:nth-child("+rowNumber+") > section > mat-card > mat-card-header > div > mat-card-subtitle"));
 			ele.click();
-			controller.waitUntilProgressBarToDisappears();				
+			controller.waitUntilFectchRecordProgressBarToDisappears();				
 			} catch (Exception ex) {
 				throw new Exception("clickOnPatentRecord is not working" + ex);
 			}
@@ -340,7 +358,7 @@ public class Tab_PatentSearch extends Controller{
 		
 		public boolean isDisplayedPN(int rowNumber) throws Exception {
 			try{
-				List<WebElement> ele=driver.findElements(By.xpath("//mat-card-title[@class='pn mat-card-title']"));
+				List<WebElement> ele=driver.findElements(By.xpath("(//span[contains(@class,'pn')])"));
 				WebElement elePN=ele.get(rowNumber);
 				boolean blnChkPN=controller.isElementDisplayed(elePN);
 			
@@ -407,7 +425,7 @@ public class Tab_PatentSearch extends Controller{
 		
 		public boolean isDisplayedImg(int rowNumber) throws Exception {
 			try {
-			WebElement eleImage=driver.findElement(By.cssSelector("app-result-set:nth-child("+rowNumber+") > section > mat-card > aside > div > img"));
+			WebElement eleImage=driver.findElement(By.cssSelector("app-result-set:nth-child("+rowNumber+") > section > aside > div.image-block > img"));
 			boolean blnChkImage=controller.isElementDisplayed(eleImage);
 			if (blnChkImage)
 				return true;
@@ -451,7 +469,6 @@ public class Tab_PatentSearch extends Controller{
 		
 		public void clickOnFiltersPublicationDate() throws Exception {
 			try {
-				//super.waitUntilElementIsDisplayed(btnClearAll);
 				controller.jsScrollToElement(filters_PublicationDate);
 				super.jsClick(filters_PublicationDate);
 				} catch (Exception ex) {
@@ -478,15 +495,6 @@ public class Tab_PatentSearch extends Controller{
 			return "";
 			}
 		}
-		
-		/*
-		 * public int getCountOfHighlightedKeyword(String searchText) throws Exception {
-		 * try { String lowerCasesearchText=searchText.toLowerCase(); List<WebElement>
-		 * elements; elements =
-		 * driver.findElements(By.xpath("//mark[contains(text(),'"+lowerCasesearchText+
-		 * "')]")); return elements.size(); }catch (Exception e) { throw new
-		 * Exception("getCountOfHighlightedKeyword is not working.." + e); } }
-		 */
 		
 		public int getCountOfHighlightedTextInRS(String searchText) throws Exception {
 			try {
@@ -567,84 +575,6 @@ public class Tab_PatentSearch extends Controller{
 	                      }
 	           }
 		
-				
-				  public boolean isDisplayedFetchRecordProgressBar() throws Exception { try {
-				  waitTime(2); return controller.isElementDisplayed(element_FetchRecord);
-				  
-				  } catch (Exception e) { throw new
-				  Exception(" FetchRecordProgressBar is not displaying.." + e);
-				  
-				  } }
-				 
-		
-		
-		public int numberOfMajorPlayersAssigneeDisplayedForPatent() throws Exception {
-			try {
-				int playersCount=0;
-				controller.jsScrollToElement(label_WhoAreTheMajorPlayers);
-				List<WebElement> listOfMajorPlayers = driver.findElements(By.xpath("//*[@class='major-player']//*[name()='svg']//*[name()='g' and @class='g']//*[name()='text']"));
-				
-				for(WebElement ele:listOfMajorPlayers)
-				{
-					if(controller.isElementDisplayed(ele))
-					{
-						playersCount++;
-						if(playersCount==8)
-							break;
-					}
-			    }
-				return playersCount;
-				} catch (Exception ex) {
-				throw new Exception("records are not displaying" + ex);
-			}
-		}
-		
-		
-		public int numberOfMajorInventorsAssigneeDisplayedForPatent() throws Exception {
-			try {
-				int playersCount=0;
-				controller.jsScrollToElement(label_WhoAreTheMajorInventors);
-				List<WebElement> listOfMajorPlayers = driver.findElements(By.xpath("//*[@id='major-inventor']//*[name()='svg']//*[name()='g']//*[name()='text']"));
-				
-				for(WebElement ele:listOfMajorPlayers)
-				{
-					if(controller.isElementDisplayed(ele))
-					{
-						playersCount++;
-						if(playersCount==8)
-							break;
-					}
-			    }
-				return playersCount;
-				} catch (Exception ex) {
-				throw new Exception("records are not displaying" + ex);
-			}
-		}
-		
-		public List<String> getColorsForPatentAssigneeDocumentsBar(String assigneeName){
-			    controller.jsScrollToElement(label_WhoAreTheMajorPlayers);
-				List<String> getActualColors = new ArrayList<String>();
-				List<WebElement> listOfColors = driver.findElements(By.xpath("//*[@id='major-player']//*[name()='text' and text()='"+assigneeName+"']//preceding-sibling::*"));
-				
-				for (WebElement color:listOfColors)
-				
-				{
-					String actualColor = getElementAttribute(color, "style").trim();
-					getActualColors.add(actualColor);
-					
-				}
-				return getActualColors;
-		}
-
-		public String getColorOfDifferentAssigneeState(String assigneeState){
-			controller.jsScrollToElement(label_WhoAreTheMajorPlayers);
-			WebElement assigneeStateColors = driver.findElement(By.xpath("//*[@id='major-player']//*[name()='g' and @class='legend']//*[name()='text' and contains(text(),'"+assigneeState+"')]//preceding-sibling::*"));
-			String colorAttribute= getElementAttribute(assigneeStateColors,"fill").trim();
-			
-			return colorAttribute;
-				
-	      }
-		
 		public boolean isDisplayedFilterAboveSuggestedKeywords() throws Exception {
 			try {
 			    boolean status=controller.isElementDisplayed(labelFilters_SuggestedKeywords);
@@ -724,18 +654,7 @@ public class Tab_PatentSearch extends Controller{
 				throw new Exception("clickOnlink Filters is not working" + ex);
 			}
 		}
-		
-		public void waitUntilFectchRecordProgressBarToDisappears() throws Exception {
-	          try {
-	                         waitTime(2);
-	                         waitUntilElementIsNotDisplayed(element_FetchRecord);
-	                         waitForPageLoad();
-	                 } catch (Exception e) {
-	                	 throw new Exception("waitUntilDottedProgressBarToDisappears is not working.." + e);
-
-	                              }
-	           }
-		      
+	      
 		public void clickOnArrowNextPageTillLastPage() throws Exception {
 			try {
 				
@@ -876,8 +795,7 @@ public class Tab_PatentSearch extends Controller{
 		
 		public boolean isDisplayedCloseMarkX(int indexNumber) throws Exception {
 			try {
-				//int noOfPills=getNoOfPillBoxes();
-			    boolean status=controller.isElementDisplayed(driver.findElement(By.xpath("(//mat-icon[contains(.,'close')])["+(indexNumber+3)+"]")));
+				boolean status=controller.isElementDisplayed(driver.findElement(By.xpath("(//mat-icon[contains(.,'close')])["+(indexNumber+3)+"]")));
 				return status;	
 			 }catch (Exception e) {
 			return false;
@@ -896,7 +814,6 @@ public class Tab_PatentSearch extends Controller{
 						break;
 					}
 				}
-				 //super.jsClick(driver.findElement(By.xpath("(//mat-icon[contains(.,'close')])["+(indexNumber+3)+"]")));
 				super.jsClick(driver.findElement(By.xpath("(//mat-chip[@class='mat-chip mat-primary mat-standard-chip mat-chip-with-trailing-icon ng-star-inserted']//mat-icon[contains(text(),'close')])["+j+"]")));
 				} catch (Exception ex) {
 				throw new Exception("click on mark X is not working" + ex);
@@ -1665,8 +1582,7 @@ public class Tab_PatentSearch extends Controller{
 			public void clickOnButtonThumsUp(int recordNumber) throws Exception
 			{
 				try {
-					//WebElement listOfThumsUp = driver.findElement(By.xpath("(//img[contains(@alt,'vote as relevant') and contains(@src,'/assets/images/thumbup')])["+recordNumber+"]"));
-					WebElement listOfThumsUp = driver.findElement(By.cssSelector("app-result-set:nth-child("+recordNumber+") > section > mat-card > mat-card-content > section > div > span:nth-child(1) > button > span > mat-icon"));
+					WebElement listOfThumsUp = driver.findElement(By.cssSelector("app-result-set:nth-child("+recordNumber+") > section > aside > section:nth-child(3) > div > span:nth-child(1) > button > span > mat-icon"));
 					controller.jsClick(listOfThumsUp);
 					controller.Logger.addsubStep(LogStatus.INFO,"Clicked On Thumbs Up Button Successfully", false);
 					}
@@ -1680,7 +1596,7 @@ public class Tab_PatentSearch extends Controller{
 			{
 				try 
 				{
-					WebElement listOfThumsUp = driver.findElement(By.cssSelector("app-result-set:nth-child("+recordNumber+") > section > mat-card > mat-card-content > section > div > span:nth-child(1) > button > span > mat-icon"));
+					WebElement listOfThumsUp = driver.findElement(By.cssSelector("app-result-set:nth-child("+recordNumber+") > section > aside > section:nth-child(3) > div > span:nth-child(1) > button > span > mat-icon"));
 					if(controller.getElementAttribute(listOfThumsUp, "ng-reflect-svg-icon").contains("filled")) 
 					{
 						return true;
@@ -1701,7 +1617,7 @@ public class Tab_PatentSearch extends Controller{
 			{
 				try 
 				{
-					WebElement listOfThumsDown = driver.findElement(By.cssSelector("app-result-set:nth-child("+recordNumber+") > section > mat-card > mat-card-content > section > div > span:nth-child(2) > button > span > mat-icon"));
+					WebElement listOfThumsDown = driver.findElement(By.cssSelector("app-result-set:nth-child("+recordNumber+") > section > aside > section:nth-child(3) > div > span:nth-child(2) > button > span > mat-icon"));
 					if(controller.getElementAttribute(listOfThumsDown, "ng-reflect-svg-icon").contains("filled")) 
 					{
 						return true;
@@ -1720,7 +1636,7 @@ public class Tab_PatentSearch extends Controller{
 			public void clickOnButtonThumsDown(int recordNumber) throws Exception
 			{
 				try {
-					WebElement listOfThumsDown = driver.findElement(By.cssSelector("app-result-set:nth-child("+recordNumber+") > section > mat-card > mat-card-content > section > div > span:nth-child(2) > button > span > mat-icon"));
+					WebElement listOfThumsDown = driver.findElement(By.cssSelector("app-result-set:nth-child("+recordNumber+") > section > aside > section:nth-child(3) > div > span:nth-child(2) > button > span > mat-icon"));
 				controller.jsClick(listOfThumsDown);
 				controller.Logger.addsubStep(LogStatus.INFO,"Clicked On Thumbs Down Button Successfully", false);
 				}
@@ -1728,5 +1644,221 @@ public class Tab_PatentSearch extends Controller{
 				{
 					throw new Exception("clickOnButtonThumsDown is not working.." + e);
 				}
-			}		
+			}
+			
+			public boolean isDisabledFilterField() throws Exception {
+				try {
+					super.jsScrollToElement(filterFieldDisable);
+					return true;
+				} catch (Exception e) {
+					return false;
+				}
+			}
+			
+
+			public void clickOnInventorsTab() throws Exception {
+				try {
+					waitUntilElementIsDisplayed(tabInventors);
+					jsClick(tabInventors);
+				} catch (Exception ex) {
+					throw new Exception("clickOnInventorsTab is not working" + ex);
+				}
+			}
+			public void clickOnInventorsBar() throws Exception {
+				try {
+					waitUntilElementIsDisplayed(barInventors);
+					Actions builder = new Actions(driver);
+					builder.click(barInventors).build().perform();
+				} catch (Exception ex) {
+					throw new Exception("lclickOnInventorsBar  is not working" + ex);
+				}
+			}
+			public void clickOnInventorsText() throws Exception {
+				try {
+					waitUntilElementIsDisplayed(textInventors);
+					Actions builder = new Actions(driver);
+					builder.click(textInventors).build().perform();
+				} catch (Exception ex) {
+					throw new Exception("clickOnInventorsText  is not working" + ex);
+				}
+			}
+			
+			public boolean isDisplayedPublicationYearChartExpanded() throws Exception {
+				try {
+					controller.waitUntilElementIsDisplayed(linkPublicationYear);
+					String chart = controller.getElementAttribute(linkPublicationYear, "style");
+					if(chart.contains("180deg"))
+					{
+						return true;
+					}
+					else
+					{
+						return false;
+					}
+				} catch (Exception e) {
+					throw new Exception("isDisplayedPatentRecordCloseIcon is not working" + e);
+				}
+			}	
+			
+		
+			public String getTextPublicationChartLabelName() throws Exception {
+				 waitUntilElementIsDisplayed(publicationYearLabel);
+				String label= controller.getText(publicationYearLabel);
+				return(label);
+			}
+			
+			
+			public void selectMultiplePublicationChartFilters() throws Exception
+			{
+				try {
+					 driver.findElement(By.cssSelector("#publ_year_rect_2007")).click();
+					controller.waitUntilFectchRecordProgressBarToDisappears();
+					controller.waitTime(2);
+					driver.findElement(By.cssSelector("#publ_year_rect_2010")).click();
+					controller.waitUntilFectchRecordProgressBarToDisappears();	
+					controller.waitTime(3);
+				}
+				catch(Exception e) 
+				{
+					throw new Exception("selectMultiplePublicationChartFilters is not working.." + e);
+				}
+			}
+			
+			public void deSelectMultiplePublicationChartFilters() throws Exception
+			{
+				try {
+					 driver.findElement(By.cssSelector("#publ_year_rect_2007")).click();
+					controller.waitUntilFectchRecordProgressBarToDisappears();
+					controller.waitTime(2);
+					 driver.findElement(By.cssSelector("#publ_year_rect_2010")).click();
+					 controller.waitUntilFectchRecordProgressBarToDisappears();	
+					 controller.waitTime(3);
+				}
+				catch(Exception e) 
+				{
+					throw new Exception("deSelectMultiplePublicationChartFilters is not working.." + e);
+				}
+			}
+			
+			public void clickOnPYChartExpandCollapseIcon() throws Exception {
+				try {
+					controller.waitUntilElementIsDisplayed(linkPublicationYear);
+					linkPublicationYear.click();				
+				} catch (Exception e) {
+					throw new Exception("clickOnPYChartExpandCollapseIcon is not working" + e);
+				}
+			}
+			
+			public void clickOnPYChartLeftArrow() throws Exception {
+				try {
+					controller.waitUntilElementIsDisplayed(publicationYearLeftArrow);
+					String color = controller.getElementAttribute(publicationYearLeftArrow, "style");
+					if(color.contains("black"))
+					publicationYearLeftArrow.click();				
+				} catch (Exception e) {
+					throw new Exception("clickOnPYChartLeftArrow is not working" + e);
+				}
+			}
+			
+			public boolean isEnabledPYChartRightArrow() throws Exception {
+				try {
+					controller.waitUntilElementIsDisplayed(publicationYearRightArrow);
+					String color = controller.getElementAttribute(publicationYearRightArrow, "style");
+					if(color.contains("black"))
+					{
+					return true;
+					}
+					else
+					{
+					return false;
+					}
+				} catch (Exception e) {
+					throw new Exception("isDisabledPYChartRightArrow is not working" + e);
+				}
+			}
+			
+			
+			public boolean isEnabledPYCharLeftArrow() throws Exception {
+				try {
+					controller.waitUntilElementIsDisplayed(publicationYearLeftArrow);
+					String color = controller.getElementAttribute(publicationYearLeftArrow, "style");
+					if(color.contains("black"))
+					{
+					return true;
+					}
+					else
+					{
+						return false;
+					}
+				} catch (Exception e) {
+					throw new Exception("isEnabledPYCharLeftArrow is not working" + e);
+				}
+			}
+			
+			
+			public boolean isDisabledPYChartRightArrow() throws Exception {
+				try {
+					controller.waitUntilElementIsDisplayed(publicationYearRightArrow);
+					String color = publicationYearRightArrow.getText();
+					if(color.contains("chevron_right"))
+					{
+					return true;
+					}
+					else
+					{
+					return false;
+					}
+				} catch (Exception e) {
+					throw new Exception("isDisabledPYChartRightArrow is not working" + e);
+				}
+			}
+			
+			
+			 public void clickOnPublicationYearFilter() throws Exception {
+					try {
+						Actions action = new Actions(driver);
+						action.moveToElement(publicationYearFilter).click().perform();
+						} catch (Exception ex) {
+						throw new Exception("clickOnPublicationYearFilter is not working" + ex);
+					}
+				}
+			 
+			 
+			 public boolean isDisabledPublicationYearFilter() throws Exception {
+					try {
+						String checkStatus;
+						controller.waitUntilElementIsDisplayed(publicationYearFilter);
+						checkStatus=controller.getElementAttribute(publicationYearFilter, "aria-expanded");
+						if(checkStatus.equals("false"))
+							return true;
+						else
+							return false;
+					} catch (Exception e) {
+						throw new Exception("isDisabledPublicationYearFilter is not working" + e);
+					}
+				}
+			 
+			 
+			 public void clickOnPublicationYearChart() throws Exception {
+					try {
+						Actions action = new Actions(driver);
+						action.moveToElement(publicationYearFilterDisable).click().perform();
+						} catch (Exception ex) {
+						throw new Exception("clickOnPublicationYearChart is not working" + ex);
+					}
+				}
+			 
+			 public boolean isDisabledPublicationYearChart() throws Exception {
+					try {
+						String checkStatus;
+						controller.waitUntilElementIsDisplayed(publicationYearFilterDisable);
+						checkStatus=controller.getElementAttribute(publicationYearFilterDisable, "style");
+						if(checkStatus.contains("cursor: not-allowed"))
+							return true;
+						else
+							return false;
+					} catch (Exception e) {
+						throw new Exception("isDisabledPublicationYearChart is not working" + e);
+					}
+				}
 }
