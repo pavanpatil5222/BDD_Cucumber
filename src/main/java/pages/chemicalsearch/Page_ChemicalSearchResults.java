@@ -36,7 +36,9 @@ public class Page_ChemicalSearchResults extends Controller{
 	@FindBy(xpath = "//textarea[@ng-reflect-maxlength='2000']")
 	private WebElement txtSearchBox;
 	
-	@FindBy(xpath = "//section[@class='filter-section']//div[@class='ng-star-inserted']//mat-expansion-panel[1]")
+	//" //section[@class='filter-section ng-star-inserted']//div[contains(text(),'" + filter + "')]"
+	//@FindBy(xpath = "//section[@class='filter-section']//div[@class='ng-star-inserted']//mat-expansion-panel[1]")
+	@FindBy(xpath = "//section[@class='filter-section ng-star-inserted']//div[contains(text(),'Assignee')]")
 	private WebElement collapseExpand;
 
 
@@ -182,7 +184,7 @@ public class Page_ChemicalSearchResults extends Controller{
 	@FindBy(xpath = " //section[contains(@class, 'major-inventor')]//div[@class='chart']//*[name()='svg']//*[name()='text']")
 	private WebElement textAuthors;
 	
-	@FindBy(xpath = " //section[@class='filter-section']//div[@class='ng-star-inserted']//mat-expansion-panel[1][contains(@class, 'disable-click')]")
+	@FindBy(xpath = " //section[@class='filter-details']//div[@class='ng-star-inserted']//mat-expansion-panel[1][contains(@class, 'disable-click')]")
 	private WebElement inventorFilterDisable;
 	
 	@FindBy(xpath = "//span[contains(.,'You are in Help mode. Use the toggle in the Support menu to turn the tips on and off any time.')]")
@@ -514,10 +516,11 @@ public class Page_ChemicalSearchResults extends Controller{
 	public String getTextOfSerachBox() throws Exception {
 		try {
 			waitUntilElementIsDisplayed(getResultsCount);
-		    WebElement ele=driver.findElement(By.xpath("//textarea[contains(@id,'mat-input-1')]"));
+		    WebElement ele=driver.findElement(By.cssSelector("section > textarea"));
+		    ele.click();
 			return ele.getAttribute("title");
 		 }catch (Exception e) {
-			 throw new Exception("getColorOfSerachBox is not working.." + e);
+			 throw new Exception("getTextOfSerachBox is not working.." + e);
 		}
 	}
 	
@@ -766,9 +769,9 @@ public class Page_ChemicalSearchResults extends Controller{
 		try 
 		{
 			waitUntilElementIsDisplayed(getResultsCount);
-			WebElement ele=driver.findElement(By.xpath("//textarea[contains(@id,'mat-input-1')]"));
-		    String blnChkTopSectionEnabled=ele.getAttribute("disabled");
-			if(blnChkTopSectionEnabled.equals("true")) 
+			WebElement ele=driver.findElement(By.xpath("//section/div[2]/section[1]/textarea"));
+		    String blnChkTopSectionEnabled=ele.getAttribute("aria-invalid");
+			if(blnChkTopSectionEnabled.equals("false")) 
 			{	
 				return true;
 			}
@@ -796,7 +799,7 @@ public class Page_ChemicalSearchResults extends Controller{
 	public String getColorOfTopSection() throws Exception {
 		try {
 			waitUntilElementIsDisplayed(getResultsCount);
-			WebElement ele=driver.findElement(By.xpath("//textarea[contains(@id,'mat-input-1')]"));
+			WebElement ele=driver.findElement(By.xpath("//section/div[2]/section[1]/textarea"));
 		    System.out.println(ele.getCssValue("background-color"));
 			return ele.getCssValue("background-color");	
 		 }catch (Exception e) {
@@ -1209,7 +1212,7 @@ public void selectTemplateFromTemplateDropDown(String templateName) throws Excep
 
 public void clickOnLinkPdf() throws Exception {
 	try {
-		List<WebElement> listOfPdfLink = driver.findElements(By.cssSelector("section > div > span:nth-child(3) > button > span > mat-icon"));
+		List<WebElement> listOfPdfLink = driver.findElements(By.cssSelector("section > div > span:nth-child(4) > button > span > mat-icon"));
 		for(WebElement firstLink:listOfPdfLink) {
 			super.jsClick(firstLink);
 			break;

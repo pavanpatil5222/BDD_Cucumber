@@ -17,6 +17,21 @@ import support.Controller;
  */
 public class Tab_LiteratureSearch extends Controller{
 	
+	@FindBy(css = "app-result-set:nth-child(1) > section > mat-card > mat-card-content > section:nth-child(3) > div > span")
+	private WebElement linkMoreLikeThis;
+	
+	@FindBy(xpath = "(//mat-icon[contains(@class,'mat-icon notranslate mat-chip-remove mat-chip-trailing-icon material-icons mat-icon-no-color')])[2]")
+	private WebElement moreLikeCloseIcon;
+	
+	@FindBy(css = "app-record-view > section > div > div.body-content > div:nth-child(1) > span:nth-child(2) > a")
+	private WebElement rsAuthor;
+	
+	@FindBy(css = "section.insights-chart > app-suggested-keyword > section > section.view.disable-click")
+	private WebElement keywordDisable;
+	
+	@FindBy(css = "div > mat-chip > div > span > span")
+	private WebElement moreLikeKeyword;
+	
 	@FindBy(xpath="//app-result-search-bar/section/section/div[2]/div[2]/div[2]")
 	private WebElement getLiteratureResultsCount;
 	
@@ -667,5 +682,72 @@ public class Tab_LiteratureSearch extends Controller{
 			}
 		}
 	 
+
+	 public String getTextKeyWordMoreLike() throws Exception {
+			waitUntilElementIsDisplayed(moreLikeKeyword);
+			String morelikekeyword=controller.getElementAttribute(moreLikeKeyword, "title");
+			return(morelikekeyword);
+		}
+
+	 public String getTextLiteratureTitle(int recordnumber) throws Exception {
+		 try {
+			WebElement ele = driver.findElement(By.cssSelector("app-result-set:nth-child("+recordnumber+") > section > mat-card > mat-card-header > div > mat-card-subtitle"));
+			return controller.getText(ele);			
+		}
+		 catch (Exception ex) {
+			throw new Exception("getTextLiteratureTitle is not working" + ex);
+		}
+	}
+	 
+		public void clickOnLinkLiteratureRecordViewAuthor() throws Exception {
+			try {
+				waitUntilElementIsDisplayed(rsAuthor);
+				jsClick(rsAuthor);
+			} catch (Exception ex) {
+				throw new Exception("clickOnLinkLiteratureRecordViewAuthor is not working" + ex);
+			}
+		}
+
+		public String getTextLiteratureRecordViewAuthor() throws Exception {
+			try {
+				waitUntilElementIsDisplayed(rsAuthor);
+				return controller.getText(rsAuthor);
+			} catch (Exception ex) {
+				throw new Exception("getTextLiteratureRecordViewAuthor is not working" + ex);
+			}
+		}
+		
 	
+		public void clickOnLinkMoreLikeThis() throws Exception {
+			try {
+				waitUntilElementIsDisplayed(linkMoreLikeThis);
+				jsClick(linkMoreLikeThis);
+			} catch (Exception ex) {
+				throw new Exception("clickOnLinkMoreLikeThis is not working" + ex);
+			}
+		}
+
+
+		public boolean isDisabledKeyWordSection() throws Exception {
+			try {
+				String disable;
+				waitUntilElementIsDisplayed(keywordDisable);
+			    disable=controller.getElementAttribute(keywordDisable, "class");
+			    if(disable.contains("view disable-click"))
+				return true;
+			    else
+			   	return false;
+			 }catch (Exception e) {
+				 throw new Exception("isDisabledKeyWordSection is not working" + e);
+			}
+		}
+		
+		public void clickOnCloseIconMoreLike() throws Exception {
+			try {
+				waitUntilElementIsDisplayed(moreLikeCloseIcon);
+				jsClick(moreLikeCloseIcon);
+			} catch (Exception ex) {
+				throw new Exception("clickOnCloseIconMoreLike is not working" + ex);
+			}
+		}
 }

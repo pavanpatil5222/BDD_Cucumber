@@ -36,7 +36,7 @@ public class Page_ManageFields extends Controller{
 	@FindBy(css="button.cdx-but-xl.mat-flat-button.mat-button.mat-button-base.mat-primary > span")
 	private WebElement btnApply;	
 	
-	@FindBy(css="app-manage-fields-modal > div > form > div.cdx-dialog-top > button > span > mat-icon")
+	@FindBy(css="#result-set-manage-fields-modal > form > div.cdx-dialog-top > button > span > mat-icon")
 	private WebElement closeIcon;	
 	
 	public Page_ManageFields(Controller controller) {
@@ -118,7 +118,7 @@ public class Page_ManageFields extends Controller{
 	
 	public List<String> getAllManageFieldsOptions() throws Exception{
 		try {
-			List<WebElement> options = driver.findElements(By.xpath("//mat-checkbox/label/span[not(contains(., 'Filler'))]"));
+			List<WebElement> options = driver.findElements(By.xpath("//div/mat-checkbox/label/span[not(contains(., 'Filler'))]"));
  			List<String> optionlabels =new ArrayList<String>();
  			
  			if(options.size() > 0) {

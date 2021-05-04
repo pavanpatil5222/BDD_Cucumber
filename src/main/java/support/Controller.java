@@ -209,7 +209,8 @@ public class Controller {
 			WebDriverManager.chromedriver().clearCache();
 			WebDriverManager.chromedriver().setup();
 			ChromeOptions options = new ChromeOptions();
-		//	options.addArguments("--headless", "--start-maximized", "--no-sandbox", "--incognito", "--lang=en-US");
+			//options.addArguments("--headless", "--start-maximized", "--no-sandbox", "--incognito", "--lang=en-US");
+			options.addArguments("--headless", "--start-maximized", "--no-sandbox", "--incognito", "--lang=en-US", "--window-size=1280,720");
 			/*options.addArguments("--start-maximized");
 			options.addArguments("--disable-popup-blocking");
 			options.addArguments("--disable-default-apps");

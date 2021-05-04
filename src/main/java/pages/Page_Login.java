@@ -17,7 +17,7 @@ public class Page_Login extends Controller {
 		
 	 @FindBy(css="#mat-error-7")
 	WebElement loginerr;
-	 @FindBy(xpath="//a[@class='company-name']")
+	 @FindBy(css="div:nth-child(1) > a")
 	WebElement chemlogo;
 	@FindBy(css="#mat-input-0")
 	WebElement textbox_Email;
@@ -56,7 +56,7 @@ public class Page_Login extends Controller {
         controller.waitTime(1);
         setCredentials(userName, password);
         clickOnButtonLogin();
-        controller.waitTime(2);
+        controller.waitTime(3);
 		 boolean logostatus =  super.isElementDisplayed(chemlogo);
 		  if (logostatus)
 		  controller.Logger.Logger.log(LogStatus.PASS, "Login is happend"); 

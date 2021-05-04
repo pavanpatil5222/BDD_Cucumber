@@ -57,7 +57,7 @@ import support.Controller;
 		@FindBy(css = "#mat-slide-toggle-1-input")
 		private WebElement supportTipsOnOff;
 						
-		@FindBy(css = "div.links > button:nth-child(4) > span")
+		@FindBy(css = "div.links > button:nth-child(5) > span")
 		private WebElement supportLink;
 		
 		@FindBy(css = "div > div > button:nth-child(3) > span")
@@ -82,9 +82,8 @@ import support.Controller;
 			try {
 				waitUntilElementIsDisplayed(btnClearAll);
 				return controller.isElementDisplayed(btnClearAll);
-					
-			} catch (Exception e) {
-				return true;
+				} catch (Exception e) {
+				return false;
 				
 			}
 		}

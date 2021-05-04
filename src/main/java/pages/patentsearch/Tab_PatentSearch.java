@@ -1,5 +1,6 @@
 package pages.patentsearch;
 import java.util.ArrayList;
+import java.util.LinkedHashSet;
 import java.util.List;
 
 import org.openqa.selenium.By;
@@ -17,7 +18,81 @@ import support.Controller;
  */
 
 public class Tab_PatentSearch extends Controller{
+	
+	@FindBy(xpath = "//app-record-view/section/div//mat-accordion/mat-expansion-panel[5]/mat-expansion-panel-header")
+	private WebElement citingPatentLinkAttribute;
+	
+	@FindBy(xpath = "//span[@class='mat-option-text']")
+	private List<WebElement> dropdownFields;
+	
+	@FindBy(xpath = "//app-record-view/section/div//mat-accordion/mat-expansion-panel[6]/mat-expansion-panel-header")
+	private WebElement citedPatentLinkAttribute;
+	
+	@FindBy(xpath = "//mat-expansion-panel[5]/mat-expansion-panel-header/span/mat-panel-title")
+	private WebElement citingPatentCount;
+	
+	@FindBy(xpath = "//mat-expansion-panel[6]/mat-expansion-panel-header/span/mat-panel-title")
+	private WebElement citedPatentCount;
+	
+	@FindBy(xpath = "//mat-accordion/mat-expansion-panel[5]/mat-expansion-panel-header/span/mat-panel-title")
+	private WebElement citingPatentLink;
+	
+	@FindBy(xpath = "//mat-accordion/mat-expansion-panel[6]/mat-expansion-panel-header/span/mat-panel-title")
+	private WebElement citedPatentLink;	
+	
+	@FindBy(xpath = "//table[contains(@class, 'citation-family')]//button[1]")
+	private WebElement citingTitle;
+	
+	@FindBy(xpath = "(//table[contains(@class, 'citation-family')])[2]//button[1]")
+	private WebElement citedTitle;	
+	
+	@FindBy(xpath = "//app-record-view/section/div/div[1]/div[1]/div")
+	private WebElement patRecordViewTitle;
+	
+	@FindBy(xpath = "//app-record-view/section/div//mat-accordion//mat-expansion-panel[4]//mat-expansion-panel-header")
+	private WebElement dwpiPatentTableAttribute;
+	
+	@FindBy(xpath = "//app-record-view/section/div//mat-accordion//mat-expansion-panel[4]//mat-expansion-panel-header/span/mat-panel-title")
+	private WebElement dwpiTableLink;
+	
+	@FindBy(xpath = "//table[contains(@class, 'dw-family')]//button[1]")
+	private WebElement dwpiPublicationNumber;
+	
+	@FindBy(xpath = "//app-record-view/section/div/div[1]/div[1]/div")
+	private WebElement recordViewDwpiPublicationNumber;
+	
+	@FindBy(xpath = "//div[@class='mat-select-arrow']")
+	private WebElement dropdownMoreFilters;
+	
+	@FindBy(xpath = "//section[contains(@class, 'add')]//button[contains(@class, 'add-button')]")
+	private WebElement button_Add;
+	@FindBy(css = "section > app-result-set:nth-child(1) > section > mat-card > mat-card-content > div:nth-child(1) > section.assignee.ng-star-inserted > p > span > span > a")
+	private WebElement linkAssignee;
+	
+	@FindBy(css = "div > mat-chip > div > span > span")
+	private WebElement moreLikeKeyword;
+	
+	@FindBy(css = "section.insights-chart > app-suggested-keyword > section > section.view.disable-click")
+	private WebElement keywordDisable;
 		
+	@FindBy(css = "section > app-result-set:nth-child(1) > section > mat-card > mat-card-content > div:nth-child(1) > section.inventor.ng-star-inserted > p > span > span:nth-child(1) > a")
+	private WebElement linkInventor;
+	
+	@FindBy(css = "app-result-set:nth-child(1) > section > aside > section:nth-child(4) > div")
+	private WebElement linkMoreLikeThis;
+	
+	@FindBy(css = "#mat-chip-list-0 > div > mat-chip > mat-icon")
+	private WebElement moreLikeCloseIcon;
+	
+	@FindBy(css = "app-result-set:nth-child(1) > section > aside > div:nth-child(1) > span.pn")
+	private WebElement rsPublicationNumber;
+	
+	@FindBy(css = "div:nth-child(1) > section.assignee > span > span > a")
+	private WebElement patentRecordViewAssignee;
+	
+	@FindBy(css = "div:nth-child(1) > section.inventor > span > span:nth-child(1) > a")
+	private WebElement patentRecordViewInventor;
+	
 	@FindBy(xpath="//app-result-search-bar/section/section/div[1]/div[2]/div[2]")
 	private WebElement getPatentResultsCount;
 	
@@ -48,7 +123,7 @@ public class Tab_PatentSearch extends Controller{
    @FindBy(xpath = " //section[contains(@class, 'major-inventor')]//div[@class='chart']//*[name()='svg']//*[name()='text']")
 	private WebElement textInventors;
 	
-	@FindBy(xpath = " //section[@class='filter-section']//div[@class='ng-star-inserted']//mat-expansion-panel[1][contains(@class, 'disable-click')]")
+	@FindBy(xpath = " //section[@class='filter-details']//div[@class='ng-star-inserted']//mat-expansion-panel[1][contains(@class, 'disable-click')]")
 	private WebElement filterFieldDisable;	
 	
 	@FindBy(xpath="//span[@class='mat-button-wrapper'][contains(.,'Clear all')]")
@@ -216,16 +291,16 @@ public class Tab_PatentSearch extends Controller{
 	@FindBy(xpath="//app-result-count-bar/section/section[3]/button")
     WebElement btn_Insights;	
 
-	@FindBy(css="section > div > span:nth-child(1) > button > span > mat-icon")
+	@FindBy(css="section > app-result-set:nth-child(1) > section > aside > section:nth-child(3) > div > span:nth-child(2) > button > span > mat-icon")
 	private WebElement thumsUpIcon;
 	
-	@FindBy(css="section > div > span:nth-child(2) > button > span > mat-icon")
+	@FindBy(css="section > app-result-set:nth-child(1) > section > aside > section:nth-child(3) > div > span:nth-child(3) > button > span > mat-icon")
 	private WebElement thumbsDownIcon;
 	
 	@FindBy(xpath="//app-publication-year/section/mat-expansion-panel/mat-expansion-panel-header/span[2]")
     private WebElement linkPublicationYear;
 	
-	@FindBy(css="#mat-expansion-panel-header-8 > span.mat-content")
+	@FindBy(css="#mat-expansion-panel-header-0 > span.mat-content")
     private WebElement publicationYearLabel;
 	
 	@FindBy(xpath="//app-publication-year/section/mat-expansion-panel/div/div/section/button[1]/span/mat-icon")
@@ -1529,11 +1604,11 @@ public class Tab_PatentSearch extends Controller{
 				int j=1;
 				boolean status=true;
 				try {
-					List<WebElement> thumbsUpIcons = driver.findElements(By.xpath("//section/div[3]/div[1]/button"));
+					List<WebElement> thumbsUpIcons = driver.findElements(By.xpath("//section/aside/section[1]/div/span[2]/button"));
 					System.out.println("size" + thumbsUpIcons.size());
 					if (thumbsUpIcons.size() > 0) {
 						for (WebElement ele : thumbsUpIcons) {
-							if(controller.isElementDisplayed(driver.findElement(By.xpath("//section/div[3]/div[1]/button")))) {
+							if(controller.isElementDisplayed(driver.findElement(By.xpath("//section/aside/section[1]/div/span[2]/button")))) {
 							controller.Logger.addsubStep(LogStatus.PASS,"THUMBS UP ICON IS DISPLAYED FOR THE RECORD:"+(j)+"", false);
 							j=j+1;
 						}
@@ -1556,11 +1631,11 @@ public class Tab_PatentSearch extends Controller{
 				int j=1;
 				boolean status=true;
 				try {
-					List<WebElement> thumbsDownIcons = driver.findElements(By.xpath("//section/div[3]/div[2]/button"));
+					List<WebElement> thumbsDownIcons = driver.findElements(By.xpath("//section/aside/section[1]/div/span[3]/button"));
 					System.out.println("size" + thumbsDownIcons.size());
 					if (thumbsDownIcons.size() > 0) {
 						for (WebElement ele : thumbsDownIcons) {
-							if(controller.isElementDisplayed(driver.findElement(By.xpath("//section/div[3]/div[2]/button")))) {
+							if(controller.isElementDisplayed(driver.findElement(By.xpath("//section/aside/section[1]/div/span[3]/button")))) {
 							controller.Logger.addsubStep(LogStatus.PASS,"THUMBS DOWN ICON IS DISPLAYED FOR THE RECORD:"+(j)+"", false);
 							j=j+1;
 						}
@@ -1582,7 +1657,7 @@ public class Tab_PatentSearch extends Controller{
 			public void clickOnButtonThumsUp(int recordNumber) throws Exception
 			{
 				try {
-					WebElement listOfThumsUp = driver.findElement(By.cssSelector("app-result-set:nth-child("+recordNumber+") > section > aside > section:nth-child(3) > div > span:nth-child(1) > button > span > mat-icon"));
+					WebElement listOfThumsUp = driver.findElement(By.cssSelector("section > app-result-set:nth-child("+recordNumber+") > section > aside > section:nth-child(3) > div > span:nth-child(2) > button > span > mat-icon"));
 					controller.jsClick(listOfThumsUp);
 					controller.Logger.addsubStep(LogStatus.INFO,"Clicked On Thumbs Up Button Successfully", false);
 					}
@@ -1596,7 +1671,7 @@ public class Tab_PatentSearch extends Controller{
 			{
 				try 
 				{
-					WebElement listOfThumsUp = driver.findElement(By.cssSelector("app-result-set:nth-child("+recordNumber+") > section > aside > section:nth-child(3) > div > span:nth-child(1) > button > span > mat-icon"));
+					WebElement listOfThumsUp = driver.findElement(By.cssSelector("section > app-result-set:nth-child("+recordNumber+") > section > aside > section:nth-child(3) > div > span:nth-child(2) > button > span > mat-icon"));
 					if(controller.getElementAttribute(listOfThumsUp, "ng-reflect-svg-icon").contains("filled")) 
 					{
 						return true;
@@ -1617,7 +1692,7 @@ public class Tab_PatentSearch extends Controller{
 			{
 				try 
 				{
-					WebElement listOfThumsDown = driver.findElement(By.cssSelector("app-result-set:nth-child("+recordNumber+") > section > aside > section:nth-child(3) > div > span:nth-child(2) > button > span > mat-icon"));
+					WebElement listOfThumsDown = driver.findElement(By.cssSelector("section > app-result-set:nth-child("+recordNumber+") > section > aside > section:nth-child(3) > div > span:nth-child(3) > button > span > mat-icon"));
 					if(controller.getElementAttribute(listOfThumsDown, "ng-reflect-svg-icon").contains("filled")) 
 					{
 						return true;
@@ -1629,14 +1704,14 @@ public class Tab_PatentSearch extends Controller{
 				}
 				catch(Exception e) 
 				{
-					return false;
+					throw new Exception("isDisplayedButtonThumsDownWithFillColor is not working.." + e);
 				}
 			}
 			
 			public void clickOnButtonThumsDown(int recordNumber) throws Exception
 			{
 				try {
-					WebElement listOfThumsDown = driver.findElement(By.cssSelector("app-result-set:nth-child("+recordNumber+") > section > aside > section:nth-child(3) > div > span:nth-child(2) > button > span > mat-icon"));
+					WebElement listOfThumsDown = driver.findElement(By.cssSelector("section > app-result-set:nth-child("+recordNumber+") > section > aside > section:nth-child(3) > div > span:nth-child(3) > button > span > mat-icon"));
 				controller.jsClick(listOfThumsDown);
 				controller.Logger.addsubStep(LogStatus.INFO,"Clicked On Thumbs Down Button Successfully", false);
 				}
@@ -1861,4 +1936,388 @@ public class Tab_PatentSearch extends Controller{
 						throw new Exception("isDisabledPublicationYearChart is not working" + e);
 					}
 				}
+			 public void clickOnLinkAssignee() throws Exception {
+					try {
+						waitUntilElementIsDisplayed(linkAssignee);
+						jsClick(linkAssignee);
+					} catch (Exception ex) {
+						throw new Exception("clickOnLinkAssignee is not working" + ex);
+					}
+				}
+			 public String getTextKeyWordMoreLike() throws Exception {
+					waitUntilElementIsDisplayed(moreLikeKeyword);
+					String morelikekeyword=controller.getElementAttribute(moreLikeKeyword, "title");
+					return(morelikekeyword);
+				}
+			 public String getTextAssignee(int rownumber) throws Exception {
+					try {
+						WebElement assignee = driver.findElement(By.cssSelector("section > app-result-set:nth-child("+rownumber+") > section > mat-card > mat-card-content > div:nth-child(1) > section.assignee.ng-star-inserted > p > span > span > a"));
+						return assignee.getText();
+					} catch (Exception ex) {
+						throw new Exception("getTextAssignee is not working" + ex);
+					}
+				}
+			 public void clickOnLinkInventor() throws Exception {
+					try {
+						waitUntilElementIsDisplayed(linkInventor);
+						jsClick(linkInventor);
+					} catch (Exception ex) {
+						throw new Exception("clickOnLinkInventor is not working" + ex);
+					}
+				}
+			 public String getTextInventor(int rownumber) throws Exception {
+					try {
+						WebElement inventor = driver.findElement(By.cssSelector("section > app-result-set:nth-child("+rownumber+") > section > mat-card > mat-card-content > div:nth-child(1) > section.inventor.ng-star-inserted > p > span > span:nth-child(1) > a"));
+						return inventor.getText();
+					} catch (Exception ex) {
+						throw new Exception("getTextInventor is not working" + ex);
+					}
+				}
+			 public void clickOnLinkMoreLikeThis() throws Exception {
+					try {
+						waitUntilElementIsDisplayed(linkMoreLikeThis);
+						jsClick(linkMoreLikeThis);
+					} catch (Exception ex) {
+						throw new Exception("clickOnLinkMoreLikeThis is not working" + ex);
+					}
+				}
+			 
+			 public String getTextPublicationNumber() throws Exception {
+					waitUntilElementIsDisplayed(rsPublicationNumber);
+					String publicationnumber=controller.getText(rsPublicationNumber);
+					return(publicationnumber);
+				}
+			 public void clickOnLinkPatentRecordViewInventor() throws Exception {
+					try {
+						waitUntilElementIsDisplayed(patentRecordViewInventor);
+						jsClick(patentRecordViewInventor);
+					} catch (Exception ex) {
+						throw new Exception("clickOnLinkPatentRecordViewInventor is not working" + ex);
+					}
+				}
+			 public void clickOnLinkPatentRecordViewAssignee() throws Exception {
+					try {
+						waitUntilElementIsDisplayed(patentRecordViewAssignee);
+						jsClick(patentRecordViewAssignee);
+					} catch (Exception ex) {
+						throw new Exception("clickOnLinkPatentRecordViewAssignee is not working" + ex);
+					}
+				}
+			 public boolean isDisabledKeyWordSection() throws Exception {
+					try {
+						String disable;
+						waitUntilElementIsDisplayed(keywordDisable);
+					    disable=controller.getElementAttribute(keywordDisable, "class");
+					    if(disable.contains("view disable-click"))
+						return true;
+					    else
+					   	return false;
+					 }catch (Exception e) {
+						 throw new Exception("isDisabledKeyWordSection is not working" + e);
+					}
+				}
+			 public void clickOnCloseIconMoreLike() throws Exception {
+					try {
+						waitUntilElementIsDisplayed(moreLikeCloseIcon);
+						jsClick(moreLikeCloseIcon);
+					} catch (Exception ex) {
+						throw new Exception("clickOnCloseIconMoreLike is not working" + ex);
+					}
+				}
+			 public boolean isDisabledAddButton() throws Exception {
+					try {
+						super.jsScrollToElement(button_Add);
+						return true;
+					} catch (Exception e) {
+						return false;
+					}
+				}
+
+				public boolean isExpandedDwpiTable() throws Exception {
+					try {
+						String collapse;
+						waitUntilElementIsDisplayed(dwpiPatentTableAttribute);
+						collapse = controller.getElementAttribute(dwpiPatentTableAttribute, "aria-expanded");
+						if (collapse.equals("true"))
+							return true;
+						else
+							return false;
+					} catch (Exception e) {
+						throw new Exception("isExpandedDwpiTable is not working" + e);
+					}
+				}
+
+				public void clickOnLinkDwpiTable() throws Exception {
+					try {
+						waitUntilElementIsDisplayed(dwpiTableLink);
+						jsClick(dwpiTableLink);
+					} catch (Exception ex) {
+						throw new Exception("clickOnLinkDwpiTable is not working" + ex);
+					}
+				}
+
+				public boolean isCollapsedDwpiTable() throws Exception {
+					try {
+						String collapse;
+						waitUntilElementIsDisplayed(dwpiPatentTableAttribute);
+						collapse = controller.getElementAttribute(dwpiPatentTableAttribute, "aria-expanded");
+						if (collapse.equals("false"))
+							return true;
+						else
+							return false;
+					} catch (Exception e) {
+						throw new Exception("isCollapsedDwpiTable is not working" + e);
+					}
+				}
+
+				public String getDwpiPublicationNumber() throws Exception {
+					waitUntilElementIsDisplayed(dwpiPublicationNumber);
+					return controller.getText(dwpiPublicationNumber);
+				}
+
+				public String getPublicationNumberRecordView() throws Exception {
+					waitUntilElementIsDisplayed(recordViewDwpiPublicationNumber);
+					return controller.getText(recordViewDwpiPublicationNumber);
+				}
+
+				public void clickOnDwpiPublicationNumber() throws Exception {
+					try {
+						waitUntilElementIsDisplayed(dwpiPublicationNumber);
+						jsClick(dwpiPublicationNumber);
+					} catch (Exception ex) {
+						throw new Exception("clickOnDwpiPublicationNumber is not working" + ex);
+					}
+				}
+				public boolean isCollapsedCitingPatent() throws Exception {
+					try {
+						String collapse;
+						waitUntilElementIsDisplayed(citingPatentLinkAttribute);
+						collapse=controller.getElementAttribute(citingPatentLinkAttribute, "aria-expanded");
+					    if(collapse.equals("false"))
+						return true;
+					    else
+					   	return false;
+					 }catch (Exception e) {
+						 throw new Exception("isCollapsedCitingPatent is not working" + e);
+					}
+				}
+				
+				public boolean isCollapsedCitedPatent() throws Exception {
+					try {
+						String collapse;
+						waitUntilElementIsDisplayed(citedPatentLinkAttribute);
+						collapse=controller.getElementAttribute(citedPatentLinkAttribute, "aria-expanded");
+						if(collapse.equals("false"))
+							return true;
+						    else
+						   	return false;
+						 }catch (Exception e) {
+							 throw new Exception("isCollapsedCitedPatent is not working" + e);
+						}
+					}
+				public void clickOnLinkCitingPatent() throws Exception {
+					try {
+						int count;
+						waitUntilElementIsDisplayed(citingPatentCount);
+						String totaltxt = getText(citingPatentCount).trim();
+						totaltxt = totaltxt.replace("(", "").replaceAll("[\\D]", "");
+						totaltxt = totaltxt.replace(")", "").replaceAll("[\\D]", "");
+						count=Integer.parseInt(totaltxt);
+						if(count==0)
+						{
+							controller.Logger.Logger.log(LogStatus.INFO, "CITING LITERATURE SECTION IS IN DISABLED STATE"); 	
+						}
+						else
+						{
+							jsClick(citingPatentLink);
+						}
+					} catch (Exception ex) {
+						throw new Exception("clickOnLinkCitingPatent is not working" + ex);
+					}
+				}
+				public boolean isExpandedCitingPatent() throws Exception {
+					try {
+						String collapse;
+						waitUntilElementIsDisplayed(citingPatentLinkAttribute);
+						collapse=controller.getElementAttribute(citingPatentLinkAttribute, "aria-expanded");
+					    if(collapse.equals("true"))
+						return true;
+					    else
+					   	return false;
+					 }catch (Exception e) {
+						 throw new Exception("isExpandedCitingPatent is not working" + e);
+					}
+				}
+				public void clickOnLinkCitedPatent() throws Exception {
+					try {
+						int count;
+						waitUntilElementIsDisplayed(citedPatentCount);
+						String totaltxt = getText(citedPatentCount).trim();
+						totaltxt = totaltxt.replace("(", "").replaceAll("[\\D]", "");
+						totaltxt = totaltxt.replace(")", "").replaceAll("[\\D]", "");
+						count=Integer.parseInt(totaltxt);
+						if(count==0)
+						{
+							controller.Logger.Logger.log(LogStatus.INFO, "CITING LITERATURE SECTION IS IN DISABLED STATE"); 	
+						}
+						else
+						{
+							jsClick(citedPatentLink);
+						}
+					} catch (Exception ex) {
+						throw new Exception("clickOnLinkCitedPatent is not working" + ex);
+					}
+				}
+				public boolean isExpandedCitedPatent() throws Exception {
+					try {
+						String collapse;
+						waitUntilElementIsDisplayed(citingPatentLinkAttribute);
+						collapse=controller.getElementAttribute(citingPatentLinkAttribute, "aria-expanded");
+					    if(collapse.equals("true"))
+						return true;
+					    else
+					   	return false;
+					 }catch (Exception e) {
+						 throw new Exception("isExpandedCitedPatent is not working" + e);
+					}
+				}
+				public void clickOnCitingPatentTitle() throws Exception {
+					try {
+						waitUntilElementIsDisplayed(citingTitle);
+						jsClick(citingTitle);
+					} catch (Exception ex) {
+						throw new Exception("clickOnCitingPatentTitle is not working" + ex);
+					}
+				}
+				
+				public void clickOnCitedPatentTitle() throws Exception {
+					try {
+						waitUntilElementIsDisplayed(citedTitle);
+						jsClick(citedTitle);
+					} catch (Exception ex) {
+						throw new Exception("clickOnCitedPatentTitle is not working" + ex);
+					}
+				}
+				public String getTextCitingTitle() throws Exception {
+					 waitUntilElementIsDisplayed(citingTitle);
+					return controller.getText(citingTitle);
+					}
+				
+				public String getTextCitedTitle() throws Exception {
+					 waitUntilElementIsDisplayed(citedTitle);
+					return controller.getText(citedTitle);
+					}
+				
+				public String getTextPatentRecordViewTitle() throws Exception {
+					 waitUntilElementIsDisplayed(patRecordViewTitle);
+					return controller.getText(patRecordViewTitle);
+					}
+			
+public void clickCloseOnFilterFields() throws Exception {
+	try {
+		List<WebElement> closeButtons = driver.findElements(By.xpath(
+				"//button[@title='Remove filter field']//span[@class='mat-button-wrapper'][contains(.,'close')]"));
+		for (int i = 1; i <= closeButtons.size(); i++) {
+			waitTime(1);
+			WebElement closeFirstButton = waitUntilElementIsAvailable(By.xpath(
+					"//button[@title='Remove filter field']//span[@class='mat-button-wrapper'][contains(.,'close')][1]"));
+			waitTime(1);
+			jsScrollToElement(closeFirstButton);
+			waitTime(1);
+			controller.jsClick(closeFirstButton);
+			controller.waitTime(2);
+			controller.waitTime(2);
+		}
+	} catch (Exception e) {
+		throw new Exception("clickCloseOnFilterFields is not working" + e);
+	}
 }
+
+public LinkedHashSet<String> getFilterFields() throws Exception {
+	List<WebElement> firstlevel = dropdownFields;
+	LinkedHashSet<String> actualfields = new LinkedHashSet<String>();
+	Actions mousehover = new Actions(driver);
+	for (WebElement menu : firstlevel) {
+		mousehover.moveToElement(menu).build().perform();
+		String mainField = menu.getText();
+		System.out.println(mainField);
+		actualfields.add(mainField.trim());
+	}
+	return actualfields;
+}
+
+public boolean verifyFilterFieldsInFilterSection(List<String> filterlist) throws Exception {
+	for(String filter : filterlist)
+	{
+		String filterxpath = " //section[@class='filter-section ng-star-inserted']//div[contains(text(),'" + filter + "')]";
+		if( !controller.isElementDisplayed(controller.driver.findElement(By.xpath(filterxpath)))){
+			return false;
+		}
+	}	
+	for(int i =0; i < filterlist.size(); i++){
+		String filter = filterlist.get(i);
+	}
+	return true;
+}
+
+
+public void addAllDropdownFields(List<String> filterlist) throws Exception {
+	try {
+		List<WebElement> firstlevel = dropdownFields;
+		firstlevel.get(0).click();
+		String dropdownfilter = "//div[@class='mat-select-arrow']";
+		for(String filter : filterlist)
+		{
+			for(int j =0; j < 3; j++){
+				try {
+					WebElement dropdown = controller.driver.findElement(By.xpath(dropdownfilter));
+					controller.waitUntilElementIsDisplayed(dropdown);
+					controller.waitUntilElementClickable(dropdown);
+					controller.jsScrollToElement(dropdown);
+					dropdown.click();
+					break;
+				} catch (Exception e) {
+				}
+			}
+			int index = filter.indexOf("(");
+			if(index >= 0){
+				filter = filter.substring(0, index-1);
+			}
+			filter = filter.replace(".", "");
+			String optionxPath = "//mat-option[contains(@ng-reflect-value," + "'" + filter + "')]";
+			System.out.println(optionxPath);
+			for(int j =0; j < 3; j++){
+				try {
+					WebElement filteroption = controller.driver.findElement(By.xpath(optionxPath));
+					controller.waitUntilElementClickable(filteroption);
+					filteroption.click();
+					break;
+				}catch(Exception e){
+				}
+			}
+			String buttonxpath = "//section[contains(@class, 'add')]//button[contains(@class, 'add-button')]";
+			for(int j =0; j < 3; j++){
+				try {
+					WebElement addbutton = controller.driver.findElement(By.xpath(buttonxpath));
+					controller.waitUntilElementIsDisplayed(addbutton);
+					addbutton.click();
+					break;
+				} catch (Exception e) {
+				}
+			}
+		}
+	} catch (Exception e) {
+		throw new Exception("addAllDropdownFields is not working" + e);
+	}
+}
+public void clickOnMoreFiltersDropdown() throws Exception {
+	try {
+		controller.waitUntilElementIsDisplayed(dropdownMoreFilters);
+		dropdownMoreFilters.click();
+	} catch (Exception e) {
+		throw new Exception("clickOnMoreFiltersDropdown is not working" + e);
+	}
+}
+}
+
+

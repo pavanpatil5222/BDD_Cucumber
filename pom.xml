@@ -19,7 +19,7 @@
 						<systemPropertyVariables>
 							<java.awt.headless>true</java.awt.headless>
 						</systemPropertyVariables>
-						
+						<encoding>UTF-8</encoding>
 					</configuration>
 				</plugin>
 				<plugin>
