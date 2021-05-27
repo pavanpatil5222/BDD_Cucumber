@@ -5,7 +5,7 @@
 		<parameter name="browser" value="CH" />
 		<parameter name="excelPath" value="./src/test/resources/testdata.xlsx" />
 		<classes>
-			<class name="support.RunTests" />
+			 <class name="support.RunTests" />
 		</classes>
 	</test>
 </suite>
