@@ -110,6 +110,7 @@ public class Controller {
 			driver.manage().deleteAllCookies();
 			driver.navigate().refresh();
 		}
+		this.controller = this;
 	}
 
 	/**
@@ -123,10 +124,12 @@ public class Controller {
 
 	public boolean switchToGivenWindow(String window, String strURLContains,String currentWindowHandleID) throws Exception {
 		try {
+			controller.waitTime(2);
 			Set<String> windowHandles = driver.getWindowHandles();
 			boolean status = false;
 			for (String handleID : windowHandles) {
 				driver.switchTo().window(handleID);
+				controller.waitTime(4);
 				if (driver.getCurrentUrl().toLowerCase().contains(strURLContains.toLowerCase())) {
 					status = true;
 					break;
@@ -160,7 +163,7 @@ public class Controller {
 			}
 		}
 	}
-
+	
 	public boolean isElementEnabled(WebElement ele) throws Exception {
 		try {
 			return ele.isEnabled();
@@ -205,12 +208,12 @@ public class Controller {
 	public void launchBrowser() {
 		if ((browser).equals("CH")) {
 			System.setProperty(ChromeDriverService.CHROME_DRIVER_SILENT_OUTPUT_PROPERTY, "true");
-			System.setProperty("java.awt.headless", "false");
+			//System.setProperty("java.awt.headless", "false");
 			WebDriverManager.chromedriver().clearCache();
 			WebDriverManager.chromedriver().setup();
 			ChromeOptions options = new ChromeOptions();
 			//options.addArguments("--headless", "--start-maximized", "--no-sandbox", "--incognito", "--lang=en-US");
-			options.addArguments("--headless", "--start-maximized", "--no-sandbox", "--incognito", "--lang=en-US", "--window-size=1280,720");
+			options.addArguments("--headless", "--start-maximized", "--no-sandbox", "--incognito", "--lang=en-US", "--window-size=1920,1080");
 			/*options.addArguments("--start-maximized");
 			options.addArguments("--disable-popup-blocking");
 			options.addArguments("--disable-default-apps");
@@ -335,6 +338,7 @@ public class Controller {
 
 	public String getText(WebElement ele) throws Exception {
 		try {
+			controller.waitUntilElementIsDisplayed(ele);
 			return ele.getText();
 		} catch (Exception e) {
 			throw new Exception("getText is not working" + e);

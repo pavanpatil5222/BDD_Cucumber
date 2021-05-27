@@ -27,6 +27,36 @@ import support.Controller;
 public class Page_ChemicalSearchResults extends Controller{
 
 
+	@FindBy(xpath="//app-result-paginator-bar/section[1]/span[1]/mat-checkbox/label/div/input")
+	private WebElement globalCheckBox;
+	@FindBy(xpath="//app-result-set[1]/section/aside/section[1]/div/span[1]/app-result-set-saveto-modal/div/div[1]/section[3]/section/button")
+	private WebElement linkCreateNewFolder;
+	@FindBy(css="app-result-set:nth-child(1) > section > aside > section:nth-child(3) > div > span:nth-child(1) > button > span > img")
+	private WebElement saveIcon;
+	@FindBy(css="#saveto-container > section.footer-section > form > section:nth-child(1) > div:nth-child(2) > span")
+	private WebElement folderErrorMessage;
+	
+	@FindBy(xpath="//button[contains(@aria-label,'Next page')]")
+	private WebElement arrowNextPage;
+	
+	@FindBy(xpath="//button[contains(@aria-label,'Previous page')]")
+	private WebElement arrowPreviousPage;
+	
+	@FindBy(xpath="//section[@class='card-section ng-star-inserted']//mat-checkbox[@id='mat-checkbox-1']//div/input[@aria-checked='true']")
+	private WebElement singleRecordCheckBox;
+	
+	@FindBy(css="#saveto-container > section.footer-section > form > section:nth-child(2) > button > span")
+	private WebElement btnCreate;
+	
+	@FindBy(css="span:nth-child(3) > button > span > img")
+	private WebElement rsFooterSaveIcon;
+	
+	@FindBy(xpath="//app-result-paginator-bar/section[1]/span[3]/div/app-result-set-saveto-modal/div/div[1]/section[3]/section/button")
+	private WebElement rsFooterCreateNewFolder;
+	
+	@FindBy(xpath="//input[@ng-reflect-maxlength='150']")
+	private WebElement txtFolderName;
+	
 	@FindBy(xpath="//div[@class='result-count']")
 	private WebElement getResultsCount;
 		
@@ -212,6 +242,7 @@ public class Page_ChemicalSearchResults extends Controller{
 	}
 
 	public int getResultsCount() throws Exception {
+		controller.waitTime(2);
 		waitUntilElementIsDisplayed(getResultsCount);
 		String resultCount= controller.getText(getResultsCount);
 		String[] finalResultCount = resultCount.split(" "); 
@@ -270,6 +301,14 @@ public class Page_ChemicalSearchResults extends Controller{
 		}
 	}
 	
+	public void clickOnRsFooterSaveIcon() throws Exception {
+		try {
+			waitUntilElementIsDisplayed(rsFooterSaveIcon);
+			jsClick(rsFooterSaveIcon);
+		} catch (Exception ex) {
+			throw new Exception("clickOnRsFooterSaveIcon is not working" + ex);
+		}
+	}
 	public void setFirstKeyWord(List <String> keywords) throws Exception {
 		try {
 		 List<String> keywordtxt = new ArrayList<String>();
@@ -1182,7 +1221,9 @@ public void clickOnCalenderIconToDateInput() throws Exception {
 
 public String getTextNoResultsPage() throws Exception {
 	try {
+		controller.waitUntilElementIsDisplayed(errorMessage_NoResultsPage);
 		return controller.getText(errorMessage_NoResultsPage);
+		
 		} catch (Exception ex) {
 		throw new Exception("No Results Page error msg has not displayed" + ex);
 	}
@@ -1216,6 +1257,7 @@ public void clickOnLinkPdf() throws Exception {
 		for(WebElement firstLink:listOfPdfLink) {
 			super.jsClick(firstLink);
 			break;
+			//controller.waitTime(2);
 		}
 		} catch (Exception ex) {
 		throw new Exception("clickOnlink pdf is not working" + ex);
@@ -1309,6 +1351,7 @@ public boolean isDisabledFilterInventorField() throws Exception {
 
 public void clickOnKeywordsTab() throws Exception {
 	try {
+		controller.waitTime(2);
 		waitUntilElementIsDisplayed(tabKeywords);
 		jsClick(tabKeywords);
 	} catch (Exception ex) {
@@ -1358,6 +1401,7 @@ public String getTextGuidedTipsToastMessage() throws Exception {
 	try {
 		String expMsg="";
 		waitUntilElementIsDisplayed(guidedTipsToastMsg);
+		//controller.waitTime(2);
 		if(controller.isElementDisplayed(guidedTipsToastMsg))
 		expMsg= controller.getText(guidedTipsToastMsg);
 		return expMsg;
@@ -1471,5 +1515,147 @@ public String getTextImageSize(int recordnumber) throws Exception {
 	}
 }
 
+public void clickOnRSFooterGlobalCheckBox() throws Exception {
+	try {
+		waitUntilElementIsDisplayed(globalCheckBox);
+		String status = controller.getElementAttribute(globalCheckBox, "aria-checked");
+		if(status.equalsIgnoreCase("false"))
+		{
+			jsClick(globalCheckBox);	
+			
+		}
+		else
+		{
+			controller.Logger.Logger.log(LogStatus.INFO, "RS Footer Global Check Box is already selected");	
+		}
+	} catch (Exception ex) {
+		throw new Exception("clickOnRSFooterGlobalCheckBox is not working" + ex);
+	}
 }
+
+
+
+
+public void clickOnRsFooterCreateNewFolder() throws Exception {
+	try {
+		Actions action = new Actions(driver);
+		action.moveToElement(rsFooterCreateNewFolder).click().build().perform();
+	} catch (Exception ex) {
+		throw new Exception("clickOnRsFooterCreateNewFolder is not working" + ex);
+	}
+}
+
+public void setTextFolderName(String value) throws Exception {
+	try {
+		click(txtFolderName);
+		txtFolderName.clear();
+		setText(txtFolderName, value);
+		} catch (Exception e) {
+		throw new Exception("setTextFolderName is not working.." + e);
+	}
+}
+public void clickOnLinkCreate() throws Exception {
+	try {
+		waitUntilElementIsDisplayed(btnCreate);
+		jsClick(btnCreate);
+	} catch (Exception ex) {
+		throw new Exception("clickOnLinkCreate is not working" + ex);
+	}
+}
+
+public void clickOnNextPage() throws Exception {
+	try {
+		controller.waitTime(2);
+		waitUntilElementIsDisplayed(arrowNextPage);
+		jsClick(arrowNextPage);
+	} catch (Exception ex) {
+		throw new Exception("clickOnNextPage is not working" + ex);
+	}
+}
+
+public void clickOnPreviousPage() throws Exception {
+	try {
+		waitUntilElementIsDisplayed(arrowPreviousPage);
+		jsClick(arrowPreviousPage);
+	} catch (Exception ex) {
+		throw new Exception(" clickOnPreviousPage is not working" + ex);
+	}
+}
+@SuppressWarnings("static-access")
+public void clickOnFolderNameCheckBox(String checkboxname) throws Exception {
+	try {
+		WebElement ele = controller.driver.findElement(By.xpath("//app-result-set-saveto-modal/div/div[1]/section[2]/mat-selection-list/mat-list-item/div/label[contains(.,"+checkboxname+")]/preceding-sibling::input[@role='checkbox']"));
+		if(!ele.isSelected())
+		{	
+			Actions action = new Actions(driver);
+			action.moveToElement(ele).click().build().perform();
+		}
+	} catch (Exception ex) {
+		throw new Exception("clickonFolderNameCheckBox is not working" + ex);
+	}
+}
+
+public String getTextFolderName(String checkboxname) throws Exception {
+	try {
+	WebElement ele = controller.driver.findElement(By.xpath("//app-result-set-saveto-modal/div/div[1]/section[2]/mat-selection-list/mat-list-item/div/label[contains(@title,'"+checkboxname+"')]"));
+	String txt = controller.getElementAttribute(ele, "title");
+	return txt;
+} catch (Exception ex) {
+	throw new Exception("getTextFolderName is not working" + ex);
+}
+}
+public void clickOnSaveIcon() throws Exception {
+	try {
+		waitUntilElementIsDisplayed(saveIcon);
+		jsClick(saveIcon);
+	} catch (Exception ex) {
+		throw new Exception("clickOnSaveIcon is not working" + ex);
+	}
+}
+
+public void clickOnLinkCreateNewFolder() throws Exception {
+	try {
+		controller.waitTime(2);
+		Actions action = new Actions(driver);
+		action.moveToElement(linkCreateNewFolder).click().build().perform();
+	} catch (Exception ex) {
+		throw new Exception("clickOnLinkCreateNewFolder is not working" + ex);
+	}
+}
+
+public String getTextFolderErrorMEssage() throws Exception {
+	String errMsg;
+	 waitUntilElementIsDisplayed(folderErrorMessage);
+	 errMsg = getText(folderErrorMessage);
+	 return(errMsg);
+	}
+
+@SuppressWarnings("static-access")
+public int getFolderNameSize(String checkboxname) throws Exception {
+	try {
+	WebElement ele = controller.driver.findElement(By.xpath("//app-result-set-saveto-modal/div/div[1]/section[2]/mat-selection-list/mat-list-item/div/label[contains(@title,'"+checkboxname+"')]"));
+	String txt = controller.getElementAttribute(ele, "title");
+	int length=txt.length();
+	return length;
+} catch (Exception ex) {
+	throw new Exception("getFolderNameSize is not working" + ex);
+}
+}
+public boolean isSelectedRSCheckBox(int checkboxnum) throws Exception {
+	try {
+	WebElement ele = controller.driver.findElement(By.xpath("//app-result-set["+checkboxnum+"]/section/aside/div[1]/span[1]/mat-checkbox"));
+	String bool = controller.getElementAttribute(ele, "ng-reflect-checked");
+	if(bool.equals("true"))
+		return true;
+	else		
+		return false;
+} catch (Exception ex) {
+	throw new Exception("isSelectedRSCheckBox is not working" + ex);
+}
+}
+
+
+}
+
+
 

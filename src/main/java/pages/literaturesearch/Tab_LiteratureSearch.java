@@ -531,34 +531,41 @@ public class Tab_LiteratureSearch extends Controller{
 		return(label);
 	}
 	
-	
 	public void selectMultiplePublicationChartFilters() throws Exception
-	{
-		try {
-			driver.findElement(By.cssSelector("#publ_year_rect_2007")).click();
-			controller.waitUntilFectchRecordProgressBarToDisappears();
-			 driver.findElement(By.cssSelector("#publ_year_rect_2010")).click();
-			 controller.waitUntilFectchRecordProgressBarToDisappears();				
-		}
-		catch(Exception e) 
-		{
-			throw new Exception("selectMultiplePublicationChartFilters is not working.." + e);
-		}
-	}
+    {
+          try {
+                 driver.findElement(By.cssSelector("#publ_year_rect_2007")).click();
+                 controller.waitUntilFectchRecordProgressBarToDisappears();
+                 controller.waitTime(2);
+                 driver.findElement(By.cssSelector("#publ_year_rect_2010")).click();
+                 controller.waitUntilFectchRecordProgressBarToDisappears();        
+                 controller.waitTime(2);
+          }
+          catch(Exception e) 
+          {
+                 throw new Exception("selectMultiplePublicationChartFilters is not working.." + e);
+          }
+    }
+
+	
+	
 	
 	public void deSelectMultiplePublicationChartFilters() throws Exception
-	{
-		try {
-			 driver.findElement(By.cssSelector("#publ_year_rect_2007")).click();
-			controller.waitUntilFectchRecordProgressBarToDisappears();
-			 driver.findElement(By.cssSelector("#publ_year_rect_2010")).click();
-			 controller.waitUntilFectchRecordProgressBarToDisappears();				
-		}
-		catch(Exception e) 
-		{
-			throw new Exception("deSelectMultiplePublicationChartFilters is not working.." + e);
-		}
-	}
+    {
+          try {
+                 driver.findElement(By.cssSelector("#publ_year_rect_2007")).click();
+                 controller.waitUntilFectchRecordProgressBarToDisappears();
+                 controller.waitTime(2);
+                 driver.findElement(By.cssSelector("#publ_year_rect_2010")).click();
+                 controller.waitUntilFectchRecordProgressBarToDisappears(); 
+                 controller.waitTime(2);
+          }
+          catch(Exception e) 
+          {
+                 throw new Exception("deSelectMultiplePublicationChartFilters is not working.." + e);
+          }
+    }
+
 	
 	public void clickOnPYChartExpandCollapseIcon() throws Exception {
 		try {
