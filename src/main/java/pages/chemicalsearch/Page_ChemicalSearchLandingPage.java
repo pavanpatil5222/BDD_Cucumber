@@ -34,7 +34,7 @@ public class Page_ChemicalSearchLandingPage extends Controller {
 	@FindBy(css = "#cdk-overlay-0 > div > div > button:nth-child(3) > span")
 	private WebElement showTipsTxt;
 
-	@FindBy(xpath = "//button//span/mat-icon[@class ='mat-icon material-icons mat-icon-24 notranslate mat-icon-no-color']")
+	@FindBy(xpath = "//button//span/mat-icon[@class ='mat-icon notranslate material-icons mat-icon-24 mat-icon-no-color']")
 	private WebElement btnSearchIcon;
 
 	@FindBy(xpath = " //textarea[@placeholder='Enter keywords, phrases or text blocks to search...']")
