@@ -1016,7 +1016,7 @@ public class Page_ChemicalSearchResults extends Controller{
 	 public void clickOnAnyCheckboxBasedOnFiltersName(String filtersName,int chkboxPostion) throws Exception {
 			try {
 				clickOnFiltersBasedOnFiltersName(filtersName);
-				WebElement chkboxName=driver.findElement(By.xpath("//div[contains(text(),'"+filtersName+"')]/ancestor::mat-expansion-panel-header/following-sibling::div//mat-selection-list[@role='listbox']/mat-list-item[@role='listitem']["+chkboxPostion+"]//label"));
+				WebElement chkboxName=driver.findElement(By.xpath("//div[contains(text(),'"+filtersName+"')]/ancestor::mat-expansion-panel-header/following-sibling::div//mat-selection-list[@role='list']/mat-list-item[@role='listitem']["+chkboxPostion+"]//label"));
 				super.jsClick(chkboxName);
 				} catch (Exception ex) {
 				throw new Exception("checkbox is not selected" + ex);
