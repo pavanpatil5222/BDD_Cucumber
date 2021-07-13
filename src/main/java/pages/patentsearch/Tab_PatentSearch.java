@@ -28,17 +28,11 @@ public class Tab_PatentSearch extends Controller {
     @FindBy(xpath="(//span[contains(.,'View as result set')])[2]")
     private WebElement citedPatentViewAsResultSet;
 
-    @FindBy(xpath = "(//mat-panel-title[contains(@class,'mat-expansion-panel-header-title citation-headers')])[1]")
+    @FindBy(xpath = "//mat-panel-title[contains(.,'Cited patents (9)')]")
     private WebElement citingPatentLink;
     
     @FindBy(xpath = "(//mat-panel-title[contains(@class,'mat-expansion-panel-header-title citation-headers')])[2]")
     private WebElement citedPatentLink;    
-
-	/*@FindBy(xpath = "//mat-accordion/mat-expansion-panel[6]/mat-expansion-panel-header/span/mat-panel-title")
-	private WebElement citingPatentLink;
-
-	@FindBy(xpath = "//mat-accordion/mat-expansion-panel[7]/mat-expansion-panel-header/span/mat-panel-title")
-	private WebElement citedPatentLink;*/
 
 	@FindBy(xpath = "//app-record-view/section/div//mat-accordion/mat-expansion-panel[6]/mat-expansion-panel-header")
 	private WebElement citingPatentLinkAttribute;
@@ -318,11 +312,23 @@ public class Tab_PatentSearch extends Controller {
 	@FindBy(xpath = "//app-result-count-bar/section/section[3]/button")
 	WebElement btn_Insights;
 
-	@FindBy(css = "section > app-result-set:nth-child(1) > section > aside > section:nth-child(3) > div > span:nth-child(2) > button > span > mat-icon")
+	@FindBy(xpath = "//app-page-search-result/div/section/section/section[2]/section/app-result-set[1]/section/aside/section[1]/div/span[2]/button/span/mat-icon")
 	private WebElement thumsUpIcon;
+	
+	@FindBy(css = "section > app-result-set:nth-child(1) > section > aside > section:nth-child(3) > div > span:nth-child(2) > button > span > mat-icon > svg > g > path")
+	private WebElement thumsUpIconFillStatus;
+	
+	@FindBy(css = "section > app-result-set:nth-child(1) > section > aside > section:nth-child(3) > div > span:nth-child(2) > button")
+	private WebElement thumsUpIconStatus;
 
 	@FindBy(css = "section > app-result-set:nth-child(1) > section > aside > section:nth-child(3) > div > span:nth-child(3) > button > span > mat-icon")
-	private WebElement thumbsDownIcon;
+	private WebElement thumbsDownIcon;	
+
+	@FindBy(css = "section > app-result-set:nth-child(1) > section > aside > section:nth-child(3) > div > span:nth-child(3) > button")
+	private WebElement thumbsDownIconStatus;
+	
+	@FindBy(css = "section > app-result-set:nth-child(1) > section > aside > section:nth-child(3) > div > span:nth-child(3) > button > span > mat-icon > svg > g > path")
+	private WebElement thumsDownIconFillStatus;
 
 	@FindBy(xpath = "//app-publication-year/section/mat-expansion-panel/mat-expansion-panel-header/span[2]")
 	private WebElement linkPublicationYear;
@@ -426,7 +432,7 @@ public class Tab_PatentSearch extends Controller {
 	public boolean isDisplayedTitle(int rowNumber) throws Exception {
 		try {
 			List<WebElement> ele = driver
-					.findElements(By.xpath("//mat-card-subtitle[@class='title ul mat-card-subtitle']"));
+					.findElements(By.xpath("//mat-card-header/div/mat-card-subtitle"));
 
 			WebElement eleTitle = ele.get(rowNumber);
 			boolean blnChkTitle = controller.isElementDisplayed(eleTitle);
@@ -1530,7 +1536,7 @@ public class Tab_PatentSearch extends Controller {
 	public void clickOnButtonInsights() throws Exception {
 		try {
 			controller.waitTime(2);
-			if (!btn_TabInsights.getAttribute("ng-reflect-fx-flex").toLowerCase().contains("385px")) {
+			if (!btn_TabInsights.getAttribute("style").toLowerCase().contains("385px")) {
 				controller.jsClick(btn_Insights);
 
 			} else {
@@ -1553,8 +1559,9 @@ public class Tab_PatentSearch extends Controller {
 			String iconStatus;
 			waitUntilElementIsDisplayed(thumsUpIcon);
 			jsClick(thumsUpIcon);
-			iconStatus = getElementAttribute(thumsUpIcon, "ng-reflect-svg-icon");
-			if (iconStatus.contains("thumbup-filled")) {
+			controller.waitTime(2);
+			iconStatus = getElementAttribute(thumsUpIconFillStatus, "fill");
+			if (iconStatus.contains("#008474")) {
 				controller.Logger.addsubStep(LogStatus.PASS, "THUMBS UP ICON CHANGED TO SOLID GREEN COLOR", false);
 			} else {
 				controller.Logger.addsubStep(LogStatus.FAIL, "THUMBS UP ICON DIDNT CHANGED TO SOLID GREEN COLOR",
@@ -1569,8 +1576,8 @@ public class Tab_PatentSearch extends Controller {
 	public String checkThumbsUpHollowState() throws Exception {
 		try {
 			String iconStatus;
-			waitUntilElementIsDisplayed(thumsUpIcon);
-			iconStatus = getElementAttribute(thumsUpIcon, "ng-reflect-svg-icon");
+			waitUntilElementIsDisplayed(thumsUpIconStatus);
+			iconStatus = getElementAttribute(thumsUpIconStatus, "class");
 			return (iconStatus);
 		} catch (Exception ex) {
 			throw new Exception("clickOnThumbsUpIcon is not working" + ex);
@@ -1580,8 +1587,8 @@ public class Tab_PatentSearch extends Controller {
 	public String checkThumbsDownHollowState() throws Exception {
 		try {
 			String iconStatus;
-			waitUntilElementIsDisplayed(thumbsDownIcon);
-			iconStatus = getElementAttribute(thumbsDownIcon, "ng-reflect-svg-icon");
+			waitUntilElementIsDisplayed(thumbsDownIconStatus);
+			iconStatus = getElementAttribute(thumbsDownIconStatus, "class");
 			return (iconStatus);
 		} catch (Exception ex) {
 			throw new Exception("checkThumbsDownHollowState is not working" + ex);
@@ -1619,12 +1626,13 @@ public class Tab_PatentSearch extends Controller {
 			String iconStatus;
 			waitUntilElementIsDisplayed(thumbsDownIcon);
 			jsClick(thumbsDownIcon);
-			iconStatus = getElementAttribute(thumbsDownIcon, "ng-reflect-svg-icon");
-			if (iconStatus.contains("thumbdown-filled")) {
+			controller.waitTime(2);
+			iconStatus = getElementAttribute(thumsDownIconFillStatus, "fill");
+			if (iconStatus.contains("#008474")) {
 				controller.Logger.addsubStep(LogStatus.PASS, "THUMBS DOWN ICON CHANGED TO SOLID GREEN COLOR", false);
 			} else {
 				controller.Logger.addsubStep(LogStatus.FAIL, "THUMBS DOWN ICON DIDNT CHANGED TO SOLID GREEN COLOR",
-						false);
+						true);
 			}
 
 		} catch (Exception ex) {
@@ -1700,30 +1708,26 @@ public class Tab_PatentSearch extends Controller {
 
 	public boolean isDisplayedButtonThumsUpWithFillColor(int recordNumber) throws Exception {
 		try {
-			WebElement listOfThumsUp = driver.findElement(By.cssSelector("section > app-result-set:nth-child("
-					+ recordNumber
-					+ ") > section > aside > section:nth-child(3) > div > span:nth-child(2) > button > span > mat-icon"));
-			if (controller.getElementAttribute(listOfThumsUp, "ng-reflect-svg-icon").contains("filled")) {
+			WebElement listOfThumsUp = driver.findElement(By.cssSelector("section > aside > section:nth-child(3) > div > span:nth-child(2) > button > span > mat-icon > svg > g > path"));
+			if (controller.getElementAttribute(listOfThumsUp, "fill").contains("#008474")) {
 				return true;
 			} else {
 				return false;
 			}
 
 		} catch (Exception e) {
-			return false;
+			throw new Exception("isDisplayedButtonThumsUpWithFillColor is not working.." + e);
 		}
 
 	}
 
 	public boolean isDisplayedButtonThumsDownWithFillColor(int recordNumber) throws Exception {
 		try {
-			WebElement listOfThumsDown = driver.findElement(By.cssSelector("section > app-result-set:nth-child("
-					+ recordNumber
-					+ ") > section > aside > section:nth-child(3) > div > span:nth-child(3) > button > span > mat-icon"));
-			if (controller.getElementAttribute(listOfThumsDown, "ng-reflect-svg-icon").contains("filled")) {
-				return true;
-			} else {
+			WebElement listOfThumsDown = driver.findElement(By.cssSelector("section > aside > section:nth-child(3) > div > span:nth-child(3) > button > span > mat-icon > svg > g > path"));
+			if (controller.getElementAttribute(listOfThumsDown, "fill").contains("#008474")) {
 				return false;
+			} else {
+				return true;
 			}
 
 		} catch (Exception e) {
