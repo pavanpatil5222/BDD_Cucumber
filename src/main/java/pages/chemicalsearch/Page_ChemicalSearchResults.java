@@ -29,7 +29,7 @@ public class Page_ChemicalSearchResults extends Controller{
 
 	@FindBy(xpath="//app-result-paginator-bar/section[1]/span[1]/mat-checkbox/label/div/input")
 	private WebElement globalCheckBox;
-	@FindBy(xpath="//app-result-set[1]/section/aside/section[1]/div/span[1]/app-result-set-saveto-modal/div/div[1]/section[3]/section/button")
+	@FindBy(xpath="//app-result-set-saveto-modal/div/div[1]/section[3]/section/button/span/span")
 	private WebElement linkCreateNewFolder;
 	@FindBy(css="app-result-set:nth-child(1) > section > aside > section:nth-child(3) > div > span:nth-child(1) > button > span > img")
 	private WebElement saveIcon;
@@ -54,7 +54,7 @@ public class Page_ChemicalSearchResults extends Controller{
 	@FindBy(xpath="//app-result-paginator-bar/section[1]/span[3]/div/app-result-set-saveto-modal/div/div[1]/section[3]/section/button")
 	private WebElement rsFooterCreateNewFolder;
 	
-	@FindBy(xpath="//input[@ng-reflect-maxlength='150']")
+	@FindBy(xpath="//input[contains(@maxlength,'150')]")
 	private WebElement txtFolderName;
 	
 	@FindBy(xpath="//div[@class='result-count']")
@@ -63,7 +63,7 @@ public class Page_ChemicalSearchResults extends Controller{
 	@FindBy(xpath = " //div[@class='chart']//*[name()='svg']//*[name()='circle']")
 	private WebElement circleClustermap;
 	
-	@FindBy(xpath = "//textarea[@ng-reflect-maxlength='2000']")
+	@FindBy(xpath = "//textarea[@maxlength='2000']")
 	private WebElement txtSearchBox;
 	
 	//" //section[@class='filter-section ng-star-inserted']//div[contains(text(),'" + filter + "')]"
@@ -103,10 +103,10 @@ public class Page_ChemicalSearchResults extends Controller{
 	@FindBy(xpath="//app-result-search-bar/section/section/div[2]/div[2]/div[2]")
 	private WebElement getLiteratureResultsCount;
 		
-	@FindBy(xpath = "//div[contains(@ng-reflect-klass,'tab tab-1')]")
+	@FindBy(xpath = "//div[@fxflex='100'][contains(.,'Patent')]")
 	private WebElement tabPatent;
 	
-	@FindBy(xpath = "//div[contains(@ng-reflect-klass,'tab tab-2')]")
+	@FindBy(xpath = "//div[@fxflex='150px'][contains(.,'Literature300+')]")
 	private WebElement tabLiterature;
 	
 	@FindBy(xpath = "//app-keyword-search/section/div[3]/button[2]/span/mat-icon")
@@ -504,7 +504,7 @@ public class Page_ChemicalSearchResults extends Controller{
 	public boolean isDisplayedSearchBoxNextToTabLiturature() throws Exception {
 		try {
 			waitUntilElementIsDisplayed(getResultsCount);
-		    boolean status=controller.isElementDisplayed(driver.findElement(By.xpath("//div[contains(@ng-reflect-klass,'tab tab-2')]/following-sibling::app-keyword-search//section[@class='ng-star-inserted']")));
+		    boolean status=controller.isElementDisplayed(driver.findElement(By.xpath("//textarea[contains(@aria-invalid,'false')]")));
 			return status;	
 		 }catch (Exception e) {
 		return false;
@@ -545,8 +545,8 @@ public class Page_ChemicalSearchResults extends Controller{
 	public String getColorOfPillBox(int pillNumber) throws Exception {
 		try {
 			waitUntilElementIsDisplayed(getResultsCount);
-			WebElement ele=driver.findElement(By.xpath("(//mat-chip[contains(@class,'mat-chip mat-primary mat-standard-chip')])["+pillNumber+"]"));
-		    return ele.getAttribute("ng-reflect-ng-class");
+			WebElement ele=driver.findElement(By.xpath("//div/mat-chip-list/div/mat-chip[1]["+pillNumber+"]"));
+		    return ele.getAttribute("class");
 		 }catch (Exception e) {
 			 throw new Exception("getColorOfPillBox is not working.." + e);
 		}
@@ -742,8 +742,8 @@ public class Page_ChemicalSearchResults extends Controller{
 		try 
 		{
 			waitUntilElementIsDisplayed(getResultsCount);
-			WebElement ele=driver.findElement(By.xpath("//textarea[contains(@id,'mat-input-1')]"));
-		    String topSectionBarText=controller.getElementAttribute(ele, "ng-reflect-model");
+			WebElement ele=driver.findElement(By.xpath("//textarea[@placeholder='Enter keywords, phrases or text blocks to search...']"));
+		    String topSectionBarText=controller.getElementAttribute(ele, "title");
 			return topSectionBarText;	
 		 }
 		catch (Exception e) 
@@ -940,7 +940,7 @@ public class Page_ChemicalSearchResults extends Controller{
 		try 
 		{
 			waitUntilElementIsDisplayed(getResultsCount);
-			WebElement ele=driver.findElement(By.xpath("(//div[@class='cdx-chip-block']//span[@class='cdx-chip-name'])["+pillNumber+"]"));
+			WebElement ele=driver.findElement(By.xpath("//div/mat-chip-list/div/mat-chip["+pillNumber+"]"));
 		    ele.click();
 		 }
 		catch (Exception e) 
@@ -951,8 +951,8 @@ public class Page_ChemicalSearchResults extends Controller{
 	
 	public void enterTextAnywhereInSearchBox(String typeText,int positionToTypeText) {
 
-	    WebElement textarea=driver.findElement(By.xpath("//textarea[contains(@placeholder,'Enter keywords, phrases or text blocks to search...')]"));;
-
+	    WebElement textarea=driver.findElement(By.xpath("//textarea[@placeholder='Enter keywords, phrases or text blocks to search...']"));;
+	    textarea.click();
 	    insert(textarea, typeText, positionToTypeText);
 	}
 	
