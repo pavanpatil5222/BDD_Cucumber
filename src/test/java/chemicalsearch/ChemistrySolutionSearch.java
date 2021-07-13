@@ -91,6 +91,7 @@ public class ChemistrySolutionSearch {
 			Application.Logger.endStep();
 			Application.Logger.addStep("4.VERIFY CLEAR ALL ICON (X) WHEN NOTHING IS ENTERED IN THE SEARCH TEXT BOX",
 					"CLEAR ALL ICON (X) SHOULD NOT BE DISPLAYED IN THE SEARCH TEXT BOX");
+			Application.waitTime(2);
 			if (!page_ChemicalSearchLandingPage.isDisplayedButtonClearAll()) {
 				Application.Logger.addsubStep(LogStatus.PASS, "CLEAR ALL ICON (X)IS NOT DISPLAYED ", false);
 			} else {
@@ -151,10 +152,10 @@ public class ChemistrySolutionSearch {
 					"KEYWORD SHOULD BE ADDED IN THE BOTTOM SECTION");
 			page_ChemicalSearchResults.clickOnTabPatent();
 			page_ChemicalSearchResults.tabPatentSearch().clickOnButtonInsights();
+			expKeywordText = page_ChemicalSearchResults.tabPatentSearch().getTextPatentInsightsKeyword();
 			page_ChemicalSearchResults.tabPatentSearch().clickOnButtonFirstKeyWord();
 			page_ChemicalSearchResults.clickOnSearchIcon();
-			rsKeyword = page_ChemicalSearchResults.getTextKeyword();
-			expKeywordText = page_ChemicalSearchResults.tabPatentSearch().getTextPatentInsightsKeyword();
+			rsKeyword = page_ChemicalSearchResults.getTextKeyword();			
 			if (rsKeyword.trim().equalsIgnoreCase(expKeywordText.trim())) {
 				Application.Logger.addsubStep(LogStatus.PASS,
 						"SEARCH IS PERFORMED WITH THE EXPECTED KEYWORD IN THE KEYWORD SECTION", false);
@@ -171,10 +172,10 @@ public class ChemistrySolutionSearch {
 					"KEYWORD SHOULD BE ADDED IN THE BOTTOM SECTION");
 			page_ChemicalSearchResults.clickOnTabLiterature();
 			page_ChemicalSearchResults.tabPatentSearch().clickOnButtonInsights();
+			expKeywordText = page_ChemicalSearchResults.tabLiteratureSearch().getTextLiteratureInsightsKeyword();
 			page_ChemicalSearchResults.tabLiteratureSearch().clickOnButtonFirstKeyWord();
 			page_ChemicalSearchResults.clickOnSearchIcon();
-			rsKeyword = page_ChemicalSearchResults.getTextKeyword();
-			expKeywordText = page_ChemicalSearchResults.tabLiteratureSearch().getTextLiteratureInsightsKeyword();
+			rsKeyword = page_ChemicalSearchResults.getTextKeyword();			
 			expKeywordText = expKeywordText.toLowerCase();
 			if (!rsKeyword.isEmpty() && (!expKeywordText.isEmpty())) {
 				Application.Logger.addsubStep(LogStatus.PASS,
@@ -243,20 +244,20 @@ public class ChemistrySolutionSearch {
 					"ICON SHOULD BE SELECTED AND CHANGED TO SOLID GREEN");
 			page_ChemicalSearchResults.tabPatentSearch().clickOnThumbsUpIcon();
 			expThumbsDownHollowState = page_ChemicalSearchResults.tabPatentSearch().checkThumbsDownHollowState();
-			if (!expThumbsDownHollowState.contains("filled")) {
+			if (!expThumbsDownHollowState.contains("focused")) {
 				Application.Logger.addsubStep(LogStatus.PASS, "THUMBS DOWN ICON IS IN HOLLOW STATE", false);
 			} else {
-				Application.Logger.addsubStep(LogStatus.FAIL, "THUMBS DOWN ICON IS NOT IN HOLLOW STATE", false);
+				Application.Logger.addsubStep(LogStatus.FAIL, "THUMBS DOWN ICON IS NOT IN HOLLOW STATE", true);
 			}
 			Application.Logger.endStep();
 			Application.Logger.addStep("3.CLICK ON THUMBS DOWN ICON FOR A RECORD",
 					"ICON SHOULD BE SELECTED AND CHANGED TO SOLID GREEN");
 			page_ChemicalSearchResults.tabPatentSearch().clickOnThumbsDownIcon();
 			expThumbsUpHollowState = page_ChemicalSearchResults.tabPatentSearch().checkThumbsUpHollowState();
-			if (!expThumbsUpHollowState.contains("filled")) {
+			if (!expThumbsUpHollowState.contains("focused")) {
 				Application.Logger.addsubStep(LogStatus.PASS, "THUMBS UP ICON IS IN HOLLOW STATE", false);
 			} else {
-				Application.Logger.addsubStep(LogStatus.FAIL, "THUMBS UP ICON IS NOT IN HOLLOW STATE", false);
+				Application.Logger.addsubStep(LogStatus.FAIL, "THUMBS UP ICON IS NOT IN HOLLOW STATE", true);
 			}
 			Application.Logger.endStep();
 
@@ -266,7 +267,7 @@ public class ChemistrySolutionSearch {
 				Application.Logger.addsubStep(LogStatus.PASS, "THUMBS UP ICON IS DISPLAYED FOR EVERY RECORD", false);
 			} else {
 				Application.Logger.addsubStep(LogStatus.FAIL, "THUMBS UP ICON IS NOT DISPLAYED FOR EVERY RECORD",
-						false);
+						true);
 			}
 			Application.Logger.endStep();
 			Application.Logger.addStep("5.VERIFY THUMBS DOWN ICON FOR EVERY RECORD",
@@ -275,7 +276,7 @@ public class ChemistrySolutionSearch {
 				Application.Logger.addsubStep(LogStatus.PASS, "THUMBS DOWN ICON IS DISPLAYED FOR EVERY RECORD", false);
 			} else {
 				Application.Logger.addsubStep(LogStatus.FAIL, "THUMBS DOWN ICON IS NOT DISPLAYED FOR EVERY RECORD",
-						false);
+						true);
 			}
 			Application.Logger.endStep();
 
@@ -284,20 +285,20 @@ public class ChemistrySolutionSearch {
 			page_ChemicalSearchResults.clickOnTabLiterature();
 			page_ChemicalSearchResults.tabLiteratureSearch().clickOnThumbsUpIcon();
 			expThumbsDownHollowState = page_ChemicalSearchResults.tabLiteratureSearch().checkThumbsDownHollowState();
-			if (!expThumbsDownHollowState.contains("filled")) {
+			if (!expThumbsDownHollowState.contains("focused")) {
 				Application.Logger.addsubStep(LogStatus.PASS, "THUMBS DOWN ICON IS IN HOLLOW STATE", false);
 			} else {
-				Application.Logger.addsubStep(LogStatus.FAIL, "THUMBS DOWN ICON IS NOT IN HOLLOW STATE", false);
+				Application.Logger.addsubStep(LogStatus.FAIL, "THUMBS DOWN ICON IS NOT IN HOLLOW STATE", true);
 			}
 			Application.Logger.endStep();
 			Application.Logger.addStep("7.CLICK ON THUMBS DOWN ICON FOR A RECORD",
 					"ICON SHOULD BE SELECTED AND CHANGED TO SOLID GREEN");
 			page_ChemicalSearchResults.tabLiteratureSearch().clickOnThumbsDownIcon();
 			expThumbsUpHollowState = page_ChemicalSearchResults.tabLiteratureSearch().checkThumbsUpHollowState();
-			if (!expThumbsUpHollowState.contains("filled")) {
+			if (!expThumbsUpHollowState.contains("focused")) {
 				Application.Logger.addsubStep(LogStatus.PASS, "THUMBS UP ICON IS IN HOLLOW STATE", false);
 			} else {
-				Application.Logger.addsubStep(LogStatus.FAIL, "THUMBS UP ICON IS NOT IN HOLLOW STATE", false);
+				Application.Logger.addsubStep(LogStatus.FAIL, "THUMBS UP ICON IS NOT IN HOLLOW STATE", true);
 			}
 			Application.Logger.endStep();
 			Application.Logger.addStep("8.IN LITERATURE TAB, VERIFY THUMBS UP ICON FOR EVERY RECORD",
@@ -306,7 +307,7 @@ public class ChemistrySolutionSearch {
 				Application.Logger.addsubStep(LogStatus.PASS, "THUMBS UP ICON IS DISPLAYED FOR EVERY RECORD", false);
 			} else {
 				Application.Logger.addsubStep(LogStatus.FAIL, "THUMBS UP ICON IS NOT DISPLAYED FOR EVERY RECORD",
-						false);
+						true);
 			}
 			Application.Logger.endStep();
 			Application.Logger.addStep("9.VERIFY THUMBS DOWN ICON FOR EVERY RECORD",
@@ -315,7 +316,7 @@ public class ChemistrySolutionSearch {
 				Application.Logger.addsubStep(LogStatus.PASS, "THUMBS DOWN ICON IS DISPLAYED FOR EVERY RECORD", false);
 			} else {
 				Application.Logger.addsubStep(LogStatus.FAIL, "THUMBS DOWN ICON IS NOT DISPLAYED FOR EVERY RECORD",
-						false);
+						true);
 			}
 			Application.Logger.endStep();
 		} catch (Exception e) {
@@ -987,7 +988,7 @@ public class ChemistrySolutionSearch {
 			} else {
 				Application.Logger.addsubStep(LogStatus.FAIL, "Looking Pillbox doesnot exist in result set", true);
 			}
-			if (page_ChemicalSearchResults.getColorOfPillBox(1).equals("state_0")) {
+			if (page_ChemicalSearchResults.getColorOfPillBox(1).contains("state_0")) {
 				Application.Logger.addsubStep(LogStatus.PASS, "Pill box contains 'blue color' as Expected.", false);
 			} else {
 				Application.Logger.addsubStep(LogStatus.FAIL, "Pill box not contain 'blue color' as Expected.", true);
@@ -1008,7 +1009,7 @@ public class ChemistrySolutionSearch {
 			page_ChemicalSearchResults.clickOnPillBox(1);
 			page_ChemicalSearchResults.clickOnSearchIcon();
 			Application.waitUntilFectchRecordProgressBarToDisappears();
-			if (page_ChemicalSearchResults.getColorOfPillBox(1).equals("state_1")) {
+			if (page_ChemicalSearchResults.getColorOfPillBox(1).contains("state_1")) {
 				Application.Logger.addsubStep(LogStatus.PASS, "Pill box contains 'Green color' as Expected.", false);
 			} else {
 				Application.Logger.addsubStep(LogStatus.FAIL, "Pill box not contain 'Green color' as Expected.", true);
@@ -1029,7 +1030,7 @@ public class ChemistrySolutionSearch {
 			page_ChemicalSearchResults.clickOnPillBox(1);
 			page_ChemicalSearchResults.clickOnSearchIcon();
 			Application.waitUntilFectchRecordProgressBarToDisappears();
-			if (page_ChemicalSearchResults.getColorOfPillBox(1).equals("state_2")) {
+			if (page_ChemicalSearchResults.getColorOfPillBox(1).contains("state_2")) {
 				Application.Logger.addsubStep(LogStatus.PASS, "Pill box contains 'Red color' as Expected.", false);
 			} else {
 				Application.Logger.addsubStep(LogStatus.FAIL, "Pill box not contain 'Red color' as Expected.", true);
@@ -1212,7 +1213,7 @@ public class ChemistrySolutionSearch {
 				}
 			}
 			for (int j = 5; j < 9; j++) {
-				if (!page_ChemicalSearchResults.tabPatentSearch().isDisplayedButtonThumsDownWithFillColor(j)) {
+				if (page_ChemicalSearchResults.tabPatentSearch().isDisplayedButtonThumsDownWithFillColor(j)) {
 					Application.Logger.addsubStep(LogStatus.PASS, "Thumbs Down is not be retained for the record :" + j,
 							false);
 				} else {
@@ -4243,7 +4244,7 @@ public class ChemistrySolutionSearch {
 			page_ChemicalSearchResults.tabPatentSearch().clickOnLinkAssignee(); 			
 			Application.waitUntilFectchRecordProgressBarToDisappears();
 			afterMoreLikeFilter= page_ChemicalSearchResults.getResultsCount();
-			if (beforeMoreLikeFilter <=afterMoreLikeFilter) 
+			if (beforeMoreLikeFilter >=afterMoreLikeFilter) 
 			{
 				Application.Logger.addsubStep(LogStatus.PASS, "RESULT SETS ARE REFRESHED", false);
 			} 
@@ -5180,7 +5181,9 @@ public class ChemistrySolutionSearch {
 			page_ChemicalSearchResults.tabPatentSearch().clickOnPatentRecord(1);
 			Application.waitTime(1);
 			publicationNumber = page_ChemicalSearchResults.tabPatentSearch().getTextPatentRecordViewPublicationNumber();
+			Application.waitTime(2);
 			page_ChemicalSearchResults.tabPatentSearch().clickOnLinkCitingPatent();
+			Application.waitTime(2);
 			page_ChemicalSearchResults.tabPatentSearch().clickOnCitingPatentViewASResultSet();
 			Application.waitUntilFectchRecordProgressBarToDisappears();
 			afterCitingPatentfilter = page_ChemicalSearchResults.getResultsCount();
@@ -5211,6 +5214,7 @@ public class ChemistrySolutionSearch {
 			page_ChemicalSearchResults.tabPatentSearch().clickOnPatentRecord(1);
 			Application.waitTime(1);
 			publicationNumber = page_ChemicalSearchResults.tabPatentSearch().getTextPatentRecordViewPublicationNumber();
+			Application.waitTime(2);
 			page_ChemicalSearchResults.tabPatentSearch().clickOnLinkCitedPatent();
 			Application.waitTime(2);
 			page_ChemicalSearchResults.tabPatentSearch().clickOnCitedPatentViewASResultSet();
@@ -5361,6 +5365,7 @@ public class ChemistrySolutionSearch {
 			page_ChemicalSearchResults.clickOnRsFooterSaveIcon();
 			Application.waitTime(2);
 			page_ChemicalSearchResults.clickOnRsFooterCreateNewFolder();
+			Application.waitTime(2);
 			page_ChemicalSearchResults.setTextFolderName(multipleFolderName);
 			page_ChemicalSearchResults.clickOnLinkCreate();
 			Application.waitTime(2);
@@ -5381,6 +5386,7 @@ public class ChemistrySolutionSearch {
 					"ERROR MESSAGE SHOULD BE DISPLAYED AND FOLDER SHOULD NOT BE CREATED");
 			Application.waitTime(2);
 			page_ChemicalSearchResults.clickOnRsFooterCreateNewFolder();
+			Application.waitTime(2);
 			page_ChemicalSearchResults.setTextFolderName(multipleFolderName);
 			actErrorMessage = page_ChemicalSearchResults.getTextFolderErrorMEssage();
 			if (actErrorMessage.equals(expErrorMessage)) {
@@ -5502,6 +5508,7 @@ public class ChemistrySolutionSearch {
 			Application.Logger.addStep(
 					"3.VERIFY IF THE ALL THE CHECK BOXES ARE SELECTED AFTER SELECTING THE GLOBAL CHECK BOX IN RS FOOTER PAGE",
 					"ALL THE CHECK BOXES SHOULD BE SELECTED");
+			Application.waitTime(2);
 			for (int i = 1; i < 100; i++) {
 				blnCheck = page_ChemicalSearchResults.isSelectedRSCheckBox(i);
 				if (blnCheck) {
