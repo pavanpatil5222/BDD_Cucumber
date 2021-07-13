@@ -20,7 +20,7 @@ public class Tab_LiteratureSearch extends Controller{
 	@FindBy(css = "app-result-set:nth-child(1) > section > mat-card > mat-card-content > section:nth-child(3) > div > span")
 	private WebElement linkMoreLikeThis;
 	
-	@FindBy(xpath = "(//mat-icon[contains(@class,'mat-icon notranslate mat-chip-remove mat-chip-trailing-icon material-icons mat-icon-no-color')])[2]")
+	@FindBy(xpath = "//app-page-search-result/div/app-result-search-bar/section/section/app-keyword-search/mat-chip-list/div/mat-chip/mat-icon")
 	private WebElement moreLikeCloseIcon;
 	
 	@FindBy(css = "app-record-view > section > div > div.body-content > div:nth-child(1) > span:nth-child(2) > a")
@@ -119,11 +119,23 @@ public class Tab_LiteratureSearch extends Controller{
 	@FindBy(css="#label_txt_0")
 	private WebElement literatureInsightsKeyword;
 
-	@FindBy(css="div:nth-child(1) > button > span > mat-icon")
+	@FindBy(css="app-result-set:nth-child(1) > section > mat-card > mat-card-content > section:nth-child(3) > div > div:nth-child(1) > button > span > mat-icon")
 	private WebElement thumsUpIcon;
 	
-	@FindBy(css="section > mat-card > mat-card-content > section:nth-child(3) > div > div:nth-child(2) > button > span > mat-icon")
+	@FindBy(css="app-result-set:nth-child(1) > section > mat-card > mat-card-content > section:nth-child(3) > div > div:nth-child(1) > button")
+	private WebElement thumsUpIconStatus;
+	
+	@FindBy(css="app-result-set:nth-child(1) > section > mat-card > mat-card-content > section:nth-child(3) > div > div:nth-child(1) > button > span > mat-icon > svg > g > path")
+	private WebElement thumsUpIconFillStatus;
+	
+	@FindBy(css="app-result-set:nth-child(1) > section > mat-card > mat-card-content > section:nth-child(3) > div > div:nth-child(2) > button > span > mat-icon")
 	private WebElement thumbsDownIcon;
+	
+	@FindBy(css="app-result-set:nth-child(1) > section > mat-card > mat-card-content > section:nth-child(3) > div > div:nth-child(2) > button")
+	private WebElement thumbsDownIconStatus;
+	
+	@FindBy(css="app-result-set:nth-child(1) > section > mat-card > mat-card-content > section:nth-child(3) > div > div:nth-child(2) > button > span > mat-icon > svg > g > path")
+	private WebElement thumbsDownIconFillStatus;
 		
 	@FindBy(xpath = " //div[contains(normalize-space(text()), 'Authors' )]")
 	private WebElement tabAuthors;
@@ -232,7 +244,7 @@ public class Tab_LiteratureSearch extends Controller{
 	
 	public boolean isDisplayedTitle(int rowNumber) throws Exception {
 		try{
-			List<WebElement> ele=driver.findElements(By.xpath("//mat-card-subtitle[@class='title ul mat-card-subtitle']"));
+			List<WebElement> ele=driver.findElements(By.xpath("//mat-card/mat-card-header/div/mat-card-subtitle"));
 			
 			WebElement eleTitle=ele.get(rowNumber);
 			boolean blnChkTitle=controller.isElementDisplayed(eleTitle);
@@ -290,8 +302,8 @@ public class Tab_LiteratureSearch extends Controller{
 			String iconStatus;
 			waitUntilElementIsDisplayed(thumsUpIcon);
 			jsClick(thumsUpIcon);
-			iconStatus=getElementAttribute(thumsUpIcon, "ng-reflect-svg-icon");
-			if(iconStatus.contains("thumbup-filled"))
+			iconStatus=getElementAttribute(thumsUpIconFillStatus, "fill");
+			if(iconStatus.contains("#008474"))
 			{
 			controller.Logger.addsubStep(LogStatus.PASS,"THUMBS UP ICON CHANGED TO SOLID GREEN COLOR", false); 
 			}
@@ -309,8 +321,8 @@ public class Tab_LiteratureSearch extends Controller{
 	public String checkThumbsUpHollowState() throws Exception {
 		try {
 			String iconStatus;
-			waitUntilElementIsDisplayed(thumsUpIcon);
-			iconStatus=getElementAttribute(thumsUpIcon, "ng-reflect-svg-icon");
+			waitUntilElementIsDisplayed(thumsUpIconStatus);
+			iconStatus=getElementAttribute(thumsUpIconStatus, "class");
 			return(iconStatus);
 			} catch (Exception ex) {
 			throw new Exception("clickOnThumbsUpIcon is not working" + ex);
@@ -320,8 +332,8 @@ public class Tab_LiteratureSearch extends Controller{
 	public String checkThumbsDownHollowState() throws Exception {
 		try {
 			String iconStatus;
-			waitUntilElementIsDisplayed(thumbsDownIcon);
-			iconStatus=getElementAttribute(thumbsDownIcon, "ng-reflect-svg-icon");
+			waitUntilElementIsDisplayed(thumbsDownIconStatus);
+			iconStatus=getElementAttribute(thumbsDownIconStatus, "class");
 			return(iconStatus);
 			} catch (Exception ex) {
 			throw new Exception("checkThumbsDownHollowState is not working" + ex);
@@ -333,8 +345,8 @@ public class Tab_LiteratureSearch extends Controller{
 			String iconStatus;
 			waitUntilElementIsDisplayed(thumbsDownIcon);
 			jsClick(thumbsDownIcon);
-			iconStatus=getElementAttribute(thumbsDownIcon, "ng-reflect-svg-icon");
-			if(iconStatus.contains("thumbdown-filled"))
+			iconStatus=getElementAttribute(thumbsDownIconFillStatus, "fill");
+			if(iconStatus.contains("#008474"))
 			{
 			controller.Logger.addsubStep(LogStatus.PASS,"THUMBS DOWN ICON CHANGED TO SOLID GREEN COLOR", false); 
 			}
@@ -699,7 +711,7 @@ public class Tab_LiteratureSearch extends Controller{
 	 public String getTextLiteratureTitle(int recordnumber) throws Exception {
 		 try {
 			WebElement ele = driver.findElement(By.cssSelector("app-result-set:nth-child("+recordnumber+") > section > mat-card > mat-card-header > div > mat-card-subtitle"));
-			return controller.getText(ele);			
+			return controller.getText(ele);
 		}
 		 catch (Exception ex) {
 			throw new Exception("getTextLiteratureTitle is not working" + ex);
