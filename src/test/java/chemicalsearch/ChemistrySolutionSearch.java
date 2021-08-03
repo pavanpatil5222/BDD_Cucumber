@@ -21,7 +21,7 @@ import utils.TestUtil;
 
 /**
  * 
- * @author Anand/Rashmi/Jagadeesh
+ * @author Anand/Rashmi
  *
  */
 public class ChemistrySolutionSearch {
