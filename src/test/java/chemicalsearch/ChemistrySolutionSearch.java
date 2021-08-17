@@ -91,7 +91,6 @@ public class ChemistrySolutionSearch {
 			Application.Logger.endStep();
 			Application.Logger.addStep("4.VERIFY CLEAR ALL ICON (X) WHEN NOTHING IS ENTERED IN THE SEARCH TEXT BOX",
 					"CLEAR ALL ICON (X) SHOULD NOT BE DISPLAYED IN THE SEARCH TEXT BOX");
-			Application.waitTime(2);
 			if (!page_ChemicalSearchLandingPage.isDisplayedButtonClearAll()) {
 				Application.Logger.addsubStep(LogStatus.PASS, "CLEAR ALL ICON (X)IS NOT DISPLAYED ", false);
 			} else {
@@ -152,10 +151,10 @@ public class ChemistrySolutionSearch {
 					"KEYWORD SHOULD BE ADDED IN THE BOTTOM SECTION");
 			page_ChemicalSearchResults.clickOnTabPatent();
 			page_ChemicalSearchResults.tabPatentSearch().clickOnButtonInsights();
-			expKeywordText = page_ChemicalSearchResults.tabPatentSearch().getTextPatentInsightsKeyword();
 			page_ChemicalSearchResults.tabPatentSearch().clickOnButtonFirstKeyWord();
 			page_ChemicalSearchResults.clickOnSearchIcon();
-			rsKeyword = page_ChemicalSearchResults.getTextKeyword();			
+			rsKeyword = page_ChemicalSearchResults.getTextKeyword();
+			expKeywordText = page_ChemicalSearchResults.tabPatentSearch().getTextPatentInsightsKeyword();
 			if (rsKeyword.trim().equalsIgnoreCase(expKeywordText.trim())) {
 				Application.Logger.addsubStep(LogStatus.PASS,
 						"SEARCH IS PERFORMED WITH THE EXPECTED KEYWORD IN THE KEYWORD SECTION", false);
@@ -172,10 +171,10 @@ public class ChemistrySolutionSearch {
 					"KEYWORD SHOULD BE ADDED IN THE BOTTOM SECTION");
 			page_ChemicalSearchResults.clickOnTabLiterature();
 			page_ChemicalSearchResults.tabPatentSearch().clickOnButtonInsights();
-			expKeywordText = page_ChemicalSearchResults.tabLiteratureSearch().getTextLiteratureInsightsKeyword();
 			page_ChemicalSearchResults.tabLiteratureSearch().clickOnButtonFirstKeyWord();
 			page_ChemicalSearchResults.clickOnSearchIcon();
-			rsKeyword = page_ChemicalSearchResults.getTextKeyword();			
+			rsKeyword = page_ChemicalSearchResults.getTextKeyword();
+			expKeywordText = page_ChemicalSearchResults.tabLiteratureSearch().getTextLiteratureInsightsKeyword();
 			expKeywordText = expKeywordText.toLowerCase();
 			if (!rsKeyword.isEmpty() && (!expKeywordText.isEmpty())) {
 				Application.Logger.addsubStep(LogStatus.PASS,
@@ -244,20 +243,20 @@ public class ChemistrySolutionSearch {
 					"ICON SHOULD BE SELECTED AND CHANGED TO SOLID GREEN");
 			page_ChemicalSearchResults.tabPatentSearch().clickOnThumbsUpIcon();
 			expThumbsDownHollowState = page_ChemicalSearchResults.tabPatentSearch().checkThumbsDownHollowState();
-			if (!expThumbsDownHollowState.contains("focused")) {
+			if (!expThumbsDownHollowState.contains("filled")) {
 				Application.Logger.addsubStep(LogStatus.PASS, "THUMBS DOWN ICON IS IN HOLLOW STATE", false);
 			} else {
-				Application.Logger.addsubStep(LogStatus.FAIL, "THUMBS DOWN ICON IS NOT IN HOLLOW STATE", true);
+				Application.Logger.addsubStep(LogStatus.FAIL, "THUMBS DOWN ICON IS NOT IN HOLLOW STATE", false);
 			}
 			Application.Logger.endStep();
 			Application.Logger.addStep("3.CLICK ON THUMBS DOWN ICON FOR A RECORD",
 					"ICON SHOULD BE SELECTED AND CHANGED TO SOLID GREEN");
 			page_ChemicalSearchResults.tabPatentSearch().clickOnThumbsDownIcon();
 			expThumbsUpHollowState = page_ChemicalSearchResults.tabPatentSearch().checkThumbsUpHollowState();
-			if (!expThumbsUpHollowState.contains("focused")) {
+			if (!expThumbsUpHollowState.contains("filled")) {
 				Application.Logger.addsubStep(LogStatus.PASS, "THUMBS UP ICON IS IN HOLLOW STATE", false);
 			} else {
-				Application.Logger.addsubStep(LogStatus.FAIL, "THUMBS UP ICON IS NOT IN HOLLOW STATE", true);
+				Application.Logger.addsubStep(LogStatus.FAIL, "THUMBS UP ICON IS NOT IN HOLLOW STATE", false);
 			}
 			Application.Logger.endStep();
 
@@ -267,7 +266,7 @@ public class ChemistrySolutionSearch {
 				Application.Logger.addsubStep(LogStatus.PASS, "THUMBS UP ICON IS DISPLAYED FOR EVERY RECORD", false);
 			} else {
 				Application.Logger.addsubStep(LogStatus.FAIL, "THUMBS UP ICON IS NOT DISPLAYED FOR EVERY RECORD",
-						true);
+						false);
 			}
 			Application.Logger.endStep();
 			Application.Logger.addStep("5.VERIFY THUMBS DOWN ICON FOR EVERY RECORD",
@@ -276,7 +275,7 @@ public class ChemistrySolutionSearch {
 				Application.Logger.addsubStep(LogStatus.PASS, "THUMBS DOWN ICON IS DISPLAYED FOR EVERY RECORD", false);
 			} else {
 				Application.Logger.addsubStep(LogStatus.FAIL, "THUMBS DOWN ICON IS NOT DISPLAYED FOR EVERY RECORD",
-						true);
+						false);
 			}
 			Application.Logger.endStep();
 
@@ -285,20 +284,20 @@ public class ChemistrySolutionSearch {
 			page_ChemicalSearchResults.clickOnTabLiterature();
 			page_ChemicalSearchResults.tabLiteratureSearch().clickOnThumbsUpIcon();
 			expThumbsDownHollowState = page_ChemicalSearchResults.tabLiteratureSearch().checkThumbsDownHollowState();
-			if (!expThumbsDownHollowState.contains("focused")) {
+			if (!expThumbsDownHollowState.contains("filled")) {
 				Application.Logger.addsubStep(LogStatus.PASS, "THUMBS DOWN ICON IS IN HOLLOW STATE", false);
 			} else {
-				Application.Logger.addsubStep(LogStatus.FAIL, "THUMBS DOWN ICON IS NOT IN HOLLOW STATE", true);
+				Application.Logger.addsubStep(LogStatus.FAIL, "THUMBS DOWN ICON IS NOT IN HOLLOW STATE", false);
 			}
 			Application.Logger.endStep();
 			Application.Logger.addStep("7.CLICK ON THUMBS DOWN ICON FOR A RECORD",
 					"ICON SHOULD BE SELECTED AND CHANGED TO SOLID GREEN");
 			page_ChemicalSearchResults.tabLiteratureSearch().clickOnThumbsDownIcon();
 			expThumbsUpHollowState = page_ChemicalSearchResults.tabLiteratureSearch().checkThumbsUpHollowState();
-			if (!expThumbsUpHollowState.contains("focused")) {
+			if (!expThumbsUpHollowState.contains("filled")) {
 				Application.Logger.addsubStep(LogStatus.PASS, "THUMBS UP ICON IS IN HOLLOW STATE", false);
 			} else {
-				Application.Logger.addsubStep(LogStatus.FAIL, "THUMBS UP ICON IS NOT IN HOLLOW STATE", true);
+				Application.Logger.addsubStep(LogStatus.FAIL, "THUMBS UP ICON IS NOT IN HOLLOW STATE", false);
 			}
 			Application.Logger.endStep();
 			Application.Logger.addStep("8.IN LITERATURE TAB, VERIFY THUMBS UP ICON FOR EVERY RECORD",
@@ -307,7 +306,7 @@ public class ChemistrySolutionSearch {
 				Application.Logger.addsubStep(LogStatus.PASS, "THUMBS UP ICON IS DISPLAYED FOR EVERY RECORD", false);
 			} else {
 				Application.Logger.addsubStep(LogStatus.FAIL, "THUMBS UP ICON IS NOT DISPLAYED FOR EVERY RECORD",
-						true);
+						false);
 			}
 			Application.Logger.endStep();
 			Application.Logger.addStep("9.VERIFY THUMBS DOWN ICON FOR EVERY RECORD",
@@ -316,7 +315,7 @@ public class ChemistrySolutionSearch {
 				Application.Logger.addsubStep(LogStatus.PASS, "THUMBS DOWN ICON IS DISPLAYED FOR EVERY RECORD", false);
 			} else {
 				Application.Logger.addsubStep(LogStatus.FAIL, "THUMBS DOWN ICON IS NOT DISPLAYED FOR EVERY RECORD",
-						true);
+						false);
 			}
 			Application.Logger.endStep();
 		} catch (Exception e) {
@@ -988,7 +987,7 @@ public class ChemistrySolutionSearch {
 			} else {
 				Application.Logger.addsubStep(LogStatus.FAIL, "Looking Pillbox doesnot exist in result set", true);
 			}
-			if (page_ChemicalSearchResults.getColorOfPillBox(1).contains("state_0")) {
+			if (page_ChemicalSearchResults.getColorOfPillBox(1).equals("state_0")) {
 				Application.Logger.addsubStep(LogStatus.PASS, "Pill box contains 'blue color' as Expected.", false);
 			} else {
 				Application.Logger.addsubStep(LogStatus.FAIL, "Pill box not contain 'blue color' as Expected.", true);
@@ -1009,7 +1008,7 @@ public class ChemistrySolutionSearch {
 			page_ChemicalSearchResults.clickOnPillBox(1);
 			page_ChemicalSearchResults.clickOnSearchIcon();
 			Application.waitUntilFectchRecordProgressBarToDisappears();
-			if (page_ChemicalSearchResults.getColorOfPillBox(1).contains("state_1")) {
+			if (page_ChemicalSearchResults.getColorOfPillBox(1).equals("state_1")) {
 				Application.Logger.addsubStep(LogStatus.PASS, "Pill box contains 'Green color' as Expected.", false);
 			} else {
 				Application.Logger.addsubStep(LogStatus.FAIL, "Pill box not contain 'Green color' as Expected.", true);
@@ -1030,7 +1029,7 @@ public class ChemistrySolutionSearch {
 			page_ChemicalSearchResults.clickOnPillBox(1);
 			page_ChemicalSearchResults.clickOnSearchIcon();
 			Application.waitUntilFectchRecordProgressBarToDisappears();
-			if (page_ChemicalSearchResults.getColorOfPillBox(1).contains("state_2")) {
+			if (page_ChemicalSearchResults.getColorOfPillBox(1).equals("state_2")) {
 				Application.Logger.addsubStep(LogStatus.PASS, "Pill box contains 'Red color' as Expected.", false);
 			} else {
 				Application.Logger.addsubStep(LogStatus.FAIL, "Pill box not contain 'Red color' as Expected.", true);
@@ -1213,7 +1212,7 @@ public class ChemistrySolutionSearch {
 				}
 			}
 			for (int j = 5; j < 9; j++) {
-				if (page_ChemicalSearchResults.tabPatentSearch().isDisplayedButtonThumsDownWithFillColor(j)) {
+				if (!page_ChemicalSearchResults.tabPatentSearch().isDisplayedButtonThumsDownWithFillColor(j)) {
 					Application.Logger.addsubStep(LogStatus.PASS, "Thumbs Down is not be retained for the record :" + j,
 							false);
 				} else {
@@ -1738,7 +1737,8 @@ public class ChemistrySolutionSearch {
 			page_ChemicalSearchLandingPage.setSearchText(searchText);
 			page_ChemicalSearchLandingPage.clickOnSearchIcon();
 			if (page_ChemicalSearchResults.checkIfResultsFound()) {
-				Application.Logger.addsubStep(LogStatus.PASS, "RESULT SET IS DISPLAYED FOR THE TEXT SEARCH AND  PDF WINDOW IS OPENED", false);
+				Application.Logger.addsubStep(LogStatus.PASS,
+						"RESULT SET IS DISPLAYED FOR THE TEXT SEARCH AND  PDF WINDOW IS OPENED", false);
 			} else {
 				throw new Exception("Results set is not loaded for the chemical search");
 			}
@@ -3500,13 +3500,15 @@ public class ChemistrySolutionSearch {
 			page_ChemicalSearchLandingPage.clickOnLinkSupportMenu();
 			page_ChemicalSearchLandingPage.setTextSearchTextBox(searchText);
 			page_ChemicalSearchLandingPage.clickOnSearchIcon();
-			/*Application.waitUntilFectchRecordProgressBarToDisappears();
-			if (page_ChemicalSearchResults.checkIfResultsFound()) {
-				Application.Logger.addsubStep(LogStatus.PASS, "RESULT SET IS DISPLAYED FOR THE TEXT SEARCH", false);
-			} else {
-				throw new Exception("Results set is not loaded for the chemical search");
-			}*/
-			//Application.waitTime(2);
+			/*
+			 * Application.waitUntilFectchRecordProgressBarToDisappears(); if
+			 * (page_ChemicalSearchResults.checkIfResultsFound()) {
+			 * Application.Logger.addsubStep(LogStatus.PASS,
+			 * "RESULT SET IS DISPLAYED FOR THE TEXT SEARCH", false); } else {
+			 * throw new Exception(
+			 * "Results set is not loaded for the chemical search"); }
+			 */
+			// Application.waitTime(2);
 			actualToastMsg = page_ChemicalSearchResults.getTextGuidedTipsToastMessage();
 			if (expToastMsg.equals(actualToastMsg)) {
 				Application.Logger.addsubStep(LogStatus.PASS,
@@ -4210,19 +4212,21 @@ public class ChemistrySolutionSearch {
 		return flag;
 	}
 
-	
-////CHEMEXP-1016
-@Test
+	//// CHEMEXP-1016
+	@Test
 	public boolean validatePatentMoreLikeThis(Controller Application, HashMap<String, String> input) {
-	page_ChemicalSearchLandingPage = new Page_ChemicalSearchLandingPage(Application);
-	page_ChemicalSearchResults = new Page_ChemicalSearchResults(Application);
-	String searchText = input.get("searchtext");
-	String rsPublicationNumber,moreLikePublicationNumber,rsAssignee,MoreLikeAssignee,rsInventor,MoreLikeInventor;
-	int beforeMoreLikeFilter,afterMoreLikeFilter;
-	List<String> fields =new ArrayList<String>(Arrays.asList("Title","Novelty","Assignee","Use","Inventor","Advantage","First claim"));
+		page_ChemicalSearchLandingPage = new Page_ChemicalSearchLandingPage(Application);
+		page_ChemicalSearchResults = new Page_ChemicalSearchResults(Application);
+		String searchText = input.get("searchtext");
+		String rsPublicationNumber, moreLikePublicationNumber, rsAssignee, MoreLikeAssignee, rsInventor,
+				MoreLikeInventor;
+		int beforeMoreLikeFilter, afterMoreLikeFilter;
+		List<String> fields = new ArrayList<String>(
+				Arrays.asList("Title", "Novelty", "Assignee", "Use", "Inventor", "Advantage", "First claim"));
 		boolean flag = true;
 		try {
-			Application.Logger.addStep("1.PERFORM A SEARCH WITH A PHARSE AND VERIFY THE RS PAGE","RS PAGE SHOULD BE DISPLAYED AFTER THE SUCCESSFUL SEARCH");
+			Application.Logger.addStep("1.PERFORM A SEARCH WITH A PHARSE AND VERIFY THE RS PAGE",
+					"RS PAGE SHOULD BE DISPLAYED AFTER THE SUCCESSFUL SEARCH");
 			page_ChemicalSearchLandingPage.setTextSearchTextBox(searchText);
 			page_ChemicalSearchLandingPage.clickOnSearchIcon();
 			Application.waitUntilFectchRecordProgressBarToDisappears();
@@ -4233,7 +4237,8 @@ public class ChemistrySolutionSearch {
 			}
 			beforeMoreLikeFilter = page_ChemicalSearchResults.getResultsCount();
 			Application.Logger.endStep();
-			Application.Logger.addStep("2.PERFORM MORE LIKE THIS ON THE ASSIGNEE IN RS PAGE","RESULT SETS SHOULD BE REFRESHED AND SHOULD DISPLAY RS FOR THE ASSIGNEE");
+			Application.Logger.addStep("2.PERFORM MORE LIKE THIS ON THE ASSIGNEE IN RS PAGE",
+					"RESULT SETS SHOULD BE REFRESHED AND SHOULD DISPLAY RS FOR THE ASSIGNEE");
 			page_ChemicalSearchResults.tabPatentSearch();
 			page_ChemicalSearchResults.clickOnLinkManageFields();
 			Application.waitTime(2);
@@ -4241,150 +4246,173 @@ public class ChemistrySolutionSearch {
 			page_ChemicalSearchResults.manageFields().selectManageFieldCheckBoxes(fields);
 			page_ChemicalSearchResults.manageFields().clickOnButtonApply();
 			Application.waitTime(2);
-			page_ChemicalSearchResults.tabPatentSearch().clickOnLinkAssignee(); 			
+			page_ChemicalSearchResults.tabPatentSearch().clickOnLinkAssignee();
 			Application.waitUntilFectchRecordProgressBarToDisappears();
-			afterMoreLikeFilter= page_ChemicalSearchResults.getResultsCount();
-			if (beforeMoreLikeFilter >=afterMoreLikeFilter) 
-			{
+			afterMoreLikeFilter = page_ChemicalSearchResults.getResultsCount();
+			if (beforeMoreLikeFilter <= afterMoreLikeFilter) {
 				Application.Logger.addsubStep(LogStatus.PASS, "RESULT SETS ARE REFRESHED", false);
-			} 
-			else 
-			{
-				Application.Logger.addsubStep(LogStatus.FAIL,"RESULT SETS ARE NOT REFRESHED  : \t" + beforeMoreLikeFilter + "\t\t AFTER FILTER :\t" + afterMoreLikeFilter,true);
+			} else {
+				Application.Logger.addsubStep(LogStatus.FAIL, "RESULT SETS ARE NOT REFRESHED  : \t"
+						+ beforeMoreLikeFilter + "\t\t AFTER FILTER :\t" + afterMoreLikeFilter, true);
 			}
-			MoreLikeAssignee=page_ChemicalSearchResults.tabPatentSearch().getTextKeyWordMoreLike();
-			for(int i=1;i<2;i++)
-			{
+			MoreLikeAssignee = page_ChemicalSearchResults.tabPatentSearch().getTextKeyWordMoreLike();
+			for (int i = 1; i < 2; i++) {
 				Application.waitTime(2);
-				rsAssignee=page_ChemicalSearchResults.tabPatentSearch().getTextAssignee(i);
-				if(MoreLikeAssignee.equalsIgnoreCase(rsAssignee))
-				{
-					Application.Logger.addsubStep(LogStatus.PASS, "MORE LIKE ASSIGNEE IN THE KEYWORD : \t\t"  +MoreLikeAssignee+ "\t\t IS MATCHING WITH RS ASSIGNEE :\t" +rsAssignee+"FOR THE RECORD NUMBER:\t\t "+i, false);	
+				rsAssignee = page_ChemicalSearchResults.tabPatentSearch().getTextAssignee(i);
+				if (MoreLikeAssignee.equalsIgnoreCase(rsAssignee)) {
+					Application.Logger.addsubStep(LogStatus.PASS,
+							"MORE LIKE ASSIGNEE IN THE KEYWORD : \t\t" + MoreLikeAssignee
+									+ "\t\t IS MATCHING WITH RS ASSIGNEE :\t" + rsAssignee
+									+ "FOR THE RECORD NUMBER:\t\t " + i,
+							false);
+				} else {
+					Application.Logger.addsubStep(LogStatus.FAIL,
+							"MORE LIKE ASSIGNEE IN THE KEYWORD : \t" + MoreLikeAssignee
+									+ "\t\t IS NOT MATCHING WITH RS ASSIGNEE :\t" + rsAssignee
+									+ "FOR THE RECORD NUMBER:\t\t " + i,
+							true);
 				}
-				else
-				{
-					Application.Logger.addsubStep(LogStatus.FAIL, "MORE LIKE ASSIGNEE IN THE KEYWORD : \t"  +MoreLikeAssignee+ "\t\t IS NOT MATCHING WITH RS ASSIGNEE :\t" +rsAssignee+"FOR THE RECORD NUMBER:\t\t "+i, true);
-				}
-					
+
 			}
 			Application.Logger.endStep();
-			Application.Logger.addStep("3.PERFORM MORE LIKE THIS ON THE INVENTOR IN RS PAGE","RESULT SETS SHOULD BE REFRESHED AND SHOULD DISPLAY RS FOR THE INVENTOR");
+			Application.Logger.addStep("3.PERFORM MORE LIKE THIS ON THE INVENTOR IN RS PAGE",
+					"RESULT SETS SHOULD BE REFRESHED AND SHOULD DISPLAY RS FOR THE INVENTOR");
 			page_ChemicalSearchResults.tabPatentSearch().clickOnLinkInventor();
 			Application.waitUntilFectchRecordProgressBarToDisappears();
-			MoreLikeInventor=page_ChemicalSearchResults.tabPatentSearch().getTextKeyWordMoreLike();
-			for(int j=1;j<2;j++)
-			{
+			MoreLikeInventor = page_ChemicalSearchResults.tabPatentSearch().getTextKeyWordMoreLike();
+			for (int j = 1; j < 2; j++) {
 				Application.waitTime(2);
-				rsInventor=page_ChemicalSearchResults.tabPatentSearch().getTextInventor(j);
-				if(MoreLikeInventor.equalsIgnoreCase(rsInventor))
-				{
-					Application.Logger.addsubStep(LogStatus.PASS, "MORE LIKE INVENTOR IN THE KEYWORD : \t\t"  +MoreLikeInventor+ "\t\t IS MATCHING WITH RS INVENTOR :\t" +rsInventor+"FOR THE RECORD NUMBER:\t\t "+j, false);	
+				rsInventor = page_ChemicalSearchResults.tabPatentSearch().getTextInventor(j);
+				if (MoreLikeInventor.equalsIgnoreCase(rsInventor)) {
+					Application.Logger.addsubStep(LogStatus.PASS,
+							"MORE LIKE INVENTOR IN THE KEYWORD : \t\t" + MoreLikeInventor
+									+ "\t\t IS MATCHING WITH RS INVENTOR :\t" + rsInventor
+									+ "FOR THE RECORD NUMBER:\t\t " + j,
+							false);
+				} else {
+					Application.Logger.addsubStep(LogStatus.FAIL,
+							"MORE LIKE INVENTOR IN THE KEYWORD : \t" + MoreLikeInventor
+									+ "\t\t IS NOT MATCHING WITH RS INVENTOR :\t" + rsInventor
+									+ "FOR THE RECORD NUMBER:\t\t " + j,
+							true);
 				}
-				else
-				{
-					Application.Logger.addsubStep(LogStatus.FAIL, "MORE LIKE INVENTOR IN THE KEYWORD : \t"  +MoreLikeInventor+ "\t\t IS NOT MATCHING WITH RS INVENTOR :\t" +rsInventor+"FOR THE RECORD NUMBER:\t\t "+j, true);
-				}
-				
-			} 	
+
+			}
 			Application.Logger.endStep();
-			Application.Logger.addStep("4.PERFORM MORE LIKE THIS ON THE PUBLICATION NUMBER IN RS PAGE","RESULT SETS SHOULD BE REFRESHED AND SHOULD DISPLAY RECORDS MATCHING FOR THE PUBLICATION NUMBER ");
+			Application.Logger.addStep("4.PERFORM MORE LIKE THIS ON THE PUBLICATION NUMBER IN RS PAGE",
+					"RESULT SETS SHOULD BE REFRESHED AND SHOULD DISPLAY RECORDS MATCHING FOR THE PUBLICATION NUMBER ");
 			page_ChemicalSearchResults.tabPatentSearch().clickOnLinkMoreLikeThis();
 			Application.waitUntilFectchRecordProgressBarToDisappears();
-			rsPublicationNumber=page_ChemicalSearchResults.tabPatentSearch().getTextPublicationNumber();
-			moreLikePublicationNumber=page_ChemicalSearchResults.tabPatentSearch().getTextKeyWordMoreLike();
-			if(rsPublicationNumber.equals(moreLikePublicationNumber))
-			{
-					Application.Logger.addsubStep(LogStatus.PASS, "MORE LIKE PUBLICATION NUMBER IN THE KEYWORD : \t\t"  +moreLikePublicationNumber+ "\t\t IS MATCHING WITH RS PUBLICATION NUMBER :\t" +rsPublicationNumber, false);	
-				}
-				else
-				{
-					Application.Logger.addsubStep(LogStatus.FAIL, "MORE LIKE PUBLICATION NUMBER IN THE KEYWORD : \t"  +moreLikePublicationNumber+ "\t\t IS NOT MATCHING WITH RS PUBLICATION NUMBER :\t" +rsPublicationNumber, true);
-				}	 				
-			
-			Application.Logger.endStep(); 				
-			Application.Logger.addStep("5.PERFORM MORE LIKE THIS ON THE ASSIGNEE FROM PATENT RECORD VIEW","RESULT SETS SHOULD BE REFRESHED AND SHOULD DISPLAY RS FOR THE ASSIGNEE");
-			page_ChemicalSearchResults.tabPatentSearch().clickOnPatentRecord(1);
-		Application.waitTime(2);
-			page_ChemicalSearchResults.tabPatentSearch().clickOnLinkPatentRecordViewAssignee(); 			
-			Application.waitUntilFectchRecordProgressBarToDisappears();
-			MoreLikeAssignee=page_ChemicalSearchResults.tabPatentSearch().getTextKeyWordMoreLike();
-			for(int i=1;i<2;i++)
-			{	
-				Application.waitTime(2);
-				rsAssignee=page_ChemicalSearchResults.tabPatentSearch().getTextAssignee(i);
-				if(MoreLikeAssignee.equalsIgnoreCase(rsAssignee))
-				{
-					Application.Logger.addsubStep(LogStatus.PASS, "MORE LIKE ASSIGNEE IN THE KEYWORD : \t\t"  +MoreLikeAssignee+ "\t\t IS MATCHING WITH RS ASSIGNEE :\t" +rsAssignee+"FOR THE RECORD NUMBER:\t\t "+i, false);	
-				}
-				else
-				{
-					Application.Logger.addsubStep(LogStatus.FAIL, "MORE LIKE ASSIGNEE IN THE KEYWORD : \t"  +MoreLikeAssignee+ "\t\t IS NOT MATCHING WITH RS ASSIGNEE :\t" +rsAssignee+"FOR THE RECORD NUMBER:\t\t "+i, true);
-				}
-					
+			rsPublicationNumber = page_ChemicalSearchResults.tabPatentSearch().getTextPublicationNumber();
+			moreLikePublicationNumber = page_ChemicalSearchResults.tabPatentSearch().getTextKeyWordMoreLike();
+			if (rsPublicationNumber.equals(moreLikePublicationNumber)) {
+				Application.Logger
+						.addsubStep(LogStatus.PASS,
+								"MORE LIKE PUBLICATION NUMBER IN THE KEYWORD : \t\t" + moreLikePublicationNumber
+										+ "\t\t IS MATCHING WITH RS PUBLICATION NUMBER :\t" + rsPublicationNumber,
+								false);
+			} else {
+				Application.Logger
+						.addsubStep(LogStatus.FAIL,
+								"MORE LIKE PUBLICATION NUMBER IN THE KEYWORD : \t" + moreLikePublicationNumber
+										+ "\t\t IS NOT MATCHING WITH RS PUBLICATION NUMBER :\t" + rsPublicationNumber,
+								true);
 			}
-			Application.Logger.endStep(); 				
-			Application.Logger.addStep("6.PERFORM MORE LIKE THIS ON THE INVENTOR FROM PATENT RECORD VIEW","RESULT SETS SHOULD BE REFRESHED AND SHOULD DISPLAY RS FOR THE INVENTOR");
+
+			Application.Logger.endStep();
+			Application.Logger.addStep("5.PERFORM MORE LIKE THIS ON THE ASSIGNEE FROM PATENT RECORD VIEW",
+					"RESULT SETS SHOULD BE REFRESHED AND SHOULD DISPLAY RS FOR THE ASSIGNEE");
 			page_ChemicalSearchResults.tabPatentSearch().clickOnPatentRecord(1);
-		Application.waitTime(2);
-			page_ChemicalSearchResults.tabPatentSearch().clickOnLinkPatentRecordViewInventor(); 			
+			Application.waitTime(2);
+			page_ChemicalSearchResults.tabPatentSearch().clickOnLinkPatentRecordViewAssignee();
 			Application.waitUntilFectchRecordProgressBarToDisappears();
-			MoreLikeInventor=page_ChemicalSearchResults.tabPatentSearch().getTextKeyWordMoreLike();
-			for(int i=1;i<2;i++)
-			{	
+			MoreLikeAssignee = page_ChemicalSearchResults.tabPatentSearch().getTextKeyWordMoreLike();
+			for (int i = 1; i < 2; i++) {
 				Application.waitTime(2);
-				rsInventor=page_ChemicalSearchResults.tabPatentSearch().getTextInventor(i);
-				if(MoreLikeInventor.equalsIgnoreCase(rsInventor))
-				{
-					Application.Logger.addsubStep(LogStatus.PASS, "MORE LIKE INVENTOR IN THE KEYWORD : \t\t"  +MoreLikeInventor+ "\t\t IS MATCHING WITH RS INVENTOR :\t" +rsInventor+"FOR THE RECORD NUMBER:\t\t "+i, false);	
+				rsAssignee = page_ChemicalSearchResults.tabPatentSearch().getTextAssignee(i);
+				if (MoreLikeAssignee.equalsIgnoreCase(rsAssignee)) {
+					Application.Logger.addsubStep(LogStatus.PASS,
+							"MORE LIKE ASSIGNEE IN THE KEYWORD : \t\t" + MoreLikeAssignee
+									+ "\t\t IS MATCHING WITH RS ASSIGNEE :\t" + rsAssignee
+									+ "FOR THE RECORD NUMBER:\t\t " + i,
+							false);
+				} else {
+					Application.Logger.addsubStep(LogStatus.FAIL,
+							"MORE LIKE ASSIGNEE IN THE KEYWORD : \t" + MoreLikeAssignee
+									+ "\t\t IS NOT MATCHING WITH RS ASSIGNEE :\t" + rsAssignee
+									+ "FOR THE RECORD NUMBER:\t\t " + i,
+							true);
 				}
-				else
-				{
-					Application.Logger.addsubStep(LogStatus.FAIL, "MORE LIKE INVENTOR IN THE KEYWORD : \t"  +MoreLikeInventor+ "\t\t IS NOT MATCHING WITH RS INVENTOR :\t" +rsInventor+"FOR THE RECORD NUMBER:\t\t "+i, true);
-				}
-					
+
 			}
 			Application.Logger.endStep();
-			Application.Logger.addStep("7.VERIFY SEARCHED KEYWORDS ARE HIGHLIGHTED IN RS","KEYWORD SHOULD BE HIGHLIGHTED IN RS");
-			page_ChemicalSearchResults.clickOnTabPatent();
-			int noOfTimesHightedOfGivenKeyword=page_ChemicalSearchResults.tabPatentSearch().getCountOfHighlightedTextInRS(searchText);
-				if(noOfTimesHightedOfGivenKeyword>0) 
-				{
-					Application.Logger.addsubStep(LogStatus.PASS,noOfTimesHightedOfGivenKeyword+ "\t time the given keyword \t"+searchText+" are heighlighted in Record Set", false); 
-				} 
-				else 
-				{
-					Application.Logger.addsubStep(LogStatus.FAIL,"keyword"+searchText+" are not heighlighted in Record Set", true);
+			Application.Logger.addStep("6.PERFORM MORE LIKE THIS ON THE INVENTOR FROM PATENT RECORD VIEW",
+					"RESULT SETS SHOULD BE REFRESHED AND SHOULD DISPLAY RS FOR THE INVENTOR");
+			page_ChemicalSearchResults.tabPatentSearch().clickOnPatentRecord(1);
+			Application.waitTime(2);
+			page_ChemicalSearchResults.tabPatentSearch().clickOnLinkPatentRecordViewInventor();
+			Application.waitUntilFectchRecordProgressBarToDisappears();
+			MoreLikeInventor = page_ChemicalSearchResults.tabPatentSearch().getTextKeyWordMoreLike();
+			for (int i = 1; i < 2; i++) {
+				Application.waitTime(2);
+				rsInventor = page_ChemicalSearchResults.tabPatentSearch().getTextInventor(i);
+				if (MoreLikeInventor.equalsIgnoreCase(rsInventor)) {
+					Application.Logger.addsubStep(LogStatus.PASS,
+							"MORE LIKE INVENTOR IN THE KEYWORD : \t\t" + MoreLikeInventor
+									+ "\t\t IS MATCHING WITH RS INVENTOR :\t" + rsInventor
+									+ "FOR THE RECORD NUMBER:\t\t " + i,
+							false);
+				} else {
+					Application.Logger.addsubStep(LogStatus.FAIL,
+							"MORE LIKE INVENTOR IN THE KEYWORD : \t" + MoreLikeInventor
+									+ "\t\t IS NOT MATCHING WITH RS INVENTOR :\t" + rsInventor
+									+ "FOR THE RECORD NUMBER:\t\t " + i,
+							true);
 				}
-				Application.Logger.endStep();
-				Application.Logger.addStep("8.VERIFY THE KEYWORD SECTION IS DISABLED IN MORE LIKE THIS MODE","KEYWORD SHOULD BE DISABLED MODE IN MORE LIKE THIS MODE");
-	 			if(page_ChemicalSearchResults.tabPatentSearch().isDisabledKeyWordSection()) 
-	 				{
-	 					Application.Logger.addsubStep(LogStatus.PASS,"KEY WORD SECTION IS IN DISABLE MODE", false); 
-	 				} 
-	 				else 
-	 				{
-	 					Application.Logger.addsubStep(LogStatus.FAIL,"KEY WORD SECTION IS NOT IN DISABLE MODE", false);
-	 				}
-	 				Application.Logger.endStep();
-	 				Application.Logger.addStep("9.VERIFY IF THE MORE LIKE OPTION IS CLOSED ON CLICK OF CLOSE ICON","USER SHOULD BE SUCCESSFULLY MOVED OUT OF MORE LIKE MODE");
-	 				page_ChemicalSearchResults.tabPatentSearch().clickOnCloseIconMoreLike();
-	 				afterMoreLikeFilter= page_ChemicalSearchResults.getResultsCount();
-	 				if (beforeMoreLikeFilter==afterMoreLikeFilter) 
-	 				{
-	 					Application.Logger.addsubStep(LogStatus.PASS, "RESULT SETS ARE REFRESHED AND USER IS OUT OF MORE LIKE THIS MODE", false);
-	 				} 
-	 				else 
-	 				{
-	 					Application.Logger.addsubStep(LogStatus.FAIL,"RESULT SETS ARE NOT REFRESHED AFTER CLOSING THE MORE LIKE THIS MODE : \t" + beforeMoreLikeFilter + "\t\t AFTER FILTER :\t" + afterMoreLikeFilter,true);
-	 				}
-	 				Application.Logger.endStep();
-		}	
-		catch (Exception e) {
-		Application.Logger.addException(e.getMessage());
-		return flag = false;
+
+			}
+			Application.Logger.endStep();
+			Application.Logger.addStep("7.VERIFY SEARCHED KEYWORDS ARE HIGHLIGHTED IN RS",
+					"KEYWORD SHOULD BE HIGHLIGHTED IN RS");
+			page_ChemicalSearchResults.clickOnTabPatent();
+			int noOfTimesHightedOfGivenKeyword = page_ChemicalSearchResults.tabPatentSearch()
+					.getCountOfHighlightedTextInRS(searchText);
+			if (noOfTimesHightedOfGivenKeyword > 0) {
+				Application.Logger.addsubStep(LogStatus.PASS, noOfTimesHightedOfGivenKeyword
+						+ "\t time the given keyword \t" + searchText + " are heighlighted in Record Set", false);
+			} else {
+				Application.Logger.addsubStep(LogStatus.FAIL,
+						"keyword" + searchText + " are not heighlighted in Record Set", true);
+			}
+			Application.Logger.endStep();
+			Application.Logger.addStep("8.VERIFY THE KEYWORD SECTION IS DISABLED IN MORE LIKE THIS MODE",
+					"KEYWORD SHOULD BE DISABLED MODE IN MORE LIKE THIS MODE");
+			if (page_ChemicalSearchResults.tabPatentSearch().isDisabledKeyWordSection()) {
+				Application.Logger.addsubStep(LogStatus.PASS, "KEY WORD SECTION IS IN DISABLE MODE", false);
+			} else {
+				Application.Logger.addsubStep(LogStatus.FAIL, "KEY WORD SECTION IS NOT IN DISABLE MODE", false);
+			}
+			Application.Logger.endStep();
+			Application.Logger.addStep("9.VERIFY IF THE MORE LIKE OPTION IS CLOSED ON CLICK OF CLOSE ICON",
+					"USER SHOULD BE SUCCESSFULLY MOVED OUT OF MORE LIKE MODE");
+			page_ChemicalSearchResults.tabPatentSearch().clickOnCloseIconMoreLike();
+			afterMoreLikeFilter = page_ChemicalSearchResults.getResultsCount();
+			if (beforeMoreLikeFilter == afterMoreLikeFilter) {
+				Application.Logger.addsubStep(LogStatus.PASS,
+						"RESULT SETS ARE REFRESHED AND USER IS OUT OF MORE LIKE THIS MODE", false);
+			} else {
+				Application.Logger.addsubStep(LogStatus.FAIL,
+						"RESULT SETS ARE NOT REFRESHED AFTER CLOSING THE MORE LIKE THIS MODE : \t"
+								+ beforeMoreLikeFilter + "\t\t AFTER FILTER :\t" + afterMoreLikeFilter,
+						true);
+			}
+			Application.Logger.endStep();
+		} catch (Exception e) {
+			Application.Logger.addException(e.getMessage());
+			return flag = false;
 		}
-	return flag;
-		}
+		return flag;
+	}
 
 	// CHEMEXP-1017
 
@@ -5152,7 +5180,7 @@ public class ChemistrySolutionSearch {
 		return flag;
 	}
 
-	//CHEMEXP-1067
+	// CHEMEXP-1067
 	@Test
 	public boolean validatePatentViewAsResultsSet(Controller Application, HashMap<String, String> input) {
 		page_ChemicalSearchLandingPage = new Page_ChemicalSearchLandingPage(Application);
@@ -5181,9 +5209,7 @@ public class ChemistrySolutionSearch {
 			page_ChemicalSearchResults.tabPatentSearch().clickOnPatentRecord(1);
 			Application.waitTime(1);
 			publicationNumber = page_ChemicalSearchResults.tabPatentSearch().getTextPatentRecordViewPublicationNumber();
-			Application.waitTime(2);
 			page_ChemicalSearchResults.tabPatentSearch().clickOnLinkCitingPatent();
-			Application.waitTime(2);
 			page_ChemicalSearchResults.tabPatentSearch().clickOnCitingPatentViewASResultSet();
 			Application.waitUntilFectchRecordProgressBarToDisappears();
 			afterCitingPatentfilter = page_ChemicalSearchResults.getResultsCount();
@@ -5214,7 +5240,6 @@ public class ChemistrySolutionSearch {
 			page_ChemicalSearchResults.tabPatentSearch().clickOnPatentRecord(1);
 			Application.waitTime(1);
 			publicationNumber = page_ChemicalSearchResults.tabPatentSearch().getTextPatentRecordViewPublicationNumber();
-			Application.waitTime(2);
 			page_ChemicalSearchResults.tabPatentSearch().clickOnLinkCitedPatent();
 			Application.waitTime(2);
 			page_ChemicalSearchResults.tabPatentSearch().clickOnCitedPatentViewASResultSet();
@@ -5271,8 +5296,8 @@ public class ChemistrySolutionSearch {
 		return flag;
 	}
 
-	//CHEMEXP-1068
-	
+	// CHEMEXP-1068
+
 	@Test
 	public boolean validateCreateFolder(Controller Application, HashMap<String, String> input) {
 		page_ChemicalSearchLandingPage = new Page_ChemicalSearchLandingPage(Application);
@@ -5365,7 +5390,6 @@ public class ChemistrySolutionSearch {
 			page_ChemicalSearchResults.clickOnRsFooterSaveIcon();
 			Application.waitTime(2);
 			page_ChemicalSearchResults.clickOnRsFooterCreateNewFolder();
-			Application.waitTime(2);
 			page_ChemicalSearchResults.setTextFolderName(multipleFolderName);
 			page_ChemicalSearchResults.clickOnLinkCreate();
 			Application.waitTime(2);
@@ -5386,7 +5410,6 @@ public class ChemistrySolutionSearch {
 					"ERROR MESSAGE SHOULD BE DISPLAYED AND FOLDER SHOULD NOT BE CREATED");
 			Application.waitTime(2);
 			page_ChemicalSearchResults.clickOnRsFooterCreateNewFolder();
-			Application.waitTime(2);
 			page_ChemicalSearchResults.setTextFolderName(multipleFolderName);
 			actErrorMessage = page_ChemicalSearchResults.getTextFolderErrorMEssage();
 			if (actErrorMessage.equals(expErrorMessage)) {
@@ -5450,7 +5473,7 @@ public class ChemistrySolutionSearch {
 		return flag;
 	}
 
-	//CHEMEXP-1069
+	// CHEMEXP-1069
 	@Test
 	public boolean validateGlobalCheckBoxAndPagination(Controller Application, HashMap<String, String> input) {
 		page_ChemicalSearchLandingPage = new Page_ChemicalSearchLandingPage(Application);
@@ -5508,7 +5531,6 @@ public class ChemistrySolutionSearch {
 			Application.Logger.addStep(
 					"3.VERIFY IF THE ALL THE CHECK BOXES ARE SELECTED AFTER SELECTING THE GLOBAL CHECK BOX IN RS FOOTER PAGE",
 					"ALL THE CHECK BOXES SHOULD BE SELECTED");
-			Application.waitTime(2);
 			for (int i = 1; i < 100; i++) {
 				blnCheck = page_ChemicalSearchResults.isSelectedRSCheckBox(i);
 				if (blnCheck) {
@@ -5575,4 +5597,726 @@ public class ChemistrySolutionSearch {
 		}
 		return flag;
 	}
+
+	// CHEMEXP-1346
+	@Test
+	public boolean validateChemicalStructureFilterField(Controller Application, HashMap<String, String> input) {
+		page_ChemicalSearchLandingPage = new Page_ChemicalSearchLandingPage(Application);
+		page_ChemicalSearchResults = new Page_ChemicalSearchResults(Application);
+		page_SavedRecords = new Page_SavedRecords(Application);
+		String searchText = input.get("searchtext");
+		String smiley = input.get("smiles");
+		int beforeFilter, afterFilter;
+		boolean flag = true;
+		try {
+			Application.Logger.addStep("1.PERFORM A SUB STRUCTURE SEARCH AND FREE TEXT SEARCH FROM THE LANDING PAGE",
+					"RESULTS SET PAGE SHOULD BE DISPLAYED FOR BOTH EXACT STRUCURE SEARCH AND FREE TEXT SEARCH");
+			page_ChemicalSearchLandingPage.setTextSearchTextBox(searchText);
+			Application.waitTime(2);
+			page_ChemicalSearchLandingPage.clickOnStructureSearchIcon();
+			page_ChemicalSearchLandingPage.setTextSmileyTextBox(smiley);
+			Application.waitTime(2);
+			page_ChemicalSearchLandingPage.selectStructureRadioButton("Substructure");
+			Application.waitTime(2);
+			page_ChemicalSearchLandingPage.clickOnSearchIcon();
+			Application.waitUntilFectchRecordProgressBarToDisappears();
+			if (page_ChemicalSearchResults.checkIfResultsFound()) {
+				Application.Logger.addsubStep(LogStatus.PASS, "RESULT SET IS DISPLAYED FOR THE TEXT SEARCH", false);
+			} else {
+				throw new Exception("Results set is not loaded for the chemical search");
+			}
+			Application.Logger.endStep();
+
+			Application.Logger.addStep("2.CLICK ON ANY STRUCTURE ON THE CHEMICAL STRUCTURE FILTER PANEL ",
+					"RESULTS COUNT SHOULD BE REFRESHED");
+			int resultsCounts = page_ChemicalSearchResults.getResultsCount();
+			beforeFilter = page_ChemicalSearchResults.getResultsCount();
+			page_ChemicalSearchResults.clickOnChemicalStructureFilterCheckbox("CHEMICAL STRUCTURE", 1);
+			afterFilter = page_ChemicalSearchResults.getResultsCount();
+			if (beforeFilter > afterFilter) {
+				Application.Logger.addsubStep(LogStatus.PASS,
+						"RESULT SETS ARE REFRESHED AFTER THE PUBLICATION YEAR TEXT FILTER", false);
+			} else {
+				Application.Logger.addsubStep(LogStatus.FAIL,
+						"RESULT SETS ARE NOT REFRESHED AFTER THE PUBLICATION YEAR TEXT FILTER, BEFORE FILTER : \t"
+								+ beforeFilter + "\t\t AFTER PY FILTER :\t" + afterFilter,
+						true);
+			}
+			Application.Logger.endStep();
+
+			Application.Logger.addStep("3.CLICK ON SEE ALL STRUCTURES LINK",
+					"FILTERCHEMICALSTRUCTUREMODAL IS DISPLAYED");
+			int resultsCount = page_ChemicalSearchResults.getResultsCount();
+			page_ChemicalSearchResults.tabPatentSearch().clickOnLinkSeeAllStructures();
+			Application.waitTime(2);
+			if (page_ChemicalSearchResults.tabPatentSearch().isDisplayedfilterChemicalStructureModal()) {
+				Application.Logger.addsubStep(LogStatus.PASS, "filterChemicalStructureModal is DISPLAYED ", false);
+			} else {
+				Application.Logger.addsubStep(LogStatus.FAIL, "filterChemicalStructureModal is not DISPLAYED ", true);
+			}
+			Application.Logger.endStep();
+
+			Application.Logger.addStep("4.SELECT ANY STRUCTURE AND CLICK ON APPLY FILTERS",
+					"RESULTS COUNT SHOULD BE REFRESHED");
+			page_ChemicalSearchResults.filterChemicalStructure().clickOnSingleStructure();
+			page_ChemicalSearchResults.filterChemicalStructure().clickOnButtonApplyFilters();
+			Application.waitTime(2);
+			int resultsCountAfterFilterChemicalStructure = page_ChemicalSearchResults.getResultsCount();
+			if (resultsCountAfterFilterChemicalStructure <= resultsCount) {
+				Application.Logger.addsubStep(LogStatus.PASS, "Results count is refreshed", false);
+			} else {
+				Application.Logger.addsubStep(LogStatus.FAIL, "Results count is not refreshed.", true);
+			}
+			Application.Logger.endStep();
+
+			Application.Logger.addStep(
+					"5.CLICK ON SEE ALL STRUCTURES LINK ,SELECT ALL THE STRUCTURE BY CLICKING GLOBAL CHECKBOX AND CLICK ON APPLY FILTERS",
+					"RESULTS COUNT SHOULD BE REFRESHED");
+			int resultCount = page_ChemicalSearchResults.getResultsCount();
+			page_ChemicalSearchResults.tabPatentSearch().clickOnLinkSeeAllStructures();
+			page_ChemicalSearchResults.filterChemicalStructure().clickOnGlobalStructureCheckbox();
+			page_ChemicalSearchResults.filterChemicalStructure().clickOnButtonApplyFilters();
+			Application.waitTime(2);
+			int resultsCountAfterFilterChemicalStructures = page_ChemicalSearchResults.getResultsCount();
+			if (resultsCountAfterFilterChemicalStructures >= resultCount) {
+				Application.Logger.addsubStep(LogStatus.PASS, "Results count is refreshed", false);
+			} else {
+				Application.Logger.addsubStep(LogStatus.FAIL, "Results count is not refreshed.", true);
+			}
+			Application.Logger.endStep();
+
+		} catch (Exception e) {
+			Application.Logger.addException(e.getMessage());
+			return flag = false;
+		}
+		return flag;
+	}
+
+	// CHEMEXP-1349
+	@Test
+	public boolean validateChemicalStructureFilterPaginationAndCheckboxSelection(Controller Application,
+			HashMap<String, String> input) {
+		page_ChemicalSearchLandingPage = new Page_ChemicalSearchLandingPage(Application);
+		page_ChemicalSearchResults = new Page_ChemicalSearchResults(Application);
+		page_SavedRecords = new Page_SavedRecords(Application);
+		String searchText = input.get("searchtext");
+		String smiley = input.get("smiles");
+		String expGlobalCheckboxHalfFilledState, expGlobalCheckboxFullFilledState, expNextPageRecordSelection;
+		boolean flag = true;
+		try {
+			Application.Logger.addStep("1.PERFORM A SUB STRUCTURE SEARCH AND FREE TEXT SEARCH FROM THE LANDING PAGE",
+					"RESULTS SET PAGE SHOULD BE DISPLAYED FOR BOTH EXACT STRUCURE SEARCH AND FREE TEXT SEARCH");
+			page_ChemicalSearchLandingPage.setTextSearchTextBox(searchText);
+			Application.waitTime(2);
+			page_ChemicalSearchLandingPage.clickOnStructureSearchIcon();
+			page_ChemicalSearchLandingPage.setTextSmileyTextBox(smiley);
+			Application.waitTime(2);
+			page_ChemicalSearchLandingPage.selectStructureRadioButton("Substructure");
+			Application.waitTime(2);
+			page_ChemicalSearchLandingPage.clickOnSearchIcon();
+			Application.waitUntilFectchRecordProgressBarToDisappears();
+			if (page_ChemicalSearchResults.checkIfResultsFound()) {
+				Application.Logger.addsubStep(LogStatus.PASS, "RESULT SET IS DISPLAYED FOR THE TEXT SEARCH", false);
+			} else {
+				throw new Exception("RESULTS SET IS NOT LOADED FOR THE CHEMICAL SEARCH");
+			}
+			Application.Logger.endStep();
+
+			Application.Logger.addStep("2.CLICK ON SEE ALL STRUCTURES LINK",
+					"FILTERCHEMICALSTRUCTUREMODAL IS DISPLAYED");
+			page_ChemicalSearchResults.tabPatentSearch().clickOnLinkSeeAllStructures();
+			Application.waitTime(2);
+			if (page_ChemicalSearchResults.tabPatentSearch().isDisplayedfilterChemicalStructureModal()) {
+				Application.Logger.addsubStep(LogStatus.PASS, "filterChemicalStructureModal is DISPLAYED ", false);
+			} else {
+				Application.Logger.addsubStep(LogStatus.FAIL, "filterChemicalStructureModal is not DISPLAYED ", true);
+			}
+			Application.Logger.endStep();
+
+			Application.Logger.addStep("3.SELECT ANY STRUCTURE AND VERIFY GLOBAL CHECKBOX",
+					"GLOBAL CHECKBOX SHOULD BE HALF FILLED");
+			page_ChemicalSearchResults.filterChemicalStructure().clickOnSingleStructure();
+			expGlobalCheckboxHalfFilledState = page_ChemicalSearchResults.filterChemicalStructure()
+					.checkGlobalStructureCheckboxState();
+			if (expGlobalCheckboxHalfFilledState.contains("mixed")) {
+				Application.Logger.addsubStep(LogStatus.PASS, "global checkbox is half filled ", false);
+			} else {
+				Application.Logger.addsubStep(LogStatus.FAIL, "global checkbox is not half filled", false);
+			}
+
+			Application.Logger.endStep();
+
+			Application.Logger.addStep("4.NAVIGATE TO NEXT PAGE AND VERIFY THE RECORD SELECTION ON FOOTER CHECKBOX",
+					"RECORD SELECTION SHOULD REMAIN SAME");
+			Application.waitTime(2);
+			String actualRecordSelection = page_ChemicalSearchResults.filterChemicalStructure()
+					.getStructureTextRecordSelection();
+			Application.waitTime(2);
+			page_ChemicalSearchResults.filterChemicalStructure().clickOnNextPage();
+			Application.waitTime(2);
+			expNextPageRecordSelection = page_ChemicalSearchResults.filterChemicalStructure()
+					.getStructureTextRecordSelection();
+			Application.waitTime(2);
+			if (actualRecordSelection.contentEquals(expNextPageRecordSelection)) {
+				Application.Logger.addsubStep(LogStatus.PASS, "Record selection should be same  ", false);
+			} else {
+				Application.Logger.addsubStep(LogStatus.FAIL, "Record selection is not matching ", false);
+			}
+			Application.Logger.endStep();
+
+			Application.Logger.addStep("5.VERIFY THE GLOBAL CHECKBOX STATE AFTER NAVIGATING TO NEXT PAGE",
+					"SHOULD BE IN HOLLOW STATE");
+			expGlobalCheckboxFullFilledState = page_ChemicalSearchResults.filterChemicalStructure()
+					.checkGlobalStructureCheckboxState();
+			if (expGlobalCheckboxFullFilledState.contains("false")) {
+				Application.Logger.addsubStep(LogStatus.PASS, "global checkbox is in hollow state ", false);
+			} else {
+				Application.Logger.addsubStep(LogStatus.FAIL, "global checkbox is not in hollow state", false);
+			}
+			Application.Logger.endStep();
+
+			Application.Logger.addStep("6.SELECT ANY RECORD ON NEXT PAGE AND VERIFY THE RECORD SELECTION ON FOOTER",
+					"RECORD SELECTION SHOULD NOT BE SAME");
+			String actualRecordSelectionInNextPage = page_ChemicalSearchResults.filterChemicalStructure()
+					.getStructureTextRecordSelection();
+			page_ChemicalSearchResults.filterChemicalStructure().clickOnSingleStructure();
+			Application.waitTime(2);
+			expNextPageRecordSelection = page_ChemicalSearchResults.filterChemicalStructure()
+					.getStructureTextRecordSelection();
+			if (!(actualRecordSelectionInNextPage).contentEquals(expNextPageRecordSelection)) {
+				Application.Logger.addsubStep(LogStatus.PASS, "Record selection should not be same  ", false);
+			} else {
+				Application.Logger.addsubStep(LogStatus.FAIL, "Record selection Should be same ", false);
+			}
+			Application.Logger.endStep();
+
+			Application.Logger.addStep("7.SET THE PAGINATION TO DIFFERENT LEVELS AND VERIFY THE GLOBAL CHECKBOX STATE",
+					"GLOBAL CHECKBOX SHOULD HALF FILLED");
+			page_ChemicalSearchResults.filterChemicalStructure().clickOnPreviousPage();
+			Application.waitTime(2);
+			page_ChemicalSearchResults.filterChemicalStructure().selectItemsPerPageFromDropDown("24");
+			Application.waitTime(2);
+			expGlobalCheckboxFullFilledState = page_ChemicalSearchResults.filterChemicalStructure()
+					.checkGlobalStructureCheckboxState();
+			if (expGlobalCheckboxFullFilledState.contains("mixed")) {
+				Application.Logger.addsubStep(LogStatus.PASS, "global checkbox is partialy filled ", false);
+			} else {
+				Application.Logger.addsubStep(LogStatus.FAIL, "global checkbox is not partialy filled", false);
+			}
+			page_ChemicalSearchResults.filterChemicalStructure().selectItemsPerPageFromDropDown("36");
+			Application.waitTime(2);
+			expGlobalCheckboxFullFilledState = page_ChemicalSearchResults.filterChemicalStructure()
+					.checkGlobalStructureCheckboxState();
+			if (expGlobalCheckboxFullFilledState.contains("mixed")) {
+				Application.Logger.addsubStep(LogStatus.PASS, "global checkbox is partialy filled ", false);
+			} else {
+				Application.Logger.addsubStep(LogStatus.FAIL, "global checkbox is not partialy filled", false);
+			}
+
+			page_ChemicalSearchResults.filterChemicalStructure().selectItemsPerPageFromDropDown("12");
+			Application.waitTime(2);
+			expGlobalCheckboxFullFilledState = page_ChemicalSearchResults.filterChemicalStructure()
+					.checkGlobalStructureCheckboxState();
+			Application.waitTime(2);
+			if (expGlobalCheckboxFullFilledState.contains("mixed")) {
+				Application.Logger.addsubStep(LogStatus.PASS, "global checkbox is partialy filled ", false);
+			} else {
+				Application.Logger.addsubStep(LogStatus.FAIL, "global checkbox is not partialy filled", false);
+			}
+			Application.Logger.endStep();
+
+			Application.Logger.addStep(
+					"8.SELECT ALL RECORDS FROM RS GLOBAL CHECKBOX AND VERIFY THE GLOBAL CHECKBOX STATE",
+					"GLOBAL CHECKBOX SHOULD FULL FILLED");
+			page_ChemicalSearchResults.filterChemicalStructure().clickOnHalfFilledGlobalCheckBox();
+			Application.waitTime(2);
+			expGlobalCheckboxFullFilledState = page_ChemicalSearchResults.filterChemicalStructure()
+					.checkGlobalStructureCheckboxState();
+			if (expGlobalCheckboxFullFilledState.contains("true")) {
+				Application.Logger.addsubStep(LogStatus.PASS, "global checkbox is full filled ", false);
+			} else {
+				Application.Logger.addsubStep(LogStatus.FAIL, "global checkbox is not full filled", false);
+			}
+			Application.Logger.endStep();
+
+			Application.Logger.addStep("9.NAVIGATE TO NEXT PAGE AND SELECT ALL RECORDS FROM RS GLOBAL CHECKBOX ",
+					"GLOBAL CHECKBOX SHOULD FULL FILLED");
+			page_ChemicalSearchResults.filterChemicalStructure().clickOnNextPage();
+			page_ChemicalSearchResults.filterChemicalStructure().clickOnSingleStructure();
+			page_ChemicalSearchResults.filterChemicalStructure().clickOnHalfFilledGlobalCheckBox();
+			expGlobalCheckboxFullFilledState = page_ChemicalSearchResults.filterChemicalStructure()
+					.checkGlobalStructureCheckboxState();
+			if (expGlobalCheckboxFullFilledState.contains("true")) {
+				Application.Logger.addsubStep(LogStatus.PASS, "global checkbox is full filled ", false);
+			} else {
+				Application.Logger.addsubStep(LogStatus.FAIL, "global checkbox is not full filled", false);
+			}
+			Application.Logger.endStep();
+
+			Application.Logger.addStep("10.SET THE PAGINATION TO 36 AND VERIFY THE STATE OF GLOBAL CHECKBOX",
+					"GLOBAL CHECKBOX IS PARTIALLY FILLED");
+			page_ChemicalSearchResults.filterChemicalStructure().selectItemsPerPageFromDropDown("36");
+			Application.waitTime(2);
+			expGlobalCheckboxHalfFilledState = page_ChemicalSearchResults.filterChemicalStructure()
+					.checkGlobalStructureCheckboxState();
+			if (expGlobalCheckboxHalfFilledState.contains("mixed")) {
+				Application.Logger.addsubStep(LogStatus.PASS, "global checkbox is partialy filled ", false);
+			} else {
+				Application.Logger.addsubStep(LogStatus.FAIL, "global checkbox is not partialy filled", false);
+			}
+			Application.Logger.endStep();
+		} catch (Exception e) {
+			Application.Logger.addException(e.getMessage());
+			return flag = false;
+		}
+		return flag;
+	}
+
+	//CHEMEXP-1347
+	@Test
+	public boolean validateTextInputBoxForStructure(Controller Application, HashMap<String, String> input) {
+		page_ChemicalSearchLandingPage = new Page_ChemicalSearchLandingPage(Application);
+		page_ChemicalSearchResults = new Page_ChemicalSearchResults(Application);
+		page_SavedRecords = new Page_SavedRecords(Application);
+		String smiley = input.get("smiles");
+		String enterSmiley = input.get("smiley");
+		boolean flag = true;
+		try {
+			Application.Logger.addStep("1.VALIDATE WATERMARK ON THE SEARCH BOX", "SHOULD SHOW BELOW WATERMARK .\r\n"
+					+ "WATERMARK: ‘ENTER A NAME OR SMILES TO GENERATE A STRUCTURE’");
+			page_ChemicalSearchLandingPage.clickOnStructureSearchIcon();
+			if (page_ChemicalSearchLandingPage.isDisplayedStructureSearchBoxWithWaterMark()) {
+				Application.Logger.addsubStep(LogStatus.PASS,
+						"Water Mark with text as '‘Enter a name or SMILES to generate a structure' has been displayed.",
+						false);
+			} else {
+				Application.Logger.addsubStep(LogStatus.FAIL,
+						"Water Mark with text as '‘Enter a name or SMILES to generate a structure' has not been displayed..",
+						true);
+			}
+			Application.Logger.endStep();
+
+			Application.Logger.addStep("2.ENTER SMILEY ON TEXTBOX AND VALIDATE X ON THE SEARCH BOX",
+					"X SHOULD PRESENT ON THE ENTERED SMILEY IN TEXTBOX ");
+			page_ChemicalSearchLandingPage.setSmileyTextBox(enterSmiley);
+			Application.waitTime(2);
+			if (page_ChemicalSearchLandingPage.isDisplayedButtonClearX()) {
+				Application.Logger.addsubStep(LogStatus.PASS, "X is displayed after entering Smiles", false);
+			} else {
+				Application.Logger.addsubStep(LogStatus.FAIL, "X is not displayed after entering Smiles", true);
+			}
+			Application.Logger.endStep();
+
+			Application.Logger.addStep("3.CLICK ON X ", "ENTERED SMILEY SHOULD BE CLEARED ");
+			page_ChemicalSearchLandingPage.clickOnButtonX();
+			if (page_ChemicalSearchLandingPage.isDisplayedStructureSearchBoxWithWaterMark()) {
+				Application.Logger.addsubStep(LogStatus.PASS,
+						"Water Mark with text as '‘Enter a name or SMILES to generate a structure' has been displayed.",
+						false);
+			} else {
+				Application.Logger.addsubStep(LogStatus.FAIL,
+						"Water Mark with text as '‘Enter a name or SMILES to generate a structure' has not been displayed..",
+						true);
+			}
+			Application.Logger.endStep();
+
+			Application.Logger.addStep("4.ENTER TEXT ON TEXTBOX AND VALIDATE X ON THE SEARCH BOX",
+					"X SHOULD PRESENT ON THE ENTERED TEXT IN TEXTBOX ");
+			page_ChemicalSearchLandingPage.setTextSmileyTextBox(smiley);
+			Application.waitTime(2);
+			if (page_ChemicalSearchLandingPage.isDisplayedButtonClearX()) {
+				Application.Logger.addsubStep(LogStatus.PASS, "X is displayed after entering Smiles", false);
+			} else {
+				Application.Logger.addsubStep(LogStatus.FAIL, "X is not displayed after entering Smiles", true);
+			}
+			Application.Logger.endStep();
+
+			Application.Logger.addStep("5.CLICK ON X ", "ENTERED TEXT SHOULD BE CLEARED ");
+			page_ChemicalSearchLandingPage.clickOnButtonX();
+			if (page_ChemicalSearchLandingPage.isDisplayedStructureSearchBoxWithWaterMark()) {
+				Application.Logger.addsubStep(LogStatus.PASS,
+						"Water Mark with text as '‘Enter a name or SMILES to generate a structure' has been displayed.",
+						false);
+			} else {
+				Application.Logger.addsubStep(LogStatus.FAIL,
+						"Water Mark with text as '‘Enter a name or SMILES to generate a structure' has not been displayed..",
+						true);
+			}
+			Application.Logger.endStep();
+		}
+
+		catch (Exception e) {
+			Application.Logger.addException(e.getMessage());
+			return flag = false;
+		}
+		return flag;
+	}
+
+	//CHEMEXP-1348
+	@Test
+	public boolean validateModifyChemicalStructureModal(Controller Application, HashMap<String, String> input) {
+		page_ChemicalSearchLandingPage = new Page_ChemicalSearchLandingPage(Application);
+		page_ChemicalSearchResults = new Page_ChemicalSearchResults(Application);
+		page_SavedRecords = new Page_SavedRecords(Application);
+		String searchText = input.get("searchtext");
+		String smiley = input.get("smiles");
+		int beforeFilter, afterFilter;
+		boolean flag = true;
+		try {
+			Application.Logger.addStep("1.PERFORM A SUB STRUCTURE SEARCH AND FREE TEXT SEARCH FROM THE LANDING PAGE",
+					"RESULTS SET PAGE SHOULD BE DISPLAYED FOR BOTH EXACT STRUCURE SEARCH AND FREE TEXT SEARCH");
+			page_ChemicalSearchLandingPage.setTextSearchTextBox(searchText);
+			Application.waitTime(2);
+			page_ChemicalSearchLandingPage.clickOnStructureSearchIcon();
+			page_ChemicalSearchLandingPage.setTextSmileyTextBox(smiley);
+			Application.waitTime(2);
+			page_ChemicalSearchLandingPage.selectStructureRadioButton("Substructure");
+			Application.waitTime(2);
+			page_ChemicalSearchLandingPage.clickOnSearchIcon();
+			Application.waitUntilFectchRecordProgressBarToDisappears();
+			if (page_ChemicalSearchResults.checkIfResultsFound()) {
+				Application.Logger.addsubStep(LogStatus.PASS, "RESULT SET IS DISPLAYED FOR THE TEXT SEARCH", false);
+			} else {
+				throw new Exception("Results set is not loaded for the chemical search");
+			}
+			Application.Logger.endStep();
+
+			Application.Logger.addStep("2.validate the color of structure pill box",
+					"pill box should contain purple color");
+			if (page_ChemicalSearchResults.getColorOfStructureSerachPillBox().equals("rgba(101, 19, 231, 1)")) {
+				Application.Logger.addsubStep(LogStatus.PASS, "Pill box contains 'purple color' as Expected.", false);
+			} else {
+				Application.Logger.addsubStep(LogStatus.FAIL, "Pill box not contain 'purple color' as Expected.", true);
+			}
+			Application.Logger.endStep();
+
+			Application.Logger.addStep("3.CLICK ON THE EDIT ICON ON THE STRUCTURE PILL BOX",
+					"MODIFY CHEMICAL STRUCTURE MODAL IS DISPLAYED");
+			beforeFilter = page_ChemicalSearchResults.getResultsCount();
+			page_ChemicalSearchResults.clickOnButtonEdit();
+			if (page_ChemicalSearchResults.isDisplayedModifyChemicalStructureModal()) {
+				Application.Logger.addsubStep(LogStatus.PASS, "ModifyChemicalStructureModal is displayed", false);
+			} else {
+				Application.Logger.addsubStep(LogStatus.FAIL, "ModifyChemicalStructureModal is not displayed", true);
+			}
+			Application.Logger.endStep();
+
+			Application.Logger.addStep("4.ENTER TEXT ON TEXTBOX AND CLICK ON APPLY BUTTON", "RESULT SET IS REFRESHED");
+			page_ChemicalSearchLandingPage.setTextSmileyTextBox(smiley);
+			Application.waitTime(2);
+			page_ChemicalSearchLandingPage.selectStructureRadioButton("Substructure");
+			Application.waitTime(2);
+			page_ChemicalSearchResults.clickOnStructureButtonApply();
+			afterFilter = page_ChemicalSearchResults.getResultsCount();
+			if (beforeFilter <= afterFilter) {
+				Application.Logger.addsubStep(LogStatus.PASS, "RESULT SETS ARE REFRESHED ", false);
+			} else {
+				Application.Logger.addsubStep(LogStatus.FAIL,
+						"RESULT SETS ARE NOT REFRESHED  : \t" + beforeFilter + "\t\t AFTER FILTER :\t" + afterFilter,
+						true);
+			}
+			Application.Logger.endStep();
+
+			Application.Logger.addStep("5.CLICK ON CANCEL BUTTON ", "MODIFY CHEMICAL STRUCTURE MODAL SHOULD CLOSE");
+			page_ChemicalSearchResults.clickOnButtonEdit();
+			page_ChemicalSearchResults.clickOnStructureModalButtonCancel();
+			Application.waitTime(2);
+			if (page_ChemicalSearchResults.isDisplayedModifyChemicalStructureModal()) {
+				Application.Logger.addsubStep(LogStatus.FAIL, "ModifyChemicalStructureModal is displayed", false);
+			} else {
+				Application.Logger.addsubStep(LogStatus.PASS, "ModifyChemicalStructureModal is not displayed", true);
+			}
+			Application.Logger.endStep();
+
+			Application.Logger.addStep("6.CLICK ON X ON THE STRUCTURE PILL BOX ",
+					"STRUCTURE PILL BOX SHOULD BE REMOVED");
+			page_ChemicalSearchResults.clickOnStructurePillX();
+			afterFilter = page_ChemicalSearchResults.getResultsCount();
+			if (beforeFilter >= afterFilter) {
+				Application.Logger.addsubStep(LogStatus.PASS, "RESULT SETS ARE REFRESHED ", false);
+			} else {
+				Application.Logger.addsubStep(LogStatus.FAIL,
+						"RESULT SETS ARE NOT REFRESHED  : \t" + beforeFilter + "\t\t AFTER FILTER :\t" + afterFilter,
+						true);
+			}
+			Application.Logger.endStep();
+
+		} catch (Exception e) {
+			Application.Logger.addException(e.getMessage());
+			return flag = false;
+		}
+		return flag;
+	}
+	//CHEMEXP-1291
+			@Test
+			public boolean validateStructureSearchAndLiteratureTab(Controller Application, HashMap<String, String> input) {
+				page_ChemicalSearchLandingPage = new Page_ChemicalSearchLandingPage(Application);
+				page_ChemicalSearchResults = new Page_ChemicalSearchResults(Application);
+				page_SavedRecords = new Page_SavedRecords(Application);
+				String searchText = input.get("searchtext");
+				String smiley = input.get("smiles");
+				String expstructureLable = "Search patent structure as";
+				String actstructureLable;
+				boolean flag = true;
+				try {
+					Application.Logger.addStep("1.VERIFY IF THE SEARCH PATENT LABLE IS DISPLAYED ABOVE THE STRUCTURE RADIO BUTTONS","SEARCH PATENT STRUCTURE AS LABLE SHOULD BE DISPLAYED ABOVE STRUCTURE RADIO BUTTONS ");
+					page_ChemicalSearchLandingPage.clickOnStructureSearchIcon();
+					actstructureLable=page_ChemicalSearchLandingPage.getTextStructureSearchLable();
+					if (actstructureLable.equalsIgnoreCase(expstructureLable)) {
+						Application.Logger.addsubStep(LogStatus.PASS,"STRUCTURE LABLE NAME IS DISPLAYED ABOVE THE RADIO BUTTON",false);
+					} else {
+						Application.Logger.addsubStep(LogStatus.FAIL,"STRUCTURE LABLE NAME IS NOT DISPLAYED ABOVE THE RADIO BUTTON : EXPECTED STRUCTURE LABLE :\t" +expstructureLable+ "\t ACTUAL STRUCTURE LABLE:" +actstructureLable,true);
+					}
+					Application.Logger.endStep();				
+					Application.Logger.addStep("2.PERFORM A STRUCTURE SEARCH FROM THE LANDING PAGE","RESULTS SET PAGE SHOULD BE DISPLAYED");
+					page_ChemicalSearchLandingPage.setTextSmileyTextBox(smiley);
+					Application.waitTime(2);
+					page_ChemicalSearchLandingPage.selectStructureRadioButton("exact");
+					Application.waitTime(2);
+					page_ChemicalSearchLandingPage.clickOnSearchIcon();
+					Application.waitUntilFectchRecordProgressBarToDisappears();
+					if (page_ChemicalSearchResults.checkIfResultsFound()) {
+						Application.Logger.addsubStep(LogStatus.PASS, "RESULT SET IS DISPLAYED FOR THE TEXT SEARCH", false);
+					} else {
+						throw new Exception("Results set is not loaded for the chemical search");
+					}
+					Application.Logger.endStep();
+					Application.Logger.addStep("3.VERIFY THE LITERATURE TAB AFTER THE STRUCTURE SEARCH","LITERATURE TAB SHOULD BE DISABLED AFTER THE STRUCTURE SEARCH");
+					if (page_ChemicalSearchResults.tabLiteratureSearch().isDisabledLiteratureTab()) {
+						Application.Logger.addsubStep(LogStatus.PASS, "LITERATURE TAB IS DISABLED AFTER THE STRUCTURE SEARCH", false);
+					} else {
+						Application.Logger.addsubStep(LogStatus.FAIL, "LITERATURE TAB IS NOT DISABLED AFTER THE STRUCTURE SEARCH",true);
+						}
+					Application.Logger.endStep();
+				} catch (Exception e) {
+					Application.Logger.addException(e.getMessage());
+					return flag = false;
+				}
+				return flag;
+			}
+			
+			//CHEMEXP-1292	
+			@Test
+			public boolean validateStructureSearchKeywordsAndPhrase(Controller Application, HashMap<String, String> input) {
+				page_ChemicalSearchLandingPage = new Page_ChemicalSearchLandingPage(Application);
+				page_ChemicalSearchResults = new Page_ChemicalSearchResults(Application);
+				page_SavedRecords = new Page_SavedRecords(Application);
+				String searchText = input.get("searchtext");
+				String smiley = input.get("smiles");
+				String secondsearchText="polymer";
+				String actSearchPhrase;
+				int beforeStructureSearch,afterStructureSearch;
+				List<String> finalKeywordList = Arrays.asList(input.get("keywords").split(","));
+				boolean flag = true;
+				try {
+					Application.Logger.addStep("1.PERFORM A EXACT STRUCTURE SEARCH AND FREE TEXT SEARCH FROM THE LANDING PAGE","RESULTS SET PAGE SHOULD BE DISPLAYED FOR BOTH EXACT STRUCURE SEARCH AND FREE TEXT SEARCH");
+					page_ChemicalSearchLandingPage.setTextSearchTextBox(searchText);
+					Application.waitTime(2);
+					page_ChemicalSearchLandingPage.clickOnStructureSearchIcon();
+					page_ChemicalSearchLandingPage.setTextSmileyTextBox(smiley);
+					Application.waitTime(2);
+					page_ChemicalSearchLandingPage.selectStructureRadioButton("exact");
+					Application.waitTime(2);
+					page_ChemicalSearchLandingPage.clickOnSearchIcon();
+					Application.waitUntilFectchRecordProgressBarToDisappears();
+					if (page_ChemicalSearchResults.checkIfResultsFound()) {
+						Application.Logger.addsubStep(LogStatus.PASS, "RESULT SET IS DISPLAYED FOR THE TEXT SEARCH", false);
+					} else {
+						throw new Exception("Results set is not loaded for the chemical search");
+					}
+					beforeStructureSearch=page_ChemicalSearchResults.getResultsCount();
+					Application.Logger.endStep();				
+					Application.Logger.addStep("2.MODIFY THE TOP SECTION AND VERIFY IF THE RESULTS ARE REFRESHED AFTER SEARCHING WITH THE MODIFIED PHRASE","RESULTS SHOULD BE REFRESHED AFTER SEARCHING WITH THE MODIFIED PHRASE");
+					page_ChemicalSearchResults.setTextPhrase(secondsearchText);
+					page_ChemicalSearchResults.clickOnSearchIcon();			
+					Application.waitUntilFectchRecordProgressBarToDisappears();
+					Application.waitUntilFectchRecordProgressBarToDisappears();
+					afterStructureSearch=page_ChemicalSearchResults.getResultsCount();
+					if (beforeStructureSearch<=afterStructureSearch) {
+						Application.Logger.addsubStep(LogStatus.PASS,"RESULTS ARE REFRESHED AFTER SEARCHING WITH THE MODIFIED PHRASE",false);
+					} else {
+						Application.Logger.addsubStep(LogStatus.FAIL,"RESULTS ARE NOT REFRESHED AFTER SEARCHING WITH THE MODIFIED PHRASE : BEFORE FILTER COUNT :\t" +beforeStructureSearch+ "\t AFTER FILTER COUNT:" +afterStructureSearch,true);
+					}
+					Application.Logger.endStep();	
+					Application.Logger.addStep("3.VERIFY IF THE MODIFIED PHRASE IS DISPLAYED IN THE RS TOP SECTION","MODIFIED PHRASE SHOULD BE DISPLAYED IN THE RS TOP SECTION");
+					actSearchPhrase=page_ChemicalSearchResults.getTextSearchBox();
+					if (secondsearchText.equalsIgnoreCase(actSearchPhrase)) {
+						Application.Logger.addsubStep(LogStatus.PASS,"MODIFIED PHRASE IS DISPLAYED IN THE RS TOP SECTION",false);
+					} else {
+						Application.Logger.addsubStep(LogStatus.FAIL,"MODIFIED PHRASE IS NOT DISPLAYED IN THE RS TOP SECTION : EXPECTED SEARCH PHRASE :\t" +secondsearchText+ "\t ACTUAL SEARCH PHRASE:" +actSearchPhrase,true);
+					}
+					Application.Logger.endStep();				
+					Application.Logger.addStep("4.MODIFY THE BOTTOM SECTION AND VERIFY IF THE RESULTS ARE REFRESHED AFTER ADDING THE KEYWORDS","RESULTS SHOULD BE REFRESHED AFTER ADDING THE KEYWORDS");
+					page_ChemicalSearchResults.setKeyWords(finalKeywordList);
+					page_ChemicalSearchResults.clickOnSearchIcon();
+					Application.waitUntilFectchRecordProgressBarToDisappears();
+					Application.waitUntilFectchRecordProgressBarToDisappears();				
+					afterStructureSearch=page_ChemicalSearchResults.getResultsCount();
+					if (beforeStructureSearch<=afterStructureSearch) {
+						Application.Logger.addsubStep(LogStatus.PASS,"RESULTS ARE REFRESHED AFTER SEARCHING WITH THE NEWLY ADDED KEYWORDS",false);
+					} else {
+						Application.Logger.addsubStep(LogStatus.FAIL,"RESULTS ARE NOT REFRESHED AFTER SEARCHING WITH THE NEWLY ADDED KEYWORDS : BEFORE FILTER COUNT :\t" +beforeStructureSearch+ "\t AFTER FILTER COUNT:" +afterStructureSearch,true);
+					}
+					Application.Logger.endStep();				
+					Application.Logger.addStep("5.VERIFY IF THE NEWLY ADDED PIILS ARE DISPLAYED IN THE RS BOTTOM PILLS SECTION","NEWLY ADDED PIILS SHOULD BE DISPLAYED IN THE RS BOTTOM PILLS SECTION");
+					List<String> getListOfPills = page_ChemicalSearchResults.getListOfPillBoxes();
+					for (String pills : getListOfPills) {
+						if (pills != null) {
+							Application.Logger.addsubStep(LogStatus.PASS,"PILL :" + pills + " IS DISPLAYED IN THE RS BOTTOM SECTION", false);
+						} else {
+							Application.Logger.addsubStep(LogStatus.FAIL,"PILLS ARE NOT DISPLAYED IN THE RS BOTTOM SECTION :'" + secondsearchText , true);
+						}
+					}
+					Application.waitTime(2);
+					Application.Logger.endStep();				
+					Application.Logger.addStep("6.PERFORM A SUB STRUCTURE SEARCH AND FREE TEXT SEARCH FROM THE LANDING PAGE","RESULTS SET PAGE SHOULD BE DISPLAYED FOR BOTH EXACT STRUCURE SEARCH AND FREE TEXT SEARCH");
+					page_ChemicalSearchResults.clickOnChemExpHomePage();
+					Application.waitTime(2);
+					page_ChemicalSearchLandingPage.setTextSearchTextBox(searchText);
+					Application.waitTime(2);
+					page_ChemicalSearchLandingPage.clickOnStructureSearchIcon();
+					page_ChemicalSearchLandingPage.setTextSmileyTextBox(smiley);
+					Application.waitTime(2);
+					page_ChemicalSearchLandingPage.selectStructureRadioButton("Substructure");
+					Application.waitTime(2);
+					page_ChemicalSearchLandingPage.clickOnSearchIcon();
+					Application.waitUntilFectchRecordProgressBarToDisappears();
+					if (page_ChemicalSearchResults.checkIfResultsFound()) {
+						Application.Logger.addsubStep(LogStatus.PASS, "RESULT SET IS DISPLAYED FOR THE TEXT SEARCH", false);
+					} else {
+						throw new Exception("Results set is not loaded for the chemical search");
+					}
+					beforeStructureSearch=page_ChemicalSearchResults.getResultsCount();
+					Application.Logger.endStep();				
+					Application.Logger.addStep("7.MODIFY THE TOP SECTION AND VERIFY IF THE RESULTS ARE REFRESHED AFTER SEARCHING WITH THE MODIFIED PHRASE","RESULTS SHOULD BE REFRESHED AFTER SEARCHING WITH THE MODIFIED PHRASE");
+					page_ChemicalSearchResults.setTextPhrase(secondsearchText);
+					page_ChemicalSearchResults.clickOnSearchIcon();			
+					Application.waitUntilFectchRecordProgressBarToDisappears();
+					Application.waitUntilFectchRecordProgressBarToDisappears();
+					afterStructureSearch=page_ChemicalSearchResults.getResultsCount();
+					if (beforeStructureSearch>=afterStructureSearch) {
+						Application.Logger.addsubStep(LogStatus.PASS,"RESULTS ARE REFRESHED AFTER SEARCHING WITH THE MODIFIED PHRASE",false);
+					} else {
+						Application.Logger.addsubStep(LogStatus.FAIL,"RESULTS ARE NOT REFRESHED AFTER SEARCHING WITH THE MODIFIED PHRASE : BEFORE FILTER COUNT :\t" +beforeStructureSearch+ "\t AFTER FILTER COUNT:" +afterStructureSearch,true);
+					}
+					Application.Logger.endStep();	
+					Application.Logger.addStep("8.VERIFY IF THE MODIFIED PHRASE IS DISPLAYED IN THE RS TOP SECTION","MODIFIED PHRASE SHOULD BE DISPLAYED IN THE RS TOP SECTION");
+					actSearchPhrase=page_ChemicalSearchResults.getTextSearchBox();
+					if (secondsearchText.equalsIgnoreCase(actSearchPhrase)) {
+						Application.Logger.addsubStep(LogStatus.PASS,"MODIFIED PHRASE IS DISPLAYED IN THE RS TOP SECTION",false);
+					} else {
+						Application.Logger.addsubStep(LogStatus.FAIL,"MODIFIED PHRASE IS NOT DISPLAYED IN THE RS TOP SECTION : EXPECTED SEARCH PHRASE :\t" +secondsearchText+ "\t ACTUAL SEARCH PHRASE:" +actSearchPhrase,true);
+					}
+					Application.Logger.endStep();				
+					Application.Logger.addStep("9.MODIFY THE BOTTOM SECTION AND VERIFY IF THE RESULTS ARE REFRESHED AFTER ADDING THE KEYWORDS","RESULTS SHOULD BE REFRESHED AFTER ADDING THE KEYWORDS");
+					page_ChemicalSearchResults.setKeyWords(finalKeywordList);
+					page_ChemicalSearchResults.clickOnSearchIcon();
+					Application.waitUntilFectchRecordProgressBarToDisappears();
+					Application.waitUntilFectchRecordProgressBarToDisappears();				
+					afterStructureSearch=page_ChemicalSearchResults.getResultsCount();
+					if (beforeStructureSearch>=afterStructureSearch) {
+						Application.Logger.addsubStep(LogStatus.PASS,"RESULTS ARE REFRESHED AFTER SEARCHING WITH THE NEWLY ADDED KEYWORDS",false);
+					} else {
+						Application.Logger.addsubStep(LogStatus.FAIL,"RESULTS ARE NOT REFRESHED AFTER SEARCHING WITH THE NEWLY ADDED KEYWORDS : BEFORE FILTER COUNT :\t" +beforeStructureSearch+ "\t AFTER FILTER COUNT:" +afterStructureSearch,true);
+					}
+					Application.Logger.endStep();				
+					Application.Logger.addStep("10.VERIFY IF THE NEWLY ADDED PIILS ARE DISPLAYED IN THE RS BOTTOM PILLS SECTION","NEWLY ADDED PIILS SHOULD BE DISPLAYED IN THE RS BOTTOM PILLS SECTION");
+					List<String> getListOfPills1 = page_ChemicalSearchResults.getListOfPillBoxes();
+					for (String pills : getListOfPills1) {
+						if (pills != null) {
+							Application.Logger.addsubStep(LogStatus.PASS,"PILL :" + pills + " IS DISPLAYED IN THE RS BOTTOM SECTION", false);
+						} else {
+							Application.Logger.addsubStep(LogStatus.FAIL,"PILLS ARE NOT DISPLAYED IN THE RS BOTTOM SECTION :'" + secondsearchText , true);
+						}
+					}
+					Application.Logger.endStep();
+				} catch (Exception e) {
+					Application.Logger.addException(e.getMessage());
+					return flag = false;
+				}
+				return flag;
+			}
+			
+			//CHEMEXP-1293
+			@Test
+			public boolean validateHitStructureImagesAndPagination(Controller Application, HashMap<String, String> input) {
+				page_ChemicalSearchLandingPage = new Page_ChemicalSearchLandingPage(Application);
+				page_ChemicalSearchResults = new Page_ChemicalSearchResults(Application);
+				page_SavedRecords = new Page_SavedRecords(Application);
+				String searchText = input.get("searchtext");
+				String smiley = input.get("smiles");
+				String paginatorValue;
+				boolean flag = true;
+				try {
+					Application.Logger.addStep("1.PERFORM A EXACT STRUCTURE SEARCH AND FREE TEXT SEARCH FROM THE LANDING PAGE","RESULTS SET PAGE SHOULD BE DISPLAYED FOR BOTH EXACT STRUCURE SEARCH AND FREE TEXT SEARCH");
+					page_ChemicalSearchLandingPage.setTextSearchTextBox(searchText);
+					Application.waitTime(2);
+					page_ChemicalSearchLandingPage.clickOnStructureSearchIcon();
+					page_ChemicalSearchLandingPage.setTextSmileyTextBox(smiley);
+					Application.waitTime(2);
+					page_ChemicalSearchLandingPage.selectStructureRadioButton("Substructure");
+					Application.waitTime(2);
+					page_ChemicalSearchLandingPage.clickOnSearchIcon();
+					Application.waitUntilFectchRecordProgressBarToDisappears();
+					if (page_ChemicalSearchResults.checkIfResultsFound()) {
+						Application.Logger.addsubStep(LogStatus.PASS, "RESULT SET IS DISPLAYED FOR THE TEXT SEARCH", false);
+					} else {
+						throw new Exception("Results set is not loaded for the chemical search");
+					}
+					
+					Application.Logger.endStep();				
+					Application.Logger.addStep("2.VERIFY THE PAGINATION IN HIT STRCUTURE IMAGE VIEWER","PAGINATION SHOULD BE DISPLAYED IF THE IMAGES COUNT ARE MORE THAN 20 IN IMAGE VIEWER WITH PREV AND NEXT BUTTONS FOR NAVIGATION");
+					page_ChemicalSearchResults.tabPatentSearch().clickOnPatentRecord(1);
+					page_ChemicalSearchResults.tabPatentSearch().clickOnHitStructureslink();	
+					Application.waitTime(2);
+					page_ChemicalSearchResults.tabPatentSearch().clickOnLinkSeeAll();
+					Application.waitTime(2);
+					paginatorValue=page_ChemicalSearchResults.tabPatentSearch().getTextImageViewerPaginatorRange();
+					if(!page_ChemicalSearchResults.tabPatentSearch().isDisabledImageViewerNextPageArrow())
+					{
+						Application.Logger.addsubStep(LogStatus.PASS,paginatorValue+ "\t - NEXT BUTTON FROM THE IMAGE VIEWER PAGINATION IS ENABLED BEOFRE THE CLICK",false);	
+					}
+					else
+					{
+						Application.Logger.addsubStep(LogStatus.FAIL,paginatorValue+ "\t - NEXT BUTTON FROM THE IMAGE VIEWER PAGINATION IS NOT ENABLED BEOFRE THE CLICK",true);
+					}
+					page_ChemicalSearchResults.tabPatentSearch().clickOnImageViewerArrowNextPage();
+					Application.waitTime(2);
+					paginatorValue=page_ChemicalSearchResults.tabPatentSearch().getTextImageViewerPaginatorRange();
+					if(page_ChemicalSearchResults.tabPatentSearch().isDisabledImageViewerNextPageArrow())
+					{
+						Application.Logger.addsubStep(LogStatus.PASS,paginatorValue+ "\t - NEXT BUTTON FROM THE IMAGE VIEWER PAGINATION IS DISABLED AFTER THE CLICK",false);	
+					}
+					else
+					{
+						Application.Logger.addsubStep(LogStatus.FAIL,paginatorValue+ "\t - NEXT BUTTON FROM THE IMAGE VIEWER PAGINATION IS NOT DISABLED AFTER THE CLICK",true);
+					}
+					paginatorValue=page_ChemicalSearchResults.tabPatentSearch().getTextImageViewerPaginatorRange();
+					if(!page_ChemicalSearchResults.tabPatentSearch().isDisabledImageViewerPreviousPageArrow())
+					{
+						Application.Logger.addsubStep(LogStatus.PASS,paginatorValue+ "\t - PREV BUTTON FROM THE IMAGE VIEWER PAGINATION IS ENABLED BEFORE THE CLICK",false);	
+					}
+					else
+					{
+						Application.Logger.addsubStep(LogStatus.FAIL,paginatorValue+ "\t - PREV BUTTON FROM THE IMAGE VIEWER PAGINATION IS NOT ENABLED BEFORE THE CLICK",true);
+					}
+					page_ChemicalSearchResults.tabPatentSearch().clickOnImageViewerArrowPrevPage();
+					Application.waitTime(2);	
+					paginatorValue=page_ChemicalSearchResults.tabPatentSearch().getTextImageViewerPaginatorRange();
+					if(page_ChemicalSearchResults.tabPatentSearch().isDisabledImageViewerPreviousPageArrow())
+					{
+						Application.Logger.addsubStep(LogStatus.PASS,paginatorValue+ "\t - PREV BUTTON FROM THE IMAGE VIEWER PAGINATION IS DISABLED AFTER THE CLICK",false);	
+					}
+					else
+					{
+						Application.Logger.addsubStep(LogStatus.FAIL,paginatorValue+ "\t -PREV BUTTON FROM THE IMAGE VIEWER PAGINATION IS NOT DISABLED AFTER THE CLICK",true);
+					}
+					Application.Logger.endStep();
+				} catch (Exception e) {
+					Application.Logger.addException(e.getMessage());
+					return flag = false;
+				}
+				return flag;
+			}
 }
+
