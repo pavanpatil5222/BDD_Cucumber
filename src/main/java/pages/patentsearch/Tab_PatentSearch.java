@@ -24,15 +24,34 @@ public class Tab_PatentSearch extends Controller {
 	
 	@FindBy(xpath="(//span[contains(.,'View as result set')])[1]")
     private WebElement citingPatentViewAsResultSet;
+	@FindBy(xpath = "//section/div[2]/div[2]/mat-paginator/div/div/div/button[2]")
+	private WebElement imgViewerArrowNextPage;
+	@FindBy(xpath = "//section/div[2]/div[2]/mat-paginator/div/div/div/button[1]")
+	private WebElement imgViewerArrowPrevPage;
+	
+	
+	@FindBy(xpath = "//div/mat-dialog-content/section/div[2]/div[2]/mat-paginator/div/div/div/div")
+	private WebElement paginatorRange;
        
     @FindBy(xpath="(//span[contains(.,'View as result set')])[2]")
     private WebElement citedPatentViewAsResultSet;
+    
+    @FindBy(css = "#cdk-accordion-child-15 > div > div.sub-block.ng-star-inserted > a")
+	private WebElement linkSeeAll;
+	@FindBy(xpath = "//app-record-view/section/div/section/mat-accordion/mat-expansion-panel[3]/mat-expansion-panel-header")
+	private WebElement hitStructureLink;	
 
-    @FindBy(xpath = "//mat-panel-title[contains(.,'Cited patents (9)')]")
+    @FindBy(xpath = "(//mat-panel-title[contains(@class,'mat-expansion-panel-header-title citation-headers')])[1]")
     private WebElement citingPatentLink;
     
     @FindBy(xpath = "(//mat-panel-title[contains(@class,'mat-expansion-panel-header-title citation-headers')])[2]")
     private WebElement citedPatentLink;    
+
+	/*@FindBy(xpath = "//mat-accordion/mat-expansion-panel[6]/mat-expansion-panel-header/span/mat-panel-title")
+	private WebElement citingPatentLink;
+
+	@FindBy(xpath = "//mat-accordion/mat-expansion-panel[7]/mat-expansion-panel-header/span/mat-panel-title")
+	private WebElement citedPatentLink;*/
 
 	@FindBy(xpath = "//app-record-view/section/div//mat-accordion/mat-expansion-panel[6]/mat-expansion-panel-header")
 	private WebElement citingPatentLinkAttribute;
@@ -312,23 +331,11 @@ public class Tab_PatentSearch extends Controller {
 	@FindBy(xpath = "//app-result-count-bar/section/section[3]/button")
 	WebElement btn_Insights;
 
-	@FindBy(xpath = "//app-page-search-result/div/section/section/section[2]/section/app-result-set[1]/section/aside/section[1]/div/span[2]/button/span/mat-icon")
+	@FindBy(css = "section > app-result-set:nth-child(1) > section > aside > section:nth-child(3) > div > span:nth-child(2) > button > span > mat-icon")
 	private WebElement thumsUpIcon;
-	
-	@FindBy(css = "section > app-result-set:nth-child(1) > section > aside > section:nth-child(3) > div > span:nth-child(2) > button > span > mat-icon > svg > g > path")
-	private WebElement thumsUpIconFillStatus;
-	
-	@FindBy(css = "section > app-result-set:nth-child(1) > section > aside > section:nth-child(3) > div > span:nth-child(2) > button")
-	private WebElement thumsUpIconStatus;
 
 	@FindBy(css = "section > app-result-set:nth-child(1) > section > aside > section:nth-child(3) > div > span:nth-child(3) > button > span > mat-icon")
-	private WebElement thumbsDownIcon;	
-
-	@FindBy(css = "section > app-result-set:nth-child(1) > section > aside > section:nth-child(3) > div > span:nth-child(3) > button")
-	private WebElement thumbsDownIconStatus;
-	
-	@FindBy(css = "section > app-result-set:nth-child(1) > section > aside > section:nth-child(3) > div > span:nth-child(3) > button > span > mat-icon > svg > g > path")
-	private WebElement thumsDownIconFillStatus;
+	private WebElement thumbsDownIcon;
 
 	@FindBy(xpath = "//app-publication-year/section/mat-expansion-panel/mat-expansion-panel-header/span[2]")
 	private WebElement linkPublicationYear;
@@ -347,6 +354,12 @@ public class Tab_PatentSearch extends Controller {
 
 	@FindBy(xpath = " //div[@class='publ-year-chart']")
 	private WebElement publicationYearFilterDisable;
+	
+	@FindBy(xpath = "//button/span[contains(.,'See all structures')]")
+	private WebElement seeAllStructuresLink;
+	
+	@FindBy(xpath = "//div[@class='structure-search-modal']")
+	private WebElement filterChemicalStructureModal;
 
 	public Tab_PatentSearch(Controller controller) {
 		super(controller);
@@ -432,7 +445,7 @@ public class Tab_PatentSearch extends Controller {
 	public boolean isDisplayedTitle(int rowNumber) throws Exception {
 		try {
 			List<WebElement> ele = driver
-					.findElements(By.xpath("//mat-card-header/div/mat-card-subtitle"));
+					.findElements(By.xpath("//mat-card-subtitle[@class='title ul mat-card-subtitle']"));
 
 			WebElement eleTitle = ele.get(rowNumber);
 			boolean blnChkTitle = controller.isElementDisplayed(eleTitle);
@@ -1536,7 +1549,7 @@ public class Tab_PatentSearch extends Controller {
 	public void clickOnButtonInsights() throws Exception {
 		try {
 			controller.waitTime(2);
-			if (!btn_TabInsights.getAttribute("style").toLowerCase().contains("385px")) {
+			if (!btn_TabInsights.getAttribute("ng-reflect-fx-flex").toLowerCase().contains("385px")) {
 				controller.jsClick(btn_Insights);
 
 			} else {
@@ -1559,9 +1572,8 @@ public class Tab_PatentSearch extends Controller {
 			String iconStatus;
 			waitUntilElementIsDisplayed(thumsUpIcon);
 			jsClick(thumsUpIcon);
-			controller.waitTime(2);
-			iconStatus = getElementAttribute(thumsUpIconFillStatus, "fill");
-			if (iconStatus.contains("#008474")) {
+			iconStatus = getElementAttribute(thumsUpIcon, "ng-reflect-svg-icon");
+			if (iconStatus.contains("thumbup-filled")) {
 				controller.Logger.addsubStep(LogStatus.PASS, "THUMBS UP ICON CHANGED TO SOLID GREEN COLOR", false);
 			} else {
 				controller.Logger.addsubStep(LogStatus.FAIL, "THUMBS UP ICON DIDNT CHANGED TO SOLID GREEN COLOR",
@@ -1576,8 +1588,8 @@ public class Tab_PatentSearch extends Controller {
 	public String checkThumbsUpHollowState() throws Exception {
 		try {
 			String iconStatus;
-			waitUntilElementIsDisplayed(thumsUpIconStatus);
-			iconStatus = getElementAttribute(thumsUpIconStatus, "class");
+			waitUntilElementIsDisplayed(thumsUpIcon);
+			iconStatus = getElementAttribute(thumsUpIcon, "ng-reflect-svg-icon");
 			return (iconStatus);
 		} catch (Exception ex) {
 			throw new Exception("clickOnThumbsUpIcon is not working" + ex);
@@ -1587,8 +1599,8 @@ public class Tab_PatentSearch extends Controller {
 	public String checkThumbsDownHollowState() throws Exception {
 		try {
 			String iconStatus;
-			waitUntilElementIsDisplayed(thumbsDownIconStatus);
-			iconStatus = getElementAttribute(thumbsDownIconStatus, "class");
+			waitUntilElementIsDisplayed(thumbsDownIcon);
+			iconStatus = getElementAttribute(thumbsDownIcon, "ng-reflect-svg-icon");
 			return (iconStatus);
 		} catch (Exception ex) {
 			throw new Exception("checkThumbsDownHollowState is not working" + ex);
@@ -1626,13 +1638,12 @@ public class Tab_PatentSearch extends Controller {
 			String iconStatus;
 			waitUntilElementIsDisplayed(thumbsDownIcon);
 			jsClick(thumbsDownIcon);
-			controller.waitTime(2);
-			iconStatus = getElementAttribute(thumsDownIconFillStatus, "fill");
-			if (iconStatus.contains("#008474")) {
+			iconStatus = getElementAttribute(thumbsDownIcon, "ng-reflect-svg-icon");
+			if (iconStatus.contains("thumbdown-filled")) {
 				controller.Logger.addsubStep(LogStatus.PASS, "THUMBS DOWN ICON CHANGED TO SOLID GREEN COLOR", false);
 			} else {
 				controller.Logger.addsubStep(LogStatus.FAIL, "THUMBS DOWN ICON DIDNT CHANGED TO SOLID GREEN COLOR",
-						true);
+						false);
 			}
 
 		} catch (Exception ex) {
@@ -1708,26 +1719,30 @@ public class Tab_PatentSearch extends Controller {
 
 	public boolean isDisplayedButtonThumsUpWithFillColor(int recordNumber) throws Exception {
 		try {
-			WebElement listOfThumsUp = driver.findElement(By.cssSelector("section > aside > section:nth-child(3) > div > span:nth-child(2) > button > span > mat-icon > svg > g > path"));
-			if (controller.getElementAttribute(listOfThumsUp, "fill").contains("#008474")) {
+			WebElement listOfThumsUp = driver.findElement(By.cssSelector("section > app-result-set:nth-child("
+					+ recordNumber
+					+ ") > section > aside > section:nth-child(3) > div > span:nth-child(2) > button > span > mat-icon"));
+			if (controller.getElementAttribute(listOfThumsUp, "ng-reflect-svg-icon").contains("filled")) {
 				return true;
 			} else {
 				return false;
 			}
 
 		} catch (Exception e) {
-			throw new Exception("isDisplayedButtonThumsUpWithFillColor is not working.." + e);
+			return false;
 		}
 
 	}
 
 	public boolean isDisplayedButtonThumsDownWithFillColor(int recordNumber) throws Exception {
 		try {
-			WebElement listOfThumsDown = driver.findElement(By.cssSelector("section > aside > section:nth-child(3) > div > span:nth-child(3) > button > span > mat-icon > svg > g > path"));
-			if (controller.getElementAttribute(listOfThumsDown, "fill").contains("#008474")) {
-				return false;
-			} else {
+			WebElement listOfThumsDown = driver.findElement(By.cssSelector("section > app-result-set:nth-child("
+					+ recordNumber
+					+ ") > section > aside > section:nth-child(3) > div > span:nth-child(3) > button > span > mat-icon"));
+			if (controller.getElementAttribute(listOfThumsDown, "ng-reflect-svg-icon").contains("filled")) {
 				return true;
+			} else {
+				return false;
 			}
 
 		} catch (Exception e) {
@@ -2389,4 +2404,112 @@ public class Tab_PatentSearch extends Controller {
 			throw new Exception("clickOnCitingPatentViewASResultSet is not working" + ex);
 		}
 	}
+	
+	public void clickOnLinkSeeAllStructures() throws Exception {
+		try {
+			waitUntilElementIsDisplayed(seeAllStructuresLink);
+			jsClick(seeAllStructuresLink);
+			controller.waitUntilFectchRecordProgressBarToDisappears();
+		} catch (Exception ex) {
+			throw new Exception("clickOnLinkSeeAllStructures is not working" + ex);
+		}
+	}
+	public boolean isDisplayedfilterChemicalStructureModal() throws Exception {
+		try {
+			return controller.isElementDisplayed(filterChemicalStructureModal);
+
+		} catch (Exception ex) {
+			throw new Exception("filterChemicalStructureModal is not displayed" + ex);
+		}
+	}
+	public void clickOnHitStructureslink() throws Exception {
+		try {
+			String status;
+			waitUntilElementIsDisplayed(hitStructureLink);
+			status = controller.getElementAttribute(hitStructureLink, "aria-expanded");
+			if (status.equals("false")) {
+				jsClick(hitStructureLink);
+			}
+			else
+			{
+				controller.Logger.Logger.log(LogStatus.INFO, "Hit Strcture link is already expanded");
+			}
+
+		} catch (Exception ex) {
+			throw new Exception("clickOnHitStructureslink is not working" + ex);
+		}
+	}
+	public void clickOnLinkSeeAll() throws Exception {
+		try {
+			List<WebElement> hitimages = driver.findElements(By.cssSelector("#cdk-accordion-child-15 > div > div:nth-child(1) > a"));
+			controller.waitTime(2);
+			if(hitimages.size()==3)
+			{
+				jsClick(linkSeeAll);
+			}
+			else
+			{
+				controller.Logger.Logger.log(LogStatus.INFO, "See All link will not be dsisplayed if the hit structure images count is less than 3");
+			}
+		} catch (Exception ex) {
+			throw new Exception("clickOnLinkSeeAll is not working" + ex);
+		}
+	}
+	
+	public String getTextImageViewerPaginatorRange() throws Exception {
+		try {
+			return controller.getText(paginatorRange);
+		} catch (Exception ex) {
+			throw new Exception("getTextImageViewerPaginatorRange is not working" + ex);
+		}
+	}
+	
+	public boolean isDisabledImageViewerNextPageArrow() throws Exception {
+		try {
+
+			boolean Status = true;
+			String nextPageAttribute;
+			WebElement arrowNextPage = driver.findElement(By.xpath("//section/div[2]/div[2]/mat-paginator/div/div/div/button[2]"));
+			nextPageAttribute = controller.getElementAttribute(arrowNextPage, "ng-reflect-disabled");
+			if (!nextPageAttribute.contentEquals("true")) {
+				return false;
+			}
+			return Status;
+		} catch (Exception e) {
+			throw new Exception("isDisabledImageViewerNextPageArrow is not working" + e);
+		}
+	}
+	public void clickOnImageViewerArrowNextPage() throws Exception {
+		try {
+			super.jsClick(imgViewerArrowNextPage);
+		} catch (Exception ex) {
+			throw new Exception("clickOnImageViewerArrowNextPage is not working" + ex);
+		}
+	}
+	
+	public boolean isDisabledImageViewerPreviousPageArrow() throws Exception {
+		try {
+
+			boolean Status = true;
+			String previousPageAttribute;
+			WebElement previousPage = driver.findElement(By.xpath("//section/div[2]/div[2]/mat-paginator/div/div/div/button[1]"));
+			previousPageAttribute = controller.getElementAttribute(previousPage, "ng-reflect-disabled");
+			if (!previousPageAttribute.contentEquals("true")) {
+				return false;
+			}
+			return Status;
+		} catch (Exception e) {
+			throw new Exception("isDisabledImageViewerPreviousPageArrow is not working" + e);
+		}
+	}
+	public void clickOnImageViewerArrowPrevPage() throws Exception {
+		try {
+			super.jsClick(imgViewerArrowPrevPage);
+		} catch (Exception ex) {
+			throw new Exception("clickOnImageViewerArrowPrevPage is not working" + ex);
+		}
+	}
+	
+	
 }
+
