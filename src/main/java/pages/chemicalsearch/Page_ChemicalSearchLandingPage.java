@@ -24,6 +24,9 @@ public class Page_ChemicalSearchLandingPage extends Controller {
 
 	@FindBy(xpath = "(//span[contains(.,'close')])[2]")
 	private WebElement btnClearAll;
+	
+	@FindBy(xpath = "//section[2]/app-page-home/div/section/app-structure-search/div/section[2]/div[1]/button[1]/span")
+	private WebElement btn_ClearX;
 
 	@FindBy(css = "span:nth-child(3) > button > span > img")
 	private WebElement rsFooterSaveIcon;
@@ -66,6 +69,26 @@ public class Page_ChemicalSearchLandingPage extends Controller {
 
 	@FindBy(css = "div.links > button:nth-child(5) > span")
 	private WebElement supportLink;
+	
+	@FindBy(css = "span > mat-icon > svg")
+	private WebElement structureSearchIcon;
+	
+	@FindBy(xpath = "//input[@placeholder='Enter a name or SMILES to generate a structure']")
+	private WebElement txtSmiley;
+	
+	@FindBy(xpath = "(//span[contains(@class,'mat-option-text')])[1]")
+	private WebElement firstStructureName;
+	
+	@FindBy(xpath = "//mat-radio-button[@role='radio'  and @value='substructure']")
+	private WebElement radioBtnSubStructure;
+	
+	@FindBy(xpath = "//mat-radio-button[@role='radio'  and @value='exact']")
+	private WebElement radioBtnExactStructure;
+	
+	@FindBy(css = "div:nth-child(2) > h3")
+	private WebElement structureLable;
+	
+	
 
 	public Page_ChemicalSearchLandingPage(Controller controller) {
 		super(controller);
@@ -328,5 +351,111 @@ public class Page_ChemicalSearchLandingPage extends Controller {
 			throw new Exception("setToolTipsOptionOFF is not working" + ex);
 		}
 	}
+	
+	public void clickOnStructureSearchIcon() throws Exception {
+		try {
+			waitUntilElementIsDisplayed(structureSearchIcon);
+			structureSearchIcon.click();
+			controller.waitTime(1);
+		} catch (Exception ex) {
+			throw new Exception("clickOnStructureSearchIcon is not working" + ex);
+		}
+	}
+	
+	public void selectRadioButtonSubstructure() throws Exception {
+		try {
+			String status = controller.getElementAttribute(radioBtnSubStructure, "class");
+			if(!status.contains("mat-radio-checked")) {
+				radioBtnSubStructure.click();
+			}
+			else
+				controller.Logger.addsubStep(LogStatus.INFO, "Sub Structure radio button is Already selected", false);
+			}
+		catch(Exception ex){
+		throw new Exception("selectRadioButtonSubstructure is not working "+ex);
+		}
+	}
+	
+	
+	public void selectRadioButtonExactStructure() throws Exception {
+		try {
+			String status = controller.getElementAttribute(radioBtnExactStructure, "class");
+			if(!status.contains("mat-radio-checked")) {
+				radioBtnExactStructure.click();
+			}
+			else
+				controller.Logger.addsubStep(LogStatus.INFO, "Exact Structure radio button is Already selected", false);
+			}
+		catch(Exception ex){
+		throw new Exception("selectRadioButtonExactStructure is not working "+ex);
+		}
+	}
+	
+	public void selectStructureRadioButton(String structureName) throws Exception {
+		try
+		{
+		if(structureName.trim().equalsIgnoreCase("Substructure"))
+			selectRadioButtonSubstructure();
+		else
+			selectRadioButtonExactStructure();
+		}catch(Exception ex){
+			throw new Exception("selectStructureRadioButton is not working "+ex);
+			}
+		}
 
+	public void setTextSmileyTextBox(String value) throws Exception {
+		try {
+			waitUntilElementIsDisplayed(txtSmiley);
+			click(txtSmiley);
+			setText(txtSmiley, value);
+			Actions action = new Actions(driver);
+			action.moveToElement(firstStructureName).click().build().perform();
+			controller.waitTime(2);
+			} catch (Exception e) {
+			throw new Exception("setTextSmileyTextBox is not working.." + e);
+		}
+	}
+	public boolean isDisplayedStructureSearchBoxWithWaterMark() throws Exception {
+		try {
+		    boolean status=controller.isElementDisplayed(driver.findElement(By.xpath("//div/input[contains(@placeholder,'Enter a name or SMILES to generate a structure')]")));
+			return status;	
+		 }catch (Exception e) {
+		return false;
+		}
+	}
+	public boolean isDisplayedButtonClearX() throws Exception {
+		try {
+			return controller.isElementDisplayed(btn_ClearX);
+
+		} catch (Exception ex) {
+			throw new Exception("button ClearX is not displayed" + ex);
+		}
+	}
+	public void setSmileyTextBox(String value) throws Exception {
+		try {
+			waitUntilElementIsDisplayed(txtSmiley);
+			click(txtSmiley);
+			setText(txtSmiley, value);
+			} catch (Exception e) {
+			throw new Exception("setSmileyTextBox is not working.." + e);
+		}
+	}
+	public void clickOnButtonX() throws Exception {
+		try {
+			waitUntilElementIsDisplayed(btn_ClearX);
+			jsClick(btn_ClearX);
+		} catch (Exception ex) {
+			throw new Exception("clickOnButtonX is not working" + ex);
+		}
+	}
+	public String getTextStructureSearchLable() throws Exception {
+		try {
+			String expMsg = "";
+			if (controller.isElementDisplayed(structureLable))
+				expMsg = controller.getText(structureLable);
+			return expMsg;
+		} catch (Exception e) {
+			throw new Exception("getTextStructureSearchLable is not working.." + e);
+		}
+	}
 }
