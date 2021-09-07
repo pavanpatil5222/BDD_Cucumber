@@ -14,6 +14,8 @@ import org.openqa.selenium.support.PageFactory;
 import com.relevantcodes.extentreports.LogStatus;
 
 import support.Controller;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * 
@@ -24,6 +26,21 @@ public class Page_ChemicalSearchLandingPage extends Controller {
 
 	@FindBy(xpath = "(//span[contains(.,'close')])[2]")
 	private WebElement btnClearAll;
+	
+	@FindBy(css = "button:nth-child(2) > span > mat-icon")
+	private WebElement personIcon;
+	
+	
+	
+	@FindBy(css = "div.bottom-icons > button:nth-child(1) > span > mat-icon")
+	private WebElement organizationIcon;
+
+	@FindBy(css = "section.add-button > button")
+	private WebElement btnAdd;
+	
+	@FindBy(xpath = "//input[contains(@placeholder,'Enter name')]")
+	private WebElement txtCompanyPerson;
+	
 	
 	@FindBy(xpath = "//section[2]/app-page-home/div/section/app-structure-search/div/section[2]/div[1]/button[1]/span")
 	private WebElement btn_ClearX;
@@ -37,7 +54,7 @@ public class Page_ChemicalSearchLandingPage extends Controller {
 	@FindBy(css = "#cdk-overlay-0 > div > div > button:nth-child(3) > span")
 	private WebElement showTipsTxt;
 
-	@FindBy(xpath = "//button//span/mat-icon[@class ='mat-icon notranslate material-icons mat-icon-24 mat-icon-no-color']")
+	@FindBy(xpath = "//button//span/span/mat-icon[@class ='mat-icon notranslate material-icons mat-icon-no-color']")
 	private WebElement btnSearchIcon;
 
 	@FindBy(xpath = " //textarea[@placeholder='Enter keywords, phrases or text blocks to search...']")
@@ -458,4 +475,66 @@ public class Page_ChemicalSearchLandingPage extends Controller {
 			throw new Exception("getTextStructureSearchLable is not working.." + e);
 		}
 	}
+	public void clickOnPersonIcon() throws Exception {
+		try {
+			waitUntilElementIsDisplayed(personIcon);
+			personIcon.click();
+			} catch (Exception ex) {
+			throw new Exception("clickOnPersonIcon is not working" + ex);
+		}
+	}
+	
+	
+	public void clickOnOrganizationIcon() throws Exception {
+		try {
+			waitUntilElementIsDisplayed(organizationIcon);
+			organizationIcon.click();
+			} catch (Exception ex) {
+			throw new Exception("clickOnOrganizationIcon is not working" + ex);
+		}
+	}
+	
+	public void clickOnButtonAdd() throws Exception {
+		try {
+			waitUntilElementIsDisplayed(btnAdd);
+			btnAdd.click();
+			} catch (Exception ex) {
+			throw new Exception("clickOnButtonAdd is not working" + ex);
+		}
+	}
+	
+	public void setTextPersonOrOrganization(String value) throws Exception {
+		try {
+			waitUntilElementIsDisplayed(txtCompanyPerson);
+			//txtCompanyPerson.click();
+			setText(txtCompanyPerson, value);
+		} catch (Exception e) {
+			throw new Exception("setTextPersonOrOrganization is not working.." + e);
+		}
+
+	}
+	
+	
+	@SuppressWarnings("static-access")
+	public List<String> getAllPersonsOrganizations() throws Exception{
+		try {
+			
+ 			List<String> Labels =new ArrayList<String>();
+ 				for(int i=1;i<=4;i++)
+ 				{
+ 					WebElement element = controller.driver.findElement(By.cssSelector("mat-chip:nth-child("+i+") > div.cdx-chip-block > span > span.cdx-chip-name"));
+ 					String Label = controller.getText(element);
+ 					Labels.add(Label); 					
+  				}
+ 			
+		return Labels;
+     	}catch (Exception e) {
+     		throw new Exception("getAllPersonsOrganizations is not working" + e);
+     	}
+	}
+	
+	
+
 }
+
+
