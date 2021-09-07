@@ -1,6 +1,7 @@
 package pages.literaturesearch;
 import java.util.List;
-
+import java.util.ArrayList;
+import org.openqa.selenium.Keys;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
@@ -19,6 +20,25 @@ public class Tab_LiteratureSearch extends Controller{
 	
 	@FindBy(css = "app-result-set:nth-child(1) > section > mat-card > mat-card-content > section:nth-child(3) > div > span")
 	private WebElement linkMoreLikeThis;
+	@FindBy(xpath = "//div[1]/mat-dialog-content/section[2]/div[2]/button")
+	private WebElement btnRestoreDefaults;
+	@FindBy(xpath = "(//input[@maxlength='40'])[2]")
+	private WebElement txtFirstClusterItem;
+	@FindBy(xpath = "(//input[@maxlength='40'])[3]")
+	private WebElement txtSecondClusterItem;
+	@FindBy(css = "#mat-hint-0 > span")
+	private WebElement txtClusterErrMsg;
+	@FindBy(xpath = "//div[@class='chart']//*[name()='svg']//*[name()='circle']")
+	private WebElement firstBubble;
+
+	@FindBy(xpath = "//h4[contains(.,'Edit existing cluster items')]")
+	private WebElement txtClusterLabel;
+	
+	@FindBy(xpath = "//span[contains(.,'Customize')]")
+	private WebElement linkCustomize;
+
+	@FindBy(xpath = "//div[2]/mat-dialog-actions/button[2]")
+	private WebElement btnApply;
 	
 	@FindBy(xpath = "(//mat-icon[contains(@class,'mat-icon notranslate mat-chip-remove mat-chip-trailing-icon material-icons mat-icon-no-color')])[2]")
 	private WebElement moreLikeCloseIcon;
@@ -773,4 +793,101 @@ public class Tab_LiteratureSearch extends Controller{
 				 throw new Exception("isDisabledLiteratureTab is not working" + e);
 			}
 		}
+		
+		public void clickOnLinkCustomize() throws Exception {
+			try {
+				waitUntilElementIsDisplayed(linkCustomize);
+				jsClick(linkCustomize);
+			} catch (Exception ex) {
+				throw new Exception("clickOnLinkCustomize is not working" + ex);
+			}
+		}
+		public String getTextClusterItemLabel() throws Exception {
+			String citem;
+			waitUntilElementIsDisplayed(txtClusterLabel);
+			citem = getText(txtClusterLabel);
+			return (citem);
+		}
+		
+
+@SuppressWarnings("static-access")
+public List<String> getAllClusterItems() throws Exception{
+	try {
+		
+			List<String> citemLabels =new ArrayList<String>();
+				for(int i=2;i<=13;i++)
+				{
+					WebElement element = controller.driver.findElement(By.xpath("(//input[contains(@maxlength,'40')])["+i+"]"));
+					String citemLabel = controller.getJSText(element);
+					citemLabels.add(citemLabel); 					
+				}
+			
+	return citemLabels;
+ 	}catch (Exception e) {
+ 		throw new Exception("getAllClusterItems is not working" + e);
+ 	}
+}
+
+public void deleteExistingClusterItems() throws Exception {
+	try {
+		for(int i=2;i<=13;i++)
+		{
+		 WebElement clusterItem = driver.findElement(By.xpath("(//input[contains(@maxlength,'40')])["+i+"]"));
+		 clusterItem.click();
+		 clusterItem.sendKeys(Keys.chord(Keys.CONTROL, "a", Keys.DELETE));	
+		}
+	} catch (Exception e) {
+		throw new Exception("deleteExistingClusterItems is not working.." + e);
+	}
+}
+public String getTextClusterErrorMessage() throws Exception {
+	String cErrMsg;
+	waitUntilElementIsDisplayed(txtClusterErrMsg);
+	cErrMsg = getText(txtClusterErrMsg);
+	return (cErrMsg);
+}
+public void clickOnButtonRestorDefault() throws Exception {
+	try {
+		waitUntilElementIsDisplayed(btnRestoreDefaults);
+		jsClick(btnRestoreDefaults);
+	} catch (Exception ex) {
+		throw new Exception("clickOnButtonRestorDefault is not working" + ex);
+	}
+}
+public void setTextFirstClusterItem(String value) throws Exception {
+	try {
+		waitUntilElementIsDisplayed(txtFirstClusterItem);
+		txtFirstClusterItem.click();
+		setText(txtFirstClusterItem, value);
+	} catch (Exception e) {
+		throw new Exception("setTextFirstClusterItem is not working.." + e);
+	}
+}
+public void setTextSecondClusterItem(String value) throws Exception {
+	try {
+		waitUntilElementIsDisplayed(txtSecondClusterItem);
+		txtSecondClusterItem.click();
+		setText(txtSecondClusterItem, value);
+	} catch (Exception e) {
+		throw new Exception("setTextSecondClusterItem is not working.." + e);
+	}
+}
+
+public void clickOnButtonApply() throws Exception {
+	try {
+		waitUntilElementIsDisplayed(btnApply);
+		jsClick(btnApply);
+	} catch (Exception ex) {
+		throw new Exception("clickOnButtonApply is not working" + ex);
+	}
+}
+public void clickOnFirstBubble() throws Exception {
+	try {
+		waitUntilElementIsDisplayed(firstBubble);
+		Actions builder = new Actions(driver);
+		builder.click(firstBubble).build().perform();
+	} catch (Exception ex) {
+		throw new Exception("clickOnFirstBubble is not working" + ex);
+	}
+}
 }
