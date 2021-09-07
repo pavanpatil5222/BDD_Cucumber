@@ -10,6 +10,7 @@ import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import com.relevantcodes.extentreports.LogStatus;
+import org.openqa.selenium.Keys;
 
 import support.Controller;
 
@@ -21,6 +22,30 @@ import support.Controller;
 
 public class Tab_PatentSearch extends Controller {
 
+
+	@FindBy(xpath = "//span[contains(.,'Customize')]")
+	private WebElement linkCustomize;
+	
+	@FindBy(xpath = "//div[@class='chart']//*[name()='svg']//*[name()='circle']")
+	private WebElement firstBubble;
+	
+	@FindBy(xpath = "(//input[@maxlength='40'])[2]")
+	private WebElement txtFirstClusterItem;
+	
+	@FindBy(xpath = "//h4[contains(.,'Edit existing cluster items')]")
+	private WebElement txtClusterLabel;
+	
+	@FindBy(xpath = "(//input[@maxlength='40'])[3]")
+	private WebElement txtSecondClusterItem;
+	
+	@FindBy(xpath = "//div[2]/mat-dialog-actions/button[2]")
+	private WebElement btnApply;
+	
+	@FindBy(css = "#mat-hint-0 > span")
+	private WebElement txtClusterErrMsg;
+	
+	@FindBy(xpath = "//div[1]/mat-dialog-content/section[2]/div[2]/button")
+	private WebElement btnRestoreDefaults;
 	
 	@FindBy(xpath="(//span[contains(.,'View as result set')])[1]")
     private WebElement citingPatentViewAsResultSet;
@@ -2509,7 +2534,140 @@ public class Tab_PatentSearch extends Controller {
 			throw new Exception("clickOnImageViewerArrowPrevPage is not working" + ex);
 		}
 	}
+	public void clickOnLinkCustomize() throws Exception {
+		try {
+			waitUntilElementIsDisplayed(linkCustomize);
+			jsClick(linkCustomize);
+		} catch (Exception ex) {
+			throw new Exception("clickOnLinkCustomize is not working" + ex);
+		}
+	}
+	public String getTextClusterItemLabel() throws Exception {
+		String citem;
+		waitUntilElementIsDisplayed(txtClusterLabel);
+		citem = getText(txtClusterLabel);
+		return (citem);
+	}
+	@SuppressWarnings("static-access")
+	public List<String> getAllClusterItems() throws Exception{
+		try {
+			
+ 			List<String> citemLabels =new ArrayList<String>();
+ 				for(int i=2;i<=13;i++)
+ 				{
+ 					WebElement element = controller.driver.findElement(By.xpath("(//input[contains(@maxlength,'40')])["+i+"]"));
+ 					String citemLabel = controller.getJSText(element);
+  					citemLabels.add(citemLabel); 					
+  				}
+ 			
+		return citemLabels;
+     	}catch (Exception e) {
+     		throw new Exception("getAllClusterItems is not working" + e);
+     	}
+	}
 	
+	public String getTextClusterErrorMessage() throws Exception {
+		String cErrMsg;
+		waitUntilElementIsDisplayed(txtClusterErrMsg);
+		cErrMsg = getText(txtClusterErrMsg);
+		return (cErrMsg);
+	}
+	public void deleteExistingClusterItems() throws Exception {
+		try {
+			for(int i=2;i<=13;i++)
+			{
+			 WebElement clusterItem = driver.findElement(By.xpath("(//input[contains(@maxlength,'40')])["+i+"]"));
+			 clusterItem.click();
+			 clusterItem.sendKeys(Keys.chord(Keys.CONTROL, "a", Keys.DELETE));	
+			}
+		} catch (Exception e) {
+			throw new Exception("deleteExistingClusterItems is not working.." + e);
+		}
+	}
 	
+	public void clickOnButtonRestorDefault() throws Exception {
+		try {
+			waitUntilElementIsDisplayed(btnRestoreDefaults);
+			jsClick(btnRestoreDefaults);
+		} catch (Exception ex) {
+			throw new Exception("clickOnButtonRestorDefault is not working" + ex);
+		}
+	}
+	
+	public void setTextFirstClusterItem(String value) throws Exception {
+		try {
+			waitUntilElementIsDisplayed(txtFirstClusterItem);
+			txtFirstClusterItem.click();
+			setText(txtFirstClusterItem, value);
+		} catch (Exception e) {
+			throw new Exception("setTextFirstClusterItem is not working.." + e);
+		}
+	}
+	public void setTextSecondClusterItem(String value) throws Exception {
+		try {
+			waitUntilElementIsDisplayed(txtSecondClusterItem);
+			txtSecondClusterItem.click();
+			setText(txtSecondClusterItem, value);
+		} catch (Exception e) {
+			throw new Exception("setTextSecondClusterItem is not working.." + e);
+		}
+	}
+	
+	public void clickOnButtonApply() throws Exception {
+		try {
+			waitUntilElementIsDisplayed(btnApply);
+			jsClick(btnApply);
+		} catch (Exception ex) {
+			throw new Exception("clickOnButtonApply is not working" + ex);
+		}
+	}
+	
+	public void clickOnFirstBubble() throws Exception {
+		try {
+			waitUntilElementIsDisplayed(firstBubble);
+			Actions builder = new Actions(driver);
+			builder.click(firstBubble).build().perform();
+		} catch (Exception ex) {
+			throw new Exception("clickOnFirstBubble is not working" + ex);
+		}
+	}
+
+	@SuppressWarnings("static-access")
+	public List<String> getAllPersonsOrganizationsStructureSearch() throws Exception{
+		try {
+			
+ 			List<String> Labels =new ArrayList<String>();
+ 				for(int i=3;i<=6;i++)
+ 				{
+ 					WebElement element = controller.driver.findElement(By.cssSelector("mat-chip:nth-child("+i+") > div.cdx-chip-block > span > span.cdx-chip-name"));
+ 					String Label = controller.getText(element);
+ 					Labels.add(Label); 					
+  				}
+ 			
+		return Labels;
+     	}catch (Exception e) {
+     		throw new Exception("getAllPersonsOrganizationsStructureSearch is not working" + e);
+     	}
+	}
+
+	@SuppressWarnings("static-access")
+	public List<String> getAllPersonsOrganizations() throws Exception{
+		try {
+			
+ 			List<String> Labels =new ArrayList<String>();
+ 				for(int i=1;i<=4;i++)
+ 				{
+ 					WebElement element = controller.driver.findElement(By.cssSelector("mat-chip:nth-child("+i+") > div.cdx-chip-block > span > span.cdx-chip-name"));
+ 					String Label = controller.getText(element);
+ 					Labels.add(Label); 					
+  				}
+ 			
+		return Labels;
+     	}catch (Exception e) {
+     		throw new Exception("getAllPersonsOrganizations is not working" + e);
+     	}
+	}
 }
+
+
 
