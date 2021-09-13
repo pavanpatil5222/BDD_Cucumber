@@ -62,6 +62,7 @@ public class ChemistrySolutionSearch {
 				Application.Logger.addsubStep(LogStatus.FAIL, "SEARCH ICON IS NOT ENABLED", true);
 			}
 			page_ChemicalSearchLandingPage.clickOnSearchIcon();
+			Application.waitUntilFectchRecordProgressBarToDisappears();
 			if (page_ChemicalSearchResults.checkIfResultsFound()) {
 				Application.Logger.addsubStep(LogStatus.PASS, "RESULT SET IS DISPLAYED FOR THE TEXT SEARCH", false);
 			} else {
@@ -153,6 +154,7 @@ public class ChemistrySolutionSearch {
 			page_ChemicalSearchResults.tabPatentSearch().clickOnButtonInsights();
 			page_ChemicalSearchResults.tabPatentSearch().clickOnButtonFirstKeyWord();
 			page_ChemicalSearchResults.clickOnSearchIcon();
+			Application.waitUntilFectchRecordProgressBarToDisappears();
 			rsKeyword = page_ChemicalSearchResults.getTextKeyword();
 			expKeywordText = page_ChemicalSearchResults.tabPatentSearch().getTextPatentInsightsKeyword();
 			if (rsKeyword.trim().equalsIgnoreCase(expKeywordText.trim())) {
@@ -173,6 +175,7 @@ public class ChemistrySolutionSearch {
 			page_ChemicalSearchResults.tabPatentSearch().clickOnButtonInsights();
 			page_ChemicalSearchResults.tabLiteratureSearch().clickOnButtonFirstKeyWord();
 			page_ChemicalSearchResults.clickOnSearchIcon();
+			Application.waitUntilFectchRecordProgressBarToDisappears();
 			rsKeyword = page_ChemicalSearchResults.getTextKeyword();
 			expKeywordText = page_ChemicalSearchResults.tabLiteratureSearch().getTextLiteratureInsightsKeyword();
 			expKeywordText = expKeywordText.toLowerCase();

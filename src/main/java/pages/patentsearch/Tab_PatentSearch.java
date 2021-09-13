@@ -1574,7 +1574,7 @@ public class Tab_PatentSearch extends Controller {
 	public void clickOnButtonInsights() throws Exception {
 		try {
 			controller.waitTime(2);
-			if (!btn_TabInsights.getAttribute("ng-reflect-fx-flex").toLowerCase().contains("385px")) {
+			if (!btn_TabInsights.getAttribute("style").toLowerCase().contains("385px")) {
 				controller.jsClick(btn_Insights);
 
 			} else {

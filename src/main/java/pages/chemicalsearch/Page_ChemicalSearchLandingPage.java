@@ -24,7 +24,7 @@ import java.util.List;
  */
 public class Page_ChemicalSearchLandingPage extends Controller {
 
-	@FindBy(xpath = "(//span[contains(.,'close')])[2]")
+	@FindBy(xpath = "//div[3]/section[2]/div[2]/button[2]")
 	private WebElement btnClearAll;
 	
 	@FindBy(css = "button:nth-child(2) > span > mat-icon")

@@ -100,7 +100,7 @@ public class Page_ChemicalSearchResults extends Controller{
 	@FindBy(xpath = " //div[@class='chart']//*[name()='svg']//*[name()='circle']")
 	private WebElement circleClustermap;
 	
-	@FindBy(xpath = "//textarea[@ng-reflect-maxlength='2000']")
+	@FindBy(xpath = "//textarea[contains(@maxlength,'2000')]")
 	private WebElement txtSearchBox;
 	
 	//" //section[@class='filter-section ng-star-inserted']//div[contains(text(),'" + filter + "')]"
@@ -132,7 +132,7 @@ public class Page_ChemicalSearchResults extends Controller{
 	@FindBy(xpath = "(//span[@class='cdx-chip-name ng-star-inserted'])[1]")
 	private WebElement mouseHoverFirstKeyWord;
 	
-	@FindBy(xpath="(//span[@class='cdx-chip-name'])[3]")
+	@FindBy(xpath="//mat-chip-list/div/mat-chip[3]/div[2]/span")
 	private WebElement KeywordPillText;	
 		
 	@FindBy(xpath="//app-result-search-bar/section/section/div[1]/div[2]/div[2]")
@@ -276,7 +276,7 @@ public class Page_ChemicalSearchResults extends Controller{
 	@FindBy(xpath = "//button/span[contains(.,' Apply ')]")
 	private WebElement btnApply;
 	
-	@FindBy(xpath = "//button/span[contains(.,' Canсel ')]")
+	@FindBy(xpath = "//button/span[contains(.,' CanÑ�el ')]")
 	private WebElement btnCancel;
 	
 	
@@ -734,14 +734,14 @@ public class Page_ChemicalSearchResults extends Controller{
 	public void clickOnTabLiterature() {
 		try {
 		
-			WebElement ele=driver.findElement(By.xpath("//div[contains(@class,'tab tab-2')]"));
+			WebElement ele=driver.findElement(By.xpath("//*[@id='tab-2']"));
 			if(controller.getElementAttribute(ele,"class").contains("mat-ripple tab tab-2 active")) 
 			{
 				controller.Logger.addsubStep(LogStatus.INFO, "Tab Literature is already selected ", false);
 			}else 
 			{
 			   
-				driver.findElement(By.xpath("//div[contains(@class,'tab tab-2')]")).click();
+				driver.findElement(By.xpath("//*[@id='tab-2']")).click();
 			    controller.Logger.addsubStep(LogStatus.PASS, "Tab Literature is selected successfully.", false);
 				
 			}
