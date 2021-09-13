@@ -6513,7 +6513,9 @@ public boolean vaildatePatentClusterItems(Controller Application, HashMap<String
 		page_ChemicalSearchResults.clickOnClustermapLink();		
 		Application.waitTime(3);
 		page_ChemicalSearchResults.tabPatentSearch().clickOnLinkCustomize();
+		Application.waitTime(2);
 		actLabel = page_ChemicalSearchResults.tabPatentSearch().getTextClusterItemLabel();
+		Application.waitTime(2);
 		if (actLabel.equals(expLabel)) {
 			Application.Logger.addsubStep(LogStatus.PASS," EXPECTED CLUSTER ITEM LABEL : \t\t" + expLabel+ "\t\t IS MATCHING WITH ACTUAL CLUSTER ITEM LABEL :" + actLabel,false);
 		} else {
