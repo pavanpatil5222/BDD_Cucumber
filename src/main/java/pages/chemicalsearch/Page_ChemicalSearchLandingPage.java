@@ -48,7 +48,7 @@ public class Page_ChemicalSearchLandingPage extends Controller {
 	@FindBy(css = "span:nth-child(3) > button > span > img")
 	private WebElement rsFooterSaveIcon;
 
-	@FindBy(xpath = "//div[1]/div[3]/button[2]")
+	@FindBy(xpath = "//section[2]/div[1]/button[3]")
 	private WebElement btnSearchIconStatus;
 
 	@FindBy(css = "#cdk-overlay-0 > div > div > button:nth-child(3) > span")
