@@ -27,10 +27,8 @@ public class Page_ChemicalSearchLandingPage extends Controller {
 	@FindBy(xpath = "//div[3]/section[2]/div[2]/button[2]")
 	private WebElement btnClearAll;
 	
-	@FindBy(css = "button:nth-child(2) > span > mat-icon")
-	private WebElement personIcon;
-	
-	
+	@FindBy(css = "div:nth-child(1) > button:nth-child(2) > span > mat-icon")
+	private WebElement personIcon;	
 	
 	@FindBy(css = "div.bottom-icons > button:nth-child(1) > span > mat-icon")
 	private WebElement organizationIcon;

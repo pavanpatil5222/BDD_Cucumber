@@ -55,13 +55,13 @@ public class Tab_PatentSearch extends Controller {
 	private WebElement imgViewerArrowPrevPage;
 	
 	
-	@FindBy(xpath = "//div/mat-dialog-content/section/div[2]/div[2]/mat-paginator/div/div/div/div")
+	@FindBy(css = "div:nth-child(2) > div:nth-child(2) > mat-paginator > div > div > div > div")
 	private WebElement paginatorRange;
        
     @FindBy(xpath="(//span[contains(.,'View as result set')])[2]")
     private WebElement citedPatentViewAsResultSet;
     
-    @FindBy(css = "#cdk-accordion-child-15 > div > div.sub-block.ng-star-inserted > a")
+    @FindBy(xpath = "//a[contains(.,'See all')]")
 	private WebElement linkSeeAll;
 	@FindBy(xpath = "//app-record-view/section/div/section/mat-accordion/mat-expansion-panel[3]/mat-expansion-panel-header")
 	private WebElement hitStructureLink;	
@@ -356,7 +356,7 @@ public class Tab_PatentSearch extends Controller {
 	@FindBy(xpath = "//app-result-count-bar/section/section[3]/button")
 	WebElement btn_Insights;
 
-	@FindBy(css = "section > app-result-set:nth-child(1) > section > aside > section:nth-child(3) > div > span:nth-child(2) > button > span > mat-icon")
+	@FindBy(css = "app-result-set:nth-child(1) > section > aside > section:nth-child(3) > div > span:nth-child(2) > button")
 	private WebElement thumsUpIcon;
 
 	@FindBy(css = "section > app-result-set:nth-child(1) > section > aside > section:nth-child(3) > div > span:nth-child(3) > button > span > mat-icon")
@@ -1597,8 +1597,8 @@ public class Tab_PatentSearch extends Controller {
 			String iconStatus;
 			waitUntilElementIsDisplayed(thumsUpIcon);
 			jsClick(thumsUpIcon);
-			iconStatus = getElementAttribute(thumsUpIcon, "ng-reflect-svg-icon");
-			if (iconStatus.contains("thumbup-filled")) {
+			iconStatus = getElementAttribute(thumsUpIcon, "class");
+			if (iconStatus.contains("focus")) {
 				controller.Logger.addsubStep(LogStatus.PASS, "THUMBS UP ICON CHANGED TO SOLID GREEN COLOR", false);
 			} else {
 				controller.Logger.addsubStep(LogStatus.FAIL, "THUMBS UP ICON DIDNT CHANGED TO SOLID GREEN COLOR",
@@ -2466,7 +2466,7 @@ public class Tab_PatentSearch extends Controller {
 	}
 	public void clickOnLinkSeeAll() throws Exception {
 		try {
-			List<WebElement> hitimages = driver.findElements(By.cssSelector("#cdk-accordion-child-15 > div > div:nth-child(1) > a"));
+			List<WebElement> hitimages = driver.findElements(By.xpath("//mat-accordion/mat-expansion-panel[3]/div/div/div[1]/a"));
 			controller.waitTime(2);
 			if(hitimages.size()==3)
 			{
@@ -2495,7 +2495,7 @@ public class Tab_PatentSearch extends Controller {
 			boolean Status = true;
 			String nextPageAttribute;
 			WebElement arrowNextPage = driver.findElement(By.xpath("//section/div[2]/div[2]/mat-paginator/div/div/div/button[2]"));
-			nextPageAttribute = controller.getElementAttribute(arrowNextPage, "ng-reflect-disabled");
+			nextPageAttribute = controller.getElementAttribute(arrowNextPage, "disabled");
 			if (!nextPageAttribute.contentEquals("true")) {
 				return false;
 			}
@@ -2518,7 +2518,7 @@ public class Tab_PatentSearch extends Controller {
 			boolean Status = true;
 			String previousPageAttribute;
 			WebElement previousPage = driver.findElement(By.xpath("//section/div[2]/div[2]/mat-paginator/div/div/div/button[1]"));
-			previousPageAttribute = controller.getElementAttribute(previousPage, "ng-reflect-disabled");
+			previousPageAttribute = controller.getElementAttribute(previousPage, "disabled");
 			if (!previousPageAttribute.contentEquals("true")) {
 				return false;
 			}

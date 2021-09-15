@@ -64,9 +64,9 @@ public class Page_ChemicalSearchResults extends Controller{
 	private WebElement personToastMsg;*/
 	
 	
-	@FindBy(xpath="//app-result-paginator-bar/section[1]/span[1]/mat-checkbox/label/div/input")
+	@FindBy(xpath="//app-result-paginator-bar/section/section[1]/span[1]/mat-checkbox/label/div/input")
 	private WebElement globalCheckBox;
-	@FindBy(xpath="//app-result-set[1]/section/aside/section[1]/div/span[1]/app-result-set-saveto-modal/div/div[1]/section[3]/section/button")
+	@FindBy(xpath="//div/div[1]/section[3]/section/button/span/span")
 	private WebElement linkCreateNewFolder;
 	@FindBy(css="app-result-set:nth-child(1) > section > aside > section:nth-child(3) > div > span:nth-child(1) > button > span > img")
 	private WebElement saveIcon;
@@ -88,10 +88,10 @@ public class Page_ChemicalSearchResults extends Controller{
 	@FindBy(css="span:nth-child(3) > button > span > img")
 	private WebElement rsFooterSaveIcon;
 	
-	@FindBy(xpath="//app-result-paginator-bar/section[1]/span[3]/div/app-result-set-saveto-modal/div/div[1]/section[3]/section/button")
+	@FindBy(xpath="//app-result-set-saveto-modal/div/div[1]/section[3]/section/button/span")
 	private WebElement rsFooterCreateNewFolder;
 	
-	@FindBy(xpath="//input[@ng-reflect-maxlength='150']")
+	@FindBy(xpath="//section[3]/form/section[1]/mat-form-field/div/div[1]/div[3]/input")
 	private WebElement txtFolderName;
 	
 	@FindBy(xpath="//div[@class='result-count']")
@@ -346,8 +346,8 @@ public class Page_ChemicalSearchResults extends Controller{
 			waitUntilElementIsDisplayed(mouseHoverFirstKeyWord);
 			Actions action = new Actions(driver);
 			action.moveToElement(mouseHoverFirstKeyWord).perform();
-				txtKeyWord.click();
-				setText(txtKeyWord, keywordtxt.get(i));
+			txtKeyWord.click();
+			setText(txtKeyWord, keywordtxt.get(i));
 				 new Actions(driver).sendKeys(Keys.ENTER).build().perform();
 				 controller.waitTime(1);
 			 }
@@ -1714,8 +1714,8 @@ public int getFolderNameSize(String checkboxname) throws Exception {
 public boolean isSelectedRSCheckBox(int checkboxnum) throws Exception {
 	try {
 	WebElement ele = controller.driver.findElement(By.xpath("//app-result-set["+checkboxnum+"]/section/aside/div[1]/span[1]/mat-checkbox"));
-	String bool = controller.getElementAttribute(ele, "ng-reflect-checked");
-	if(bool.equals("true"))
+	String bool = controller.getElementAttribute(ele, "class");
+	if(bool.contains("checked"))
 		return true;
 	else		
 		return false;

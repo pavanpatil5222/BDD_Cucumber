@@ -5422,6 +5422,7 @@ public class ChemistrySolutionSearch {
 			page_ChemicalSearchResults.clickOnRsFooterSaveIcon();
 			Application.waitTime(2);
 			page_ChemicalSearchResults.clickOnRsFooterCreateNewFolder();
+			Application.waitTime(2);
 			page_ChemicalSearchResults.setTextFolderName(multipleFolderName);
 			page_ChemicalSearchResults.clickOnLinkCreate();
 			Application.waitTime(2);

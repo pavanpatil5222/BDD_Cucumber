@@ -30,7 +30,7 @@ public class Page_SavedRecords extends Controller {
 	private WebElement savedRecordsCheckbox;
 	@FindBy(xpath="//mat-select[contains(@aria-label,'Items per page:')]")
     WebElement dropdown_ItemsPerPage;
-	@FindBy(xpath = "//div[@class='mat-select-value']/span/span")
+	@FindBy(xpath = "//mat-select/div/div[1]/span/span")
 	private WebElement value_Dropdown;
 	
 	@FindBy(xpath="//section[@class='new-folder ng-star-inserted']/div")
@@ -369,7 +369,7 @@ public String getValueFromItemsPerPageDropdown() throws Exception {
 public void selectItemsPerPageFromDropDown(String itemValue) throws Exception {
 	try {
 		clickOnItemsPerPageDropDown();
-        List<WebElement> listOfDropdownValue = driver.findElements(By.xpath("//span[@class='mat-option-text']"));
+        List<WebElement> listOfDropdownValue = driver.findElements(By.xpath("//div[3]/div[2]/div/div/div/mat-option/span"));
 		for (WebElement dropdownValue:listOfDropdownValue)
 		{
 			if(dropdownValue.getText().equalsIgnoreCase(itemValue))
