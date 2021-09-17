@@ -6082,7 +6082,7 @@ public class ChemistrySolutionSearch {
 	}
 	//CHEMEXP-1291
 			@Test
-			public boolean validateStructureSearchAndLiteratureTab(Controller Application, HashMap<String, String> input) {
+		public boolean validateStructureSearchAndLiteratureTab(Controller Application, HashMap<String, String> input) {
 				page_ChemicalSearchLandingPage = new Page_ChemicalSearchLandingPage(Application);
 				page_ChemicalSearchResults = new Page_ChemicalSearchResults(Application);
 				page_SavedRecords = new Page_SavedRecords(Application);
@@ -6807,7 +6807,200 @@ public boolean vaildateCompanyPeoplePhraseStructureSearch(Controller Application
 	return flag;
 }
 
+
+/**  CHEMEXP-1664* */
+@Test
+public boolean vaildateAnnotationResultSetAndSavedRecord(Controller Application, HashMap<String, String> input) {
+	page_ChemicalSearchLandingPage = new Page_ChemicalSearchLandingPage(Application);
+	page_ChemicalSearchResults = new Page_ChemicalSearchResults(Application);
+	page_SavedRecords = new Page_SavedRecords(Application);
+	String searchText = input.get("searchtext");
+	String annotationMaxText = "If you need to stop reading before you reach the end, Word remembers where you left off - even on another device. "
+			+ "Video provides a powerful way to help you prove your point. When you click Online Video, you can paste in the embed code for "
+			+ "the video you want to add. You can also type a keyword to search online for the video that best fits your document. To make your "
+			+ "document look professionally produced, Word provides header, footer, cover page, and text box designs that complement each other. "
+			+ "For example, you can add a matching cover page, header, and sidebar. Click Insert and then choose the elements you want from the "
+			+ "different galleries. Themes and styles also help keep your document coordinated. When you click Design and choose a new Theme, "
+			+ "the pictures, charts, and SmartArt graphics change to match your new theme. When you apply styles, your headings change to match the new theme. "
+			+ "Save time in Word with new buttons that show up where you need them. To change the way a picture fits in your document, click it "
+			+ "and a button for layout options appears next to it. When you work on a table, click where you want to add a row or a column, and then click the plus sign. Reading is easier, too, in the new Reading view. "
+			+ "You can collapse parts of the document and focus on the text you want. If you need to stop reading before you reach the end, Word remembers where you left off - even on another device. "
+			+ "Video provides a powerful way to help you prove your point. When you click Online Video, you can paste in the embed code for the video you want to add. You can also type a keyword to search online for the "
+			+ "video that best fits your document. To make your document look professionally produced, Word provides header, footer, cover page, and text box designs that complement each other. For example, you "
+			+ "can add a matching cover page, header, and sidebar. Click Insert and then choose the elements you want from the different galleries. Themes and styles also help keep your document coo";
+	String expAnnotationErrMsg = "2000 of 2000";
+	String annotationText = "create annotation for record";
+	String actAnnotationErrMsg,annotationFolderCount;
+	boolean flag = true;
+	
+	try {
+		Application.Logger.addStep("1.DELETE ALL THE EXISTING ANNOTATIONS FROM THE ANNOTATIONS RECORDS PAGE","ANNOTATIONS SHOULD BE DELETED SUCCESSFULLY FROM THE ANNOTATIONS RECORDS PAGE");
+		page_SavedRecords.clickOnLinkSavedRecords();
+		page_SavedRecords.clickOnLinkAnnotationRecords();
+		page_SavedRecords.deleteExistingAnnotations();
+		Application.Logger.endStep();
+		Application.Logger.addStep("2.PERFORM A SEARCH WITH A PHRASE FROM THE LANDIING PAGE","RESULT SET PAGE SHOULD BE DISPLAYED");
+		page_ChemicalSearchResults.clickOnChemExpHomePage();
+		page_ChemicalSearchLandingPage.setTextSearchTextBox(searchText);
+		page_ChemicalSearchLandingPage.clickOnSearchIcon();
+		Application.waitUntilFectchRecordProgressBarToDisappears();
+		if (page_ChemicalSearchResults.checkIfResultsFound()) {
+			Application.Logger.addsubStep(LogStatus.PASS, "RESULT SET IS DISPLAYED FOR THE TEXT SEARCH", false);
+		} else {
+			throw new Exception("RESULTS SET IS NOT LOADED FOR THE CHEMICAL SEARCH");
+		}
+		Application.Logger.endStep();	
+	Application.Logger.addStep("3.VERIFY THE ERROR MESSAGE ONCE THE ANNOATION TEXT REACHES 2000 CHARACTERS ","ERROR MESSAGE SHOULD BE DISPLAYED ONCE THE ANNOTATION TEXT REACHES 2000");
+	page_ChemicalSearchResults.tabPatentSearch().clickOnAnnotationIcon(1);
+	page_ChemicalSearchResults.tabPatentSearch().setTextAnnotationText(annotationMaxText);
+	actAnnotationErrMsg=page_ChemicalSearchResults.tabPatentSearch().getTextAnnotationErrorMessage();
+	page_ChemicalSearchResults.tabPatentSearch().clickOnAnnotationCloseIcon();
+	if (expAnnotationErrMsg.trim().equals(actAnnotationErrMsg.trim())) {
+		Application.Logger.addsubStep(LogStatus.PASS,"ERROR MESSAGE IS DISPLAYED ONCE THE ANNOTATION TEXT REACHES 2000 CHARACTERS",false);
+	} else {
+		Application.Logger.addsubStep(LogStatus.FAIL,"ERROR MESSAGE IS NOT DISPLAYED ONCE THE ANNOTATION TEXT REACHES 2000 CHARACTERS : EXPECTED ERROR MESAGE : \t"
+						+ expAnnotationErrMsg + "\t\t ACTUAL ERROR MESSAGE :\t" + actAnnotationErrMsg,true);
+	}
+	Application.Logger.endStep();
+	Application.Logger.addStep("4.VERIFY THE ANNOTATION ADDED FOR A RECORD IN RS IS DISPLAYED IN THE ANNOTATED FOLDER SECTION","ANNOTATION RECORD SHOULD BE DISPLAYED IN ANNOTATED RECORDS SECTION");
+	page_ChemicalSearchResults.tabPatentSearch().clickOnAnnotationIcon(3);
+	page_ChemicalSearchResults.tabPatentSearch().setTextAnnotationText(annotationText);
+	page_ChemicalSearchResults.tabPatentSearch().clickOnButtonSaveAnnotation();
+	page_SavedRecords.clickOnLinkSavedRecords();
+	Application.waitTime(2);
+	page_SavedRecords.clickOnLinkAnnotationRecords();
+	annotationFolderCount=page_SavedRecords.getTextAnnotationFolderCount();
+	if(annotationFolderCount.contains("1"))
+	{
+		Application.Logger.addsubStep(LogStatus.PASS,"ANNOTATION RECORD IS AVAILABLE IN THE ANNOTATION FOLDER",false);
+	} else {
+		Application.Logger.addsubStep(LogStatus.FAIL,"ANNOTATION RECORD IS NOT AVAILABLE IN THE ANNOTATION FOLDER",true);
+	}
+	Application.Logger.endStep();	
+	Application.Logger.addStep("5.VERIFY IF THE RECORD IS REMOVED FROM THE ANNOTATION FOLDER AFTER DELETING THE ANNOTATION","RECORD SHOULD NOT BE AVAILABLE AFTER IN THE ANNOTATION FOLDER AFTER DELETING THE ANNOTATION");
+	page_SavedRecords.clickOnAnnotationIcon(1);
+	page_SavedRecords.clickOnButtonDeleteAnnotation();
+	Application.waitTime(2);
+	annotationFolderCount=page_SavedRecords.getTextAnnotationFolderCount();
+	if(annotationFolderCount.contains("0"))
+	{
+		Application.Logger.addsubStep(LogStatus.PASS,"ANNOTATION RECORD IS SUCCESSFULLY REMOVED FROM THE ANNOTATION FOLDER",false);
+	} else {
+		Application.Logger.addsubStep(LogStatus.FAIL,"ANNOTATION RECORD IS NOT REMOVED FROM THE ANNOTATION FOLDER",true);
+	}
+	Application.Logger.endStep();
+	}catch (Exception e) {
+		Application.Logger.addException(e.getMessage());
+		return flag = false;
+	}
+	return flag;
 }
+
+
+/**  CHEMEXP-1665* */
+@Test
+public boolean vaildateAnnotationSavedFolderAndSavedRecord(Controller Application, HashMap<String, String> input) {
+	page_ChemicalSearchLandingPage = new Page_ChemicalSearchLandingPage(Application);
+	page_ChemicalSearchResults = new Page_ChemicalSearchResults(Application);
+	page_SavedRecords = new Page_SavedRecords(Application);
+	String searchText = input.get("searchtext");
+	String singleFolderName = "singleRecordAnnotationFolder";
+	String actErrorMessage, expFolderName,annotationFolderCount;
+	int folderLength, recordCount;
+	String annotationText = "create annotation for record in a folder";
+	boolean flag = true;
+	try {
+		Application.Logger.addStep("1.NAVIGATE TO SAVED FOLDERS PAGE AND DELETE ALL EXISTING FOLDERS AND ANNOTATIONS",
+				"FOLDERS AND ANNOTATIONS SHOULD BE DELETED SUCCESSFULLY");
+		page_SavedRecords.clickOnLinkSavedRecords();
+		page_SavedRecords.deleteExistingFolders();
+		page_SavedRecords.clickOnLinkAnnotationRecords();
+		page_SavedRecords.deleteExistingAnnotations();
+		page_ChemicalSearchResults.clickOnChemExpHomePage();
+		Application.Logger.endStep();
+		Application.Logger.addStep("2.PERFORM A SEARCH WITH A PHARSE AND VERIFY THE RS PAGE",
+				"RS PAGE SHOULD BE DISPLAYED AFTER THE SUCCESSFUL SEARCH");
+		page_ChemicalSearchLandingPage.setTextSearchTextBox(searchText);
+		page_ChemicalSearchLandingPage.clickOnSearchIcon();
+		Application.waitUntilFectchRecordProgressBarToDisappears();
+		if (page_ChemicalSearchResults.checkIfResultsFound()) {
+			Application.Logger.addsubStep(LogStatus.PASS, "RESULT SET IS DISPLAYED FOR THE TEXT SEARCH", false);
+		} else {
+			throw new Exception("Results set is not loaded for the chemical search");
+		}
+		Application.Logger.endStep();
+		Application.Logger.addStep("3.VERIFY IF THE NEW FOLDER IS CREATED SUCCESSFULLY IN RESULTS SET PAGE",
+				"FOLDER SHOULD BE CREATED SUCCESSFULLY");
+		page_ChemicalSearchResults.clickOnSaveIcon();
+		Application.waitTime(2);
+		page_ChemicalSearchResults.clickOnLinkCreateNewFolder();
+		Application.waitTime(2);
+		page_ChemicalSearchResults.setTextFolderName(singleFolderName);
+		page_ChemicalSearchResults.clickOnLinkCreate();
+		Application.waitTime(2);
+		page_ChemicalSearchResults.clickOnFolderNameCheckBox(singleFolderName);
+		Application.waitTime(2);
+		expFolderName = page_ChemicalSearchResults.getTextFolderName(singleFolderName);
+		if (expFolderName.equals(singleFolderName)) {
+			Application.Logger.addsubStep(LogStatus.PASS,
+					"NEW FOLDER IS CREATED SUCCESSFULLY WITH THE NAME :" + singleFolderName, false);
+		} else {
+			Application.Logger.addsubStep(LogStatus.FAIL,
+					"NEW FOLDER IS NOT CREATED SUCCESSFULLY WITH THE NAME :" + singleFolderName, true);
+		}
+		Application.Logger.endStep();
+		
+		Application.Logger.addStep("4.VERIFY THE NEWLY CREATED FOLDERS ARE DISPLAYED IN SAVED RECORDS PAGE",
+				"NEWLY CREATED FOLDERS WITH RECORDS SHOULD BE DISPLAYED IN SAVED RECORDS PAGE");
+		Application.waitTime(2);
+		page_SavedRecords.clickOnLinkSavedRecords();
+		Application.waitUntilFectchRecordProgressBarToDisappears();
+		page_SavedRecords.clickOnFolderName(3);
+		Application.waitTime(2);
+		Application.waitUntilFectchRecordProgressBarToDisappears();
+		recordCount = page_SavedRecords.getFolderRecordCount();
+		Application.waitTime(2);
+		if (recordCount == 1) {
+			Application.Logger.addsubStep(LogStatus.PASS,
+					"" + recordCount + " RECORD IS SAVED IN THE FOLDER : " + singleFolderName, false);
+		} else {
+			Application.Logger.addsubStep(LogStatus.FAIL,
+					"" + recordCount + " RECORD IS NOT SAVED IN THE FOLDER : " + singleFolderName, true);
+		}
+		Application.Logger.endStep();
+		Application.Logger.addStep("5.VERIFY THE ANNOTATION ADDED FOR A RECORD IN A FOLDER IS DISPLAYED IN THE ANNOTATED FOLDER SECTION","ANNOTATION RECORD SHOULD BE DISPLAYED IN ANNOTATED RECORDS SECTION");
+		page_SavedRecords.clickOnFolderAnnotationIcon(1);
+		page_SavedRecords.setTextAnnotationText(annotationText);
+		page_SavedRecords.clickOnButtonSaveAnnotation();	
+		Application.Logger.addsubStep(LogStatus.INFO,"ANNOTATION IS SUCCESSFULLY SAVED IN THE FOLDER : " + singleFolderName, false);	
+		Application.Logger.endStep();
+		Application.Logger.addStep("6.VERIFY IF THE RECORD IS REMOVED FROM THE ANNOTATION FOLDER AFTER DELETING THE ANNOTATION","RECORD SHOULD NOT BE AVAILABLE AFTER IN THE ANNOTATION FOLDER AFTER DELETING THE ANNOTATION");
+		Application.waitTime(2);
+		page_SavedRecords.clickOnLinkAnnotationRecords();
+		Application.waitTime(2);
+		page_SavedRecords.clickOnAnnotationIcon(1);
+		page_SavedRecords.clickOnButtonDeleteAnnotation();
+		Application.waitTime(2);
+		annotationFolderCount=page_SavedRecords.getTextAnnotationFolderCount();
+		if(annotationFolderCount.contains("0"))
+		{
+			Application.Logger.addsubStep(LogStatus.PASS,"ANNOTATION RECORD IS SUCCESSFULLY REMOVED FROM THE ANNOTATION FOLDER",false);
+		} else {
+			Application.Logger.addsubStep(LogStatus.FAIL,"ANNOTATION RECORD IS NOT REMOVED FROM THE ANNOTATION FOLDER",true);
+		}
+		Application.Logger.endStep();
+	} catch (Exception e) {
+		Application.Logger.addException(e.getMessage());
+		return flag = false;
+	}
+	return flag;
+}
+
+}
+
+
+
+
 
 
 

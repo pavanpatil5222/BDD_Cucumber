@@ -82,6 +82,37 @@ public class Page_SavedRecords extends Controller {
 	
 	@FindBy(css="mat-dialog-actions > button.cdx-but-xl.mat-flat-button.mat-button.mat-button-base.mat-primary")
 	private WebElement btnDeleteFolderConfirmation;	
+	
+	@FindBy(xpath="//app-page-saved-records/section/section[1]/section/button[2]/span")
+	private WebElement annotationFolderLink;
+	
+	@FindBy(xpath="//app-page-saved-records/section/section[2]/section/section/section/div")
+	private WebElement annotationFolderCount;
+	
+	@FindBy(xpath="//app-page-saved-records/section/section[2]/section/form/section/section[1]/section/section[1]/section[1]/section[2]/button")
+	private WebElement annotationIcon;
+	
+	@FindBy(xpath = "//app-result-set-annotation-modal/div/form/div/div/mat-dialog-actions/button[2]/span")
+	private WebElement saveAnnotation;
+
+	@FindBy(xpath = "//app-result-set-annotation-modal/div/form/div/div/mat-dialog-actions/button[1]/span")
+	private WebElement deleteAnnotation;
+	
+	@FindBy(xpath = "//mat-form-field/div/div[1]/div[3]/textarea")
+	private WebElement annotationTextArea;
+	
+
+	@FindBy(xpath = "//app-page-saved-records/section/section[2]/section/form/section/section[2]/section[1]/mat-checkbox")
+	private WebElement annotationFolderGlobalChkBox;
+	
+	@FindBy(xpath = "//app-page-saved-records/section/section[2]/section/form/section/section[2]/section[1]/section[2]/button/span/mat-icon")
+	private WebElement annotationGlobalDelete;
+	
+	
+	@FindBy(xpath = "//app-confirmation-modal/div/div[2]/mat-dialog-actions/button[1]/span")
+	private WebElement annotationConfirmation;
+	
+	
 
 	public Page_SavedRecords(Controller controller) {
 		super(controller);
@@ -208,6 +239,7 @@ public class Page_SavedRecords extends Controller {
 	public void deleteExistingFolders() throws Exception{
         List<WebElement> folders = driver.findElements(By.xpath("//button[contains(@id,'btnFolder')]"));
         System.out.println("size" + folders.size());
+        controller.Logger.Logger.log(LogStatus.INFO, +folders.size()+ "\t\t CURRENT FOLDER SIZE BEFORE THE DELETE"); 
         if (folders.size() > 0) {
                for (WebElement ele : folders) {
                       controller.waitTime(2);
@@ -215,9 +247,9 @@ public class Page_SavedRecords extends Controller {
                       controller.waitTime(1);
                       btnDeleteFolderConfirmation.click();
                       controller.waitUntilFectchRecordProgressBarToDisappears();
-               }
-               
-        }
+              }
+             }
+        controller.Logger.Logger.log(LogStatus.INFO, +folders.size()+ "\t\t CURRENT FOLDER SIZE AFTER THE DELETE"); 
         
   }
 
@@ -383,4 +415,103 @@ public void selectItemsPerPageFromDropDown(String itemValue) throws Exception {
 		throw new Exception("selectItemsPerPageFromDropDown is not working" + ex);
 	}
 }
+
+public void clickOnLinkAnnotationRecords() throws Exception {
+	try {
+		waitUntilElementIsDisplayed(annotationFolderLink);
+		jsClick(annotationFolderLink);
+		controller.waitUntilFectchRecordProgressBarToDisappears();
+		} catch (Exception ex) {
+		throw new Exception("clickOnLinkAnnotationFolder is not working" + ex);
+	}
+
+}
+
+
+public String getTextAnnotationFolderCount() throws Exception {
+	String annCount;
+	 waitUntilElementIsDisplayed(annotationFolderCount);
+	 annCount = getText(annotationFolderCount);
+	 return(annCount);
+	}
+
+
+@SuppressWarnings("static-access")
+public void clickOnFolderAnnotationIcon(int recordnumber) throws Exception {
+	try {
+		WebElement ele = controller.driver.findElement(By.xpath("//app-page-saved-records/section/section[2]/section/form/section/section[1]/section/section["+recordnumber+"]/section[1]/section[2]/button"));
+		jsClick(ele);
+	} catch (Exception ex) {
+		throw new Exception("clickOnFolderAnnotationIcon is not working" + ex);
+	}
+}
+
+public void clickOnButtonDeleteAnnotation() throws Exception {
+	try {
+		waitUntilElementIsDisplayed(deleteAnnotation);
+		deleteAnnotation.click();
+	} catch (Exception ex) {
+		throw new Exception("deleteAnnotation is not working" + ex);
+	}
+}
+
+
+public void deleteExistingAnnotations() throws Exception{
+	try {
+	String annotationFolderCount=getTextAnnotationFolderCount();
+	if(annotationFolderCount.contains("0"))
+	{
+		controller.Logger.Logger.log(LogStatus.INFO, "NO RECORDS ARE PRESENT IN THE ANNOTATION FOLDER"); 
+	}
+	else
+	{
+		if(!annotationFolderGlobalChkBox.isSelected())
+		{
+			annotationFolderGlobalChkBox.click();
+		}
+		annotationGlobalDelete.click();
+		annotationConfirmation.click();
+		controller.waitUntilFectchRecordProgressBarToDisappears();
+		annotationFolderCount=getTextAnnotationFolderCount();
+		if(annotationFolderCount.contains("0"))
+		{
+			controller.Logger.Logger.log(LogStatus.INFO, "NO RECORDS ARE PRESENT IN THE ANNOTATION FOLDER"); 
+		}
+	}
+    
+}
+ catch (Exception ex) {
+	throw new Exception("deleteExistingAnnoations is not working" + ex);
+}
+}
+
+@SuppressWarnings("static-access")
+public void clickOnAnnotationIcon(int recordnumber) throws Exception {
+	try {
+		WebElement ele = controller.driver.findElement(By.xpath("//app-page-saved-records/section/section[2]/section/form/section/section[1]/section/section["+recordnumber+"]/section[1]/section[2]/button/span/mat-icon"));
+		jsClick(ele);
+	} catch (Exception ex) {
+		throw new Exception("clickOnAnnotationIcon is not working" + ex);
+	}
+}
+
+public void setTextAnnotationText(String value) throws Exception {
+	try {
+		waitUntilElementIsDisplayed(annotationTextArea);
+		annotationTextArea.click();
+		setText(annotationTextArea, value);
+	} catch (Exception e) {
+		throw new Exception("setTextAnnotationText is not working.." + e);
+	}
+}
+
+public void clickOnButtonSaveAnnotation() throws Exception {
+	try {
+		waitUntilElementIsDisplayed(saveAnnotation);
+		saveAnnotation.click();
+	} catch (Exception ex) {
+		throw new Exception("clickOnButtonSaveAnnotation is not working" + ex);
+	}
+}
+
 }

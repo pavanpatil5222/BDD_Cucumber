@@ -385,7 +385,25 @@ public class Tab_PatentSearch extends Controller {
 	
 	@FindBy(xpath = "//div[@class='structure-search-modal']")
 	private WebElement filterChemicalStructureModal;
+	
+	@FindBy(xpath = "//section/app-result-set[5]/section/aside/section[1]/div/span[6]/button")
+	private WebElement annotationIcon;
+	
+	@FindBy(xpath = "//div/div[1]/div[3]/textarea")
+	private WebElement annotationTextArea;
+	
+	@FindBy(xpath = "//section/mat-hint/span")
+	private WebElement annotationErrorMsg;
+	
+	@FindBy(xpath = "//mat-dialog-actions/button[2]/span")
+	private WebElement saveAnnotation;
 
+	@FindBy(xpath = "//mat-dialog-actions/button[1]/span")
+	private WebElement deleteAnnotation;
+	
+	@FindBy(xpath = "//app-result-set-annotation-modal/div/form/div/button/span/mat-icon")
+	private WebElement cancelAnnotation;
+	
 	public Tab_PatentSearch(Controller controller) {
 		super(controller);
 		PageFactory.initElements(driver, this);
@@ -2667,7 +2685,50 @@ public class Tab_PatentSearch extends Controller {
      		throw new Exception("getAllPersonsOrganizations is not working" + e);
      	}
 	}
+
+@SuppressWarnings("static-access")
+public void clickOnAnnotationIcon(int recordnumber) throws Exception {
+	try {
+		WebElement ele = controller.driver.findElement(By.xpath("//section/app-result-set["+recordnumber+"]/section/aside/section[1]/div/span[6]/button"));
+		jsClick(ele);
+	} catch (Exception ex) {
+		throw new Exception("clickOnAnnotationIcon is not working" + ex);
+	}
 }
 
+public String getTextAnnotationErrorMessage() throws Exception {
+	String ErrMsg;
+	waitUntilElementIsDisplayed(annotationErrorMsg);
+	ErrMsg = getText(annotationErrorMsg);
+	return (ErrMsg);
+}
 
+public void setTextAnnotationText(String value) throws Exception {
+	try {
+		waitUntilElementIsDisplayed(annotationTextArea);
+		annotationTextArea.click();
+		setText(annotationTextArea, value);
+	} catch (Exception e) {
+		throw new Exception("setTextAnnotationText is not working.." + e);
+	}
+}
+
+public void clickOnButtonSaveAnnotation() throws Exception {
+	try {
+		waitUntilElementIsDisplayed(saveAnnotation);
+		saveAnnotation.click();
+	} catch (Exception ex) {
+		throw new Exception("clickOnButtonSaveAnnotation is not working" + ex);
+	}
+}
+
+public void clickOnAnnotationCloseIcon() throws Exception {
+	try {
+		waitUntilElementIsDisplayed(cancelAnnotation);
+		cancelAnnotation.click();
+	} catch (Exception ex) {
+		throw new Exception("clickOnAnnotationCloseIcon is not working" + ex);
+	}
+}
+}
 
