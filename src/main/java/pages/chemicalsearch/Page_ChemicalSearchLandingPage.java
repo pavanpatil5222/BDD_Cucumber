@@ -19,7 +19,7 @@ import java.util.List;
 
 /**
  * 
- * @author Anand/Rashmi
+ * @author Rashmi/Anand
  *
  */
 public class Page_ChemicalSearchLandingPage extends Controller {
