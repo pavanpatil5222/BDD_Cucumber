@@ -295,7 +295,11 @@ public class Page_ChemicalSearchResults extends Controller{
 	@FindBy(xpath = "//button/span[contains(.,' Apply ')]")
 	private WebElement btnApply;
 	
+<<<<<<< HEAD
 	@FindBy(xpath = "//button/span[contains(.,' Cancel ')]")
+=======
+	@FindBy(xpath = "//button/span[contains(.,' CanÑ�el ')]")
+>>>>>>> d9d34065a4f9627fa047cc0af0bf347fd665752d
 	private WebElement btnCancel;
 	
 	

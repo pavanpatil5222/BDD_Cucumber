@@ -55,13 +55,13 @@ public class Tab_PatentSearch extends Controller {
 	private WebElement imgViewerArrowPrevPage;
 	
 	
-	@FindBy(xpath = "//div/mat-dialog-content/section/div[2]/div[2]/mat-paginator/div/div/div/div")
+	@FindBy(css = "div:nth-child(2) > div:nth-child(2) > mat-paginator > div > div > div > div")
 	private WebElement paginatorRange;
        
     @FindBy(xpath="(//span[contains(.,'View as result set')])[2]")
     private WebElement citedPatentViewAsResultSet;
     
-    @FindBy(css = "#cdk-accordion-child-15 > div > div.sub-block.ng-star-inserted > a")
+    @FindBy(xpath = "//a[contains(.,'See all')]")
 	private WebElement linkSeeAll;
 	@FindBy(xpath = "//app-record-view/section/div/section/mat-accordion/mat-expansion-panel[3]/mat-expansion-panel-header")
 	private WebElement hitStructureLink;	
@@ -356,7 +356,7 @@ public class Tab_PatentSearch extends Controller {
 	@FindBy(xpath = "//app-result-count-bar/section/section[3]/button")
 	WebElement btn_Insights;
 
-	@FindBy(css = "section > app-result-set:nth-child(1) > section > aside > section:nth-child(3) > div > span:nth-child(2) > button > span > mat-icon")
+	@FindBy(css = "app-result-set:nth-child(1) > section > aside > section:nth-child(3) > div > span:nth-child(2) > button")
 	private WebElement thumsUpIcon;
 
 	@FindBy(css = "section > app-result-set:nth-child(1) > section > aside > section:nth-child(3) > div > span:nth-child(3) > button > span > mat-icon")
@@ -385,7 +385,25 @@ public class Tab_PatentSearch extends Controller {
 	
 	@FindBy(xpath = "//div[@class='structure-search-modal']")
 	private WebElement filterChemicalStructureModal;
+	
+	@FindBy(xpath = "//section/app-result-set[5]/section/aside/section[1]/div/span[6]/button")
+	private WebElement annotationIcon;
+	
+	@FindBy(xpath = "//div/div[1]/div[3]/textarea")
+	private WebElement annotationTextArea;
+	
+	@FindBy(xpath = "//section/mat-hint/span")
+	private WebElement annotationErrorMsg;
+	
+	@FindBy(xpath = "//mat-dialog-actions/button[2]/span")
+	private WebElement saveAnnotation;
 
+	@FindBy(xpath = "//mat-dialog-actions/button[1]/span")
+	private WebElement deleteAnnotation;
+	
+	@FindBy(xpath = "//app-result-set-annotation-modal/div/form/div/button/span/mat-icon")
+	private WebElement cancelAnnotation;
+	
 	public Tab_PatentSearch(Controller controller) {
 		super(controller);
 		PageFactory.initElements(driver, this);
@@ -1574,7 +1592,7 @@ public class Tab_PatentSearch extends Controller {
 	public void clickOnButtonInsights() throws Exception {
 		try {
 			controller.waitTime(2);
-			if (!btn_TabInsights.getAttribute("ng-reflect-fx-flex").toLowerCase().contains("385px")) {
+			if (!btn_TabInsights.getAttribute("style").toLowerCase().contains("385px")) {
 				controller.jsClick(btn_Insights);
 
 			} else {
@@ -1597,8 +1615,8 @@ public class Tab_PatentSearch extends Controller {
 			String iconStatus;
 			waitUntilElementIsDisplayed(thumsUpIcon);
 			jsClick(thumsUpIcon);
-			iconStatus = getElementAttribute(thumsUpIcon, "ng-reflect-svg-icon");
-			if (iconStatus.contains("thumbup-filled")) {
+			iconStatus = getElementAttribute(thumsUpIcon, "class");
+			if (iconStatus.contains("focus")) {
 				controller.Logger.addsubStep(LogStatus.PASS, "THUMBS UP ICON CHANGED TO SOLID GREEN COLOR", false);
 			} else {
 				controller.Logger.addsubStep(LogStatus.FAIL, "THUMBS UP ICON DIDNT CHANGED TO SOLID GREEN COLOR",
@@ -2466,7 +2484,7 @@ public class Tab_PatentSearch extends Controller {
 	}
 	public void clickOnLinkSeeAll() throws Exception {
 		try {
-			List<WebElement> hitimages = driver.findElements(By.cssSelector("#cdk-accordion-child-15 > div > div:nth-child(1) > a"));
+			List<WebElement> hitimages = driver.findElements(By.xpath("//mat-accordion/mat-expansion-panel[3]/div/div/div[1]/a"));
 			controller.waitTime(2);
 			if(hitimages.size()==3)
 			{
@@ -2495,7 +2513,7 @@ public class Tab_PatentSearch extends Controller {
 			boolean Status = true;
 			String nextPageAttribute;
 			WebElement arrowNextPage = driver.findElement(By.xpath("//section/div[2]/div[2]/mat-paginator/div/div/div/button[2]"));
-			nextPageAttribute = controller.getElementAttribute(arrowNextPage, "ng-reflect-disabled");
+			nextPageAttribute = controller.getElementAttribute(arrowNextPage, "disabled");
 			if (!nextPageAttribute.contentEquals("true")) {
 				return false;
 			}
@@ -2518,7 +2536,7 @@ public class Tab_PatentSearch extends Controller {
 			boolean Status = true;
 			String previousPageAttribute;
 			WebElement previousPage = driver.findElement(By.xpath("//section/div[2]/div[2]/mat-paginator/div/div/div/button[1]"));
-			previousPageAttribute = controller.getElementAttribute(previousPage, "ng-reflect-disabled");
+			previousPageAttribute = controller.getElementAttribute(previousPage, "disabled");
 			if (!previousPageAttribute.contentEquals("true")) {
 				return false;
 			}
@@ -2667,7 +2685,50 @@ public class Tab_PatentSearch extends Controller {
      		throw new Exception("getAllPersonsOrganizations is not working" + e);
      	}
 	}
+
+@SuppressWarnings("static-access")
+public void clickOnAnnotationIcon(int recordnumber) throws Exception {
+	try {
+		WebElement ele = controller.driver.findElement(By.xpath("//section/app-result-set["+recordnumber+"]/section/aside/section[1]/div/span[6]/button"));
+		jsClick(ele);
+	} catch (Exception ex) {
+		throw new Exception("clickOnAnnotationIcon is not working" + ex);
+	}
 }
 
+public String getTextAnnotationErrorMessage() throws Exception {
+	String ErrMsg;
+	waitUntilElementIsDisplayed(annotationErrorMsg);
+	ErrMsg = getText(annotationErrorMsg);
+	return (ErrMsg);
+}
 
+public void setTextAnnotationText(String value) throws Exception {
+	try {
+		waitUntilElementIsDisplayed(annotationTextArea);
+		annotationTextArea.click();
+		setText(annotationTextArea, value);
+	} catch (Exception e) {
+		throw new Exception("setTextAnnotationText is not working.." + e);
+	}
+}
+
+public void clickOnButtonSaveAnnotation() throws Exception {
+	try {
+		waitUntilElementIsDisplayed(saveAnnotation);
+		saveAnnotation.click();
+	} catch (Exception ex) {
+		throw new Exception("clickOnButtonSaveAnnotation is not working" + ex);
+	}
+}
+
+public void clickOnAnnotationCloseIcon() throws Exception {
+	try {
+		waitUntilElementIsDisplayed(cancelAnnotation);
+		cancelAnnotation.click();
+	} catch (Exception ex) {
+		throw new Exception("clickOnAnnotationCloseIcon is not working" + ex);
+	}
+}
+}
 
