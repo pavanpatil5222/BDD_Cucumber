@@ -24,13 +24,11 @@ import java.util.List;
  */
 public class Page_ChemicalSearchLandingPage extends Controller {
 
-	@FindBy(xpath = "(//span[contains(.,'close')])[2]")
+	@FindBy(xpath = "//div[3]/section[2]/div[2]/button[2]")
 	private WebElement btnClearAll;
 	
-	@FindBy(css = "button:nth-child(2) > span > mat-icon")
-	private WebElement personIcon;
-	
-	
+	@FindBy(css = "div:nth-child(1) > button:nth-child(2) > span > mat-icon")
+	private WebElement personIcon;	
 	
 	@FindBy(css = "div.bottom-icons > button:nth-child(1) > span > mat-icon")
 	private WebElement organizationIcon;
@@ -42,13 +40,13 @@ public class Page_ChemicalSearchLandingPage extends Controller {
 	private WebElement txtCompanyPerson;
 	
 	
-	@FindBy(xpath = "//section[2]/app-page-home/div/section/app-structure-search/div/section[2]/div[1]/button[1]/span")
+	@FindBy(xpath = "//section[2]/app-page-home/div/section/app-structure-search/div[1]/div/section[2]/div[1]/button[1]/span/span")
 	private WebElement btn_ClearX;
-
+	//section[2]/app-page-home/div/section/app-structure-search/div/section[2]/div[1]/button[1]/span
 	@FindBy(css = "span:nth-child(3) > button > span > img")
 	private WebElement rsFooterSaveIcon;
 
-	@FindBy(xpath = "//div[1]/div[3]/button[2]")
+	@FindBy(xpath = "//section[2]/div[1]/button[3]")
 	private WebElement btnSearchIconStatus;
 
 	@FindBy(css = "#cdk-overlay-0 > div > div > button:nth-child(3) > span")
@@ -69,13 +67,13 @@ public class Page_ChemicalSearchLandingPage extends Controller {
 	@FindBy(xpath = "//mat-dialog-container[contains(@role,'dialog')]")
 	private WebElement dialogBoxFeedback;
 
-	@FindBy(xpath = "//mat-select[contains(@placeholder,'Choose a topic')]/parent::div")
+	@FindBy(xpath = "//div/span[contains(text(),'Choose a topic')]")
 	private WebElement fieldDropdown;
 
 	@FindBy(xpath = "//span[contains(text(),' Submit feedback ')]/parent::button")
 	private WebElement btn_SubmitFeedback;
 
-	@FindBy(xpath = "//a[contains(@class,'contact-us')]")
+	@FindBy(xpath = "//button/span[contains(text(),'Contact us')]")
 	private WebElement link_ContactUs;
 
 	@FindBy(xpath = "//textarea[contains(@placeholder,'How can we improve?')]")
@@ -87,7 +85,7 @@ public class Page_ChemicalSearchLandingPage extends Controller {
 	@FindBy(css = "div.links > button:nth-child(5) > span")
 	private WebElement supportLink;
 	
-	@FindBy(css = "span > mat-icon > svg")
+	@FindBy(xpath = "//*[@id='Path']")
 	private WebElement structureSearchIcon;
 	
 	@FindBy(xpath = "//input[@placeholder='Enter a name or SMILES to generate a structure']")
@@ -371,8 +369,9 @@ public class Page_ChemicalSearchLandingPage extends Controller {
 	
 	public void clickOnStructureSearchIcon() throws Exception {
 		try {
-			waitUntilElementIsDisplayed(structureSearchIcon);
-			structureSearchIcon.click();
+			WebElement structureicon=driver.findElement(By.cssSelector("polygon[fill='#F7F7F7']"));
+			waitUntilElementIsDisplayed(structureicon);
+			structureicon.click();
 			controller.waitTime(1);
 		} catch (Exception ex) {
 			throw new Exception("clickOnStructureSearchIcon is not working" + ex);
@@ -425,9 +424,10 @@ public class Page_ChemicalSearchLandingPage extends Controller {
 			waitUntilElementIsDisplayed(txtSmiley);
 			click(txtSmiley);
 			setText(txtSmiley, value);
+			controller.waitTime(4);
 			Actions action = new Actions(driver);
 			action.moveToElement(firstStructureName).click().build().perform();
-			controller.waitTime(2);
+			controller.waitTime(4);
 			} catch (Exception e) {
 			throw new Exception("setTextSmileyTextBox is not working.." + e);
 		}

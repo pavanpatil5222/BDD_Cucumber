@@ -43,7 +43,12 @@ public class Page_ChemicalSearchResults extends Controller{
 	@FindBy(xpath = "//input[contains(@placeholder,'Enter name')]")
 	private WebElement txtCompanyPerson;
 	
-	@FindBy(css="#cdk-overlay-2 > snack-bar-container > simple-snack-bar > span")
+	/*@FindBy(css="#cdk-overlay-2 > snack-bar-container > simple-snack-bar > span")
+	private WebElement companyPersonToastMsg;*/
+	
+	//body > div.cdk-overlay-container > div > div
+	
+	@FindBy(css="body > div.cdk-overlay-container > div > div")
 	private WebElement companyPersonToastMsg;
 	
 	//#cdk-overlay-1 > snack-bar-container > simple-snack-bar > span
@@ -58,15 +63,15 @@ public class Page_ChemicalSearchResults extends Controller{
 	
 	/*@FindBy(xpath = "//span[contains(.,'Company pill is added')]")
 	private WebElement companyPersonToastMsg;*/
-	@FindBy(css="#cdk-overlay-3 > snack-bar-container > simple-snack-bar > span")
+	@FindBy(css="body > div.cdk-overlay-container > div > div")
 	private WebElement personToastMsg;
 	/*@FindBy(xpath = "//span[contains(.,'Person pill is added')]")
 	private WebElement personToastMsg;*/
 	
 	
-	@FindBy(xpath="//app-result-paginator-bar/section[1]/span[1]/mat-checkbox/label/div/input")
+	@FindBy(xpath="//app-result-paginator-bar/section/section[1]/span[1]/mat-checkbox/label/div/input")
 	private WebElement globalCheckBox;
-	@FindBy(xpath="//app-result-set[1]/section/aside/section[1]/div/span[1]/app-result-set-saveto-modal/div/div[1]/section[3]/section/button")
+	@FindBy(xpath="//div/div[1]/section[3]/section/button/span/span")
 	private WebElement linkCreateNewFolder;
 	@FindBy(css="app-result-set:nth-child(1) > section > aside > section:nth-child(3) > div > span:nth-child(1) > button > span > img")
 	private WebElement saveIcon;
@@ -88,10 +93,10 @@ public class Page_ChemicalSearchResults extends Controller{
 	@FindBy(css="span:nth-child(3) > button > span > img")
 	private WebElement rsFooterSaveIcon;
 	
-	@FindBy(xpath="//app-result-paginator-bar/section[1]/span[3]/div/app-result-set-saveto-modal/div/div[1]/section[3]/section/button")
+	@FindBy(xpath="//app-result-set-saveto-modal/div/div[1]/section[3]/section/button/span")
 	private WebElement rsFooterCreateNewFolder;
 	
-	@FindBy(xpath="//input[@ng-reflect-maxlength='150']")
+	@FindBy(xpath="//section[3]/form/section[1]/mat-form-field/div/div[1]/div[3]/input")
 	private WebElement txtFolderName;
 	
 	@FindBy(xpath="//div[@class='result-count']")
@@ -100,16 +105,20 @@ public class Page_ChemicalSearchResults extends Controller{
 	@FindBy(xpath = " //div[@class='chart']//*[name()='svg']//*[name()='circle']")
 	private WebElement circleClustermap;
 	
-	@FindBy(xpath = "//textarea[@ng-reflect-maxlength='2000']")
+	@FindBy(xpath = "//textarea[contains(@maxlength,'2000')]")
 	private WebElement txtSearchBox;
 	
 	//" //section[@class='filter-section ng-star-inserted']//div[contains(text(),'" + filter + "')]"
 	//@FindBy(xpath = "//section[@class='filter-section']//div[@class='ng-star-inserted']//mat-expansion-panel[1]")
 	@FindBy(xpath = "//section[@class='filter-section ng-star-inserted']//div[contains(text(),'Assignee')]")
 	private WebElement collapseExpand;
+	
+	@FindBy(xpath = "//div[9]/button/span[contains(.,'More filters')]")
+	private WebElement moreFiltersDropdown;
 
-
-	@FindBy(xpath = "(//section[@class='filter-details']//div[@class='mat-form-field-infix']//mat-icon)[1]")
+	//@FindBy(xpath = "(//section[@class='filter-details']//div[@class='mat-form-field-infix']//mat-icon)[1]")
+	
+	@FindBy(xpath = "//div/mat-chip[1]/button/span/mat-icon")
 	private WebElement xMark;
 	
 	
@@ -119,8 +128,11 @@ public class Page_ChemicalSearchResults extends Controller{
 	@FindBy(xpath = "//span[text()=Filtered by 0 fields']")
 	private WebElement label_filteredByZeroFields;
 	
-	@FindBy(xpath = "//mat-error[contains(@class,'mat-error')]")
+	@FindBy(xpath = "//div[contains(text(), 'Please enter the date in a valid format: YYYYMMDD, YYYY-MM-DD or YYYY/MM/DD.' )]")
 	private WebElement errorMessage_PublicationDate;
+	
+	@FindBy(xpath = "//div[contains(text(),  'You have entered a date range that specifies a greater than and less than combination (> AND <) that is not possible. Please update your query and resubmit it. ' )]")
+	private WebElement errorMessage_FromTOPublicationDate;
 	
 	@FindBy(xpath = "//mat-icon[contains(.,'search')]")
 	private WebElement btnSearchIcon;
@@ -132,7 +144,7 @@ public class Page_ChemicalSearchResults extends Controller{
 	@FindBy(xpath = "(//span[@class='cdx-chip-name ng-star-inserted'])[1]")
 	private WebElement mouseHoverFirstKeyWord;
 	
-	@FindBy(xpath="(//span[@class='cdx-chip-name'])[3]")
+	@FindBy(xpath="//mat-chip-list/div/mat-chip[3]/div[2]/span")
 	private WebElement KeywordPillText;	
 		
 	@FindBy(xpath="//app-result-search-bar/section/section/div[1]/div[2]/div[2]")
@@ -165,10 +177,10 @@ public class Page_ChemicalSearchResults extends Controller{
 	@FindBy(xpath = "//input[@maxlength='40']")
 	private WebElement txtKeyWord;
 	
-	@FindBy(xpath = "//input[contains(@class,'fromDateInput')]/parent::div/following-sibling::div//button")
+	@FindBy(xpath = "//div/div/div[1]/mat-form-field/div/div[1]/div[2]/mat-datepicker-toggle/button")
 	private WebElement calenderMark_FromDateInput;
 	
-	@FindBy(xpath = "//input[contains(@class,'toDateInput')]/parent::div/following-sibling::div//button")
+	@FindBy(xpath = "//div/div/div[2]/mat-form-field/div/div[1]/div[2]/mat-datepicker-toggle/button")
 	private WebElement calenderMark_ToDateInput;
 			
 	@FindBy(xpath = "//section[@class='filterDetails']//div[contains(@class,'mat-expansion-panel-body')]/div/mat-accordion/mat-expansion-panel")
@@ -180,16 +192,23 @@ public class Page_ChemicalSearchResults extends Controller{
 	@FindBy(xpath = "//div[contains(text(),'Publication Date')]")
 	private WebElement filters_PublicationDate;
 	
-	@FindBy(xpath = "//input[contains(@class,'fromDateInput')]")
-	private WebElement format_FromDateInput;
+	//@FindBy(xpath = "//div//input[contains(@placeholder,'YYYY-MM-DD')]')]")
+	//private WebElement format_FromDateInput;
+	
+	@FindBy(xpath = "//input[contains(@class,'mat-input-element mat-form-field-autofill-control ng-tns-c29-60 cdk-text-field-autofill-monitored')]")
+		private WebElement format_FromDateInput;
+	
+	//@FindBy(xpath = "//input[contains(@class,'fromDateInput')]")
+	//private WebElement format_FromDateInput;
 	
 	@FindBy(xpath = "//div//span[text()='to']")
 	private WebElement label_ToDate;
 	
-	@FindBy(xpath = "//input[contains(@class,'toDateInput')]")
+	//@FindBy(xpath = "//input[contains(@class,'toDateInput')]")
+	@FindBy(xpath = "//input[contains(@class,'mat-input-element mat-form-field-autofill-control ng-tns-c29-60 cdk-text-field-autofill-monitored')]")
 	private WebElement format_ToDateInput;
 	
-	@FindBy(xpath = "//mat-icon[contains(text(),'biotech')]/following-sibling::h1")
+	@FindBy(xpath = "//app-page-search-result/div/section/app-no-result-bar//h1")
 	private WebElement errorMessage_NoResultsPage;
 	
 	@FindBy(xpath = "//button[@title='Feedback']/span")
@@ -276,7 +295,7 @@ public class Page_ChemicalSearchResults extends Controller{
 	@FindBy(xpath = "//button/span[contains(.,' Apply ')]")
 	private WebElement btnApply;
 	
-	@FindBy(xpath = "//button/span[contains(.,' Canсel ')]")
+	@FindBy(xpath = "//button/span[contains(.,' Cancel ')]")
 	private WebElement btnCancel;
 	
 	
@@ -346,8 +365,8 @@ public class Page_ChemicalSearchResults extends Controller{
 			waitUntilElementIsDisplayed(mouseHoverFirstKeyWord);
 			Actions action = new Actions(driver);
 			action.moveToElement(mouseHoverFirstKeyWord).perform();
-				txtKeyWord.click();
-				setText(txtKeyWord, keywordtxt.get(i));
+			txtKeyWord.click();
+			setText(txtKeyWord, keywordtxt.get(i));
 				 new Actions(driver).sendKeys(Keys.ENTER).build().perform();
 				 controller.waitTime(1);
 			 }
@@ -461,7 +480,7 @@ public class Page_ChemicalSearchResults extends Controller{
 			waitUntilElementIsDisplayed(xMark);
 			xMark.click();
 			} catch (Exception e) {
-			controller.Logger.addException("clickOnExpandDropdown is not working "+e.getMessage());
+			controller.Logger.addException("clickOnMark is not working "+e.getMessage());
 		}
 	}
 	
@@ -508,7 +527,8 @@ public class Page_ChemicalSearchResults extends Controller{
 	public String getDateFormatFromDateInput() throws Exception {
 		try {
 			controller.jsScrollToElement(filters_PublicationDate);
-		    String fromDateInput=controller.getElementAttribute(format_FromDateInput, "aria-label");
+		   // String fromDateInput=controller.getElementAttribute(format_FromDateInput, "aria-label");
+		    String fromDateInput=controller.getElementAttribute(format_FromDateInput, "placeholder");
 			return fromDateInput;	
 		 }catch (Exception e) {
 		return "";
@@ -518,7 +538,7 @@ public class Page_ChemicalSearchResults extends Controller{
 	public String getDateFormatToDateInput() throws Exception {
 		try {
 			controller.jsScrollToElement(filters_PublicationDate);
-		    String toDateInput=controller.getElementAttribute(format_ToDateInput, "aria-label");
+		    String toDateInput=controller.getElementAttribute(format_ToDateInput, "placeholder" );
 			return toDateInput;	
 		 }catch (Exception e) {
 		return "";
@@ -656,6 +676,14 @@ public class Page_ChemicalSearchResults extends Controller{
 			controller.Logger.addException("clickOnExpandDropdown is not working "+e.getMessage());
 		}
 	}
+	public void clickOnMoreFiltersDropdown() {
+		try {
+			waitUntilElementIsDisplayed(moreFiltersDropdown);
+			moreFiltersDropdown.click();
+			} catch (Exception e) {
+			controller.Logger.addException("clickOnMorefiltersDropdown is not working "+e.getMessage());
+		}
+	}
 	public boolean isDisplayedActionTextUndo() throws Exception {
 		try {
 			waitUntilElementIsDisplayed(getResultsCount);
@@ -734,14 +762,14 @@ public class Page_ChemicalSearchResults extends Controller{
 	public void clickOnTabLiterature() {
 		try {
 		
-			WebElement ele=driver.findElement(By.xpath("//div[contains(@class,'tab tab-2')]"));
+			WebElement ele=driver.findElement(By.xpath("//*[@id='tab-2']"));
 			if(controller.getElementAttribute(ele,"class").contains("mat-ripple tab tab-2 active")) 
 			{
 				controller.Logger.addsubStep(LogStatus.INFO, "Tab Literature is already selected ", false);
 			}else 
 			{
 			   
-				driver.findElement(By.xpath("//div[contains(@class,'tab tab-2')]")).click();
+				driver.findElement(By.xpath("//*[@id='tab-2']")).click();
 			    controller.Logger.addsubStep(LogStatus.PASS, "Tab Literature is selected successfully.", false);
 				
 			}
@@ -1218,6 +1246,14 @@ public boolean isDisplayedLabelFilteredByOneFields() throws Exception {
 public String getTextErrorMessagePubDate() throws Exception {
 	try {
 		return controller.getText(errorMessage_PublicationDate);
+		} catch (Exception ex) {
+		throw new Exception("error msg has not displayed" + ex);
+	}
+}
+
+public String getTextErrorMessageFromToPubDate() throws Exception {
+	try {
+		return controller.getText(errorMessage_FromTOPublicationDate);
 		} catch (Exception ex) {
 		throw new Exception("error msg has not displayed" + ex);
 	}
@@ -1714,8 +1750,8 @@ public int getFolderNameSize(String checkboxname) throws Exception {
 public boolean isSelectedRSCheckBox(int checkboxnum) throws Exception {
 	try {
 	WebElement ele = controller.driver.findElement(By.xpath("//app-result-set["+checkboxnum+"]/section/aside/div[1]/span[1]/mat-checkbox"));
-	String bool = controller.getElementAttribute(ele, "ng-reflect-checked");
-	if(bool.equals("true"))
+	String bool = controller.getElementAttribute(ele, "class");
+	if(bool.contains("checked"))
 		return true;
 	else		
 		return false;
@@ -1726,7 +1762,9 @@ public boolean isSelectedRSCheckBox(int checkboxnum) throws Exception {
 public String getColorOfStructureSerachPillBox() throws Exception {
 	try {
 		waitUntilElementIsDisplayed(getResultsCount);
-	    WebElement ele=driver.findElement(By.xpath("//mat-chip[contains(@class,'mat-chip mat-focus-indicator structure-chip mat-primary mat-standard-chip mat-chip-with-trailing-icon ng-star-inserted')]"));
+	    //WebElement ele=driver.findElement(By.xpath("//mat-chip[contains(@class,'mat-chip mat-focus-indicator structure-chip mat-primary mat-standard-chip mat-chip-with-trailing-icon ng-star-inserted')]"));
+	  //mat-chip[contains(@class,'mat-chip mat-focus-indicator small structure mat-primary mat-standard-chip ng-star-inserted')]  
+		WebElement ele=driver.findElement(By.xpath("//mat-chip[contains(@class,'mat-chip mat-focus-indicator small structure mat-primary mat-standard-chip mat-chip-with-trailing-icon ng-star-inserted')]"));
 	    System.out.println(ele.getCssValue("background-color"));
 		return ele.getCssValue("background-color");	
 	 }catch (Exception e) {
@@ -1887,7 +1925,7 @@ public String getTextCompanyLimitToastMessage() throws Exception {
 public String getColorOfPersonPillBox() throws Exception {
 	try {
 		waitUntilElementIsDisplayed(getResultsCount);
-	    WebElement ele=driver.findElement(By.xpath("//mat-chip[contains(@class,'mat-chip mat-focus-indicator mat-primary mat-standard-chip state_undefined mat-chip-with-trailing-icon ng-star-inserted')][1]"));
+	    WebElement ele=driver.findElement(By.xpath("//mat-chip[contains(@class,'mat-chip mat-focus-indicator mat-primary mat-standard-chip cdx-chip-with-caption state_0 mat-chip-with-trailing-icon ng-star-inserted')]"));
 	    System.out.println(ele.getCssValue("background-color"));
 		return ele.getCssValue("background-color");	
 	 }catch (Exception e) {
@@ -1897,7 +1935,7 @@ public String getColorOfPersonPillBox() throws Exception {
 public String getColorOfCompanyPillBox() throws Exception {
 	try {
 		waitUntilElementIsDisplayed(getResultsCount);
-	    WebElement ele=driver.findElement(By.xpath("//mat-chip[contains(@class,'mat-chip mat-focus-indicator mat-primary mat-standard-chip state_undefined mat-chip-with-trailing-icon ng-star-inserted')][2]"));
+	    WebElement ele=driver.findElement(By.xpath("//mat-chip[contains(@class,'mat-chip mat-focus-indicator mat-primary mat-standard-chip cdx-chip-with-caption state_0 mat-chip-with-trailing-icon ng-star-inserted')][2]"));
 	    System.out.println(ele.getCssValue("background-color"));
 		return ele.getCssValue("background-color");	
 	 }catch (Exception e) {

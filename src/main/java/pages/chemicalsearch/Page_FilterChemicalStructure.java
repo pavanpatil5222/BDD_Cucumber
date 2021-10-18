@@ -39,11 +39,15 @@ public class Page_FilterChemicalStructure extends Controller {
 	@FindBy(xpath = "//app-result-paginator-bar//section//span[contains(@class , 'modal-global-chkbox-text ng-star-inserted')]")
 	private WebElement structureRecordSelection;
 
-	@FindBy(xpath="//app-filter-structure-search-modal/div/div[2]/app-result-paginator-bar/section[2]/mat-paginator/div/div/div[2]/button[2]")
+	@FindBy(xpath="//app-filter-structure-search-modal/div/div[2]/app-result-paginator-bar/section/section[2]/mat-paginator/div/div/div[2]/button[2]")
 	private WebElement arrowNextPage;
 	
-	@FindBy(xpath="//app-filter-structure-search-modal/div/div[2]/app-result-paginator-bar/section[2]/mat-paginator/div/div/div[2]/button[1]")
+	
+	
+	@FindBy(xpath="//app-filter-structure-search-modal/div/div[2]/app-result-paginator-bar/section/section[2]/mat-paginator/div/div/div[2]/button[1]")
 	private WebElement arrowPreviousPage;
+	
+	
 	
 	@FindBy(xpath ="//div[2]//mat-select[contains(@aria-label,'Items per page:')]")
 	WebElement dropdown_ItemsPerPage;
