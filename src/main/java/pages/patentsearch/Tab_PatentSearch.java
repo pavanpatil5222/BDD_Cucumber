@@ -66,10 +66,11 @@ public class Tab_PatentSearch extends Controller {
 	@FindBy(xpath = "//app-record-view/section/div/section/mat-accordion/mat-expansion-panel[3]/mat-expansion-panel-header")
 	private WebElement hitStructureLink;	
 
-    @FindBy(xpath = "(//mat-panel-title[contains(@class,'mat-expansion-panel-header-title citation-headers')])[1]")
+    //@FindBy(xpath = "(//mat-panel-title[contains(@class,'mat-expansion-panel-header-title citation-headers')])[1]")
+	@FindBy(xpath = "//span/mat-panel-title[contains(text(),'Citing patents')]")
     private WebElement citingPatentLink;
     
-    @FindBy(xpath = "(//mat-panel-title[contains(@class,'mat-expansion-panel-header-title citation-headers')])[2]")
+    @FindBy(xpath = "//span/mat-panel-title[contains(text(),' Cited patents ')]")
     private WebElement citedPatentLink;    
 
 	/*@FindBy(xpath = "//mat-accordion/mat-expansion-panel[6]/mat-expansion-panel-header/span/mat-panel-title")
@@ -81,7 +82,7 @@ public class Tab_PatentSearch extends Controller {
 	@FindBy(xpath = "//app-record-view/section/div//mat-accordion/mat-expansion-panel[6]/mat-expansion-panel-header")
 	private WebElement citingPatentLinkAttribute;
 
-	@FindBy(xpath = "//app-result-paginator-bar/section[1]/span[1]/mat-checkbox/label/div/input")
+	@FindBy(xpath = "//app-result-paginator-bar/section/section/span/mat-checkbox/label/div/input")
 	private WebElement globalCheckBox;
 	
 	@FindBy(css = "app-keyword-search > mat-chip-list > div > mat-chip > div > span")
@@ -102,7 +103,9 @@ public class Tab_PatentSearch extends Controller {
 	@FindBy(xpath = "//app-record-view/section/div//mat-accordion/mat-expansion-panel[7]/mat-expansion-panel-header")
 	private WebElement citedPatentLinkAttribute;
 
+	
 	@FindBy(xpath = "//mat-expansion-panel[6]/mat-expansion-panel-header/span/mat-panel-title")
+	
 	private WebElement citingPatentCount;
 
 	@FindBy(xpath = "//mat-expansion-panel[7]/mat-expansion-panel-header/span/mat-panel-title")
@@ -185,7 +188,7 @@ public class Tab_PatentSearch extends Controller {
 	@FindBy(xpath = " //section[contains(@class, 'major-inventor')]//div[@class='chart']//*[name()='svg']//*[name()='rect']")
 	private WebElement barInventors;
 
-	@FindBy(xpath = " //div[contains(normalize-space(text()), 'Inventors' )]")
+	@FindBy(xpath = " //app-page-search-result/div/section/section/section[3]/section[2]/div[3]/div/span")
 	private WebElement tabInventors;
 
 	@FindBy(xpath = " //section[contains(@class, 'major-inventor')]//div[@class='chart']//*[name()='svg']//*[name()='text']")
@@ -263,7 +266,7 @@ public class Tab_PatentSearch extends Controller {
 	@FindBy(xpath = "//mat-panel-title[contains(text(),'What are the suggested keywords?')]/ancestor::app-cluster-map/preceding-sibling::*//child::div[contains(text(),'Filter')]")
 	private WebElement labelFilters_SuggestedKeywords;
 
-	@FindBy(xpath = "//div[@class='mat-select-value']/span/span")
+	@FindBy(xpath = "//div/div[1]/span/span")
 	private WebElement value_Dropdown;
 
 	@FindBy(xpath = "//button[contains(@aria-label,'Next page')]")
@@ -382,6 +385,8 @@ public class Tab_PatentSearch extends Controller {
 	
 	@FindBy(xpath = "//button/span[contains(.,'See all structures')]")
 	private WebElement seeAllStructuresLink;
+	 
+	
 	
 	@FindBy(xpath = "//div[@class='structure-search-modal']")
 	private WebElement filterChemicalStructureModal;
