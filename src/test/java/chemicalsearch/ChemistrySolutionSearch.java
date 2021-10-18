@@ -62,6 +62,7 @@ public class ChemistrySolutionSearch {
 				Application.Logger.addsubStep(LogStatus.FAIL, "SEARCH ICON IS NOT ENABLED", true);
 			}
 			page_ChemicalSearchLandingPage.clickOnSearchIcon();
+			Application.waitUntilFectchRecordProgressBarToDisappears();
 			if (page_ChemicalSearchResults.checkIfResultsFound()) {
 				Application.Logger.addsubStep(LogStatus.PASS, "RESULT SET IS DISPLAYED FOR THE TEXT SEARCH", false);
 			} else {
@@ -153,6 +154,7 @@ public class ChemistrySolutionSearch {
 			page_ChemicalSearchResults.tabPatentSearch().clickOnButtonInsights();
 			page_ChemicalSearchResults.tabPatentSearch().clickOnButtonFirstKeyWord();
 			page_ChemicalSearchResults.clickOnSearchIcon();
+			Application.waitUntilFectchRecordProgressBarToDisappears();
 			rsKeyword = page_ChemicalSearchResults.getTextKeyword();
 			expKeywordText = page_ChemicalSearchResults.tabPatentSearch().getTextPatentInsightsKeyword();
 			if (rsKeyword.trim().equalsIgnoreCase(expKeywordText.trim())) {
@@ -173,6 +175,7 @@ public class ChemistrySolutionSearch {
 			page_ChemicalSearchResults.tabPatentSearch().clickOnButtonInsights();
 			page_ChemicalSearchResults.tabLiteratureSearch().clickOnButtonFirstKeyWord();
 			page_ChemicalSearchResults.clickOnSearchIcon();
+			Application.waitUntilFectchRecordProgressBarToDisappears();
 			rsKeyword = page_ChemicalSearchResults.getTextKeyword();
 			expKeywordText = page_ChemicalSearchResults.tabLiteratureSearch().getTextLiteratureInsightsKeyword();
 			expKeywordText = expKeywordText.toLowerCase();
@@ -1677,6 +1680,7 @@ public class ChemistrySolutionSearch {
 				throw new Exception("Results set is not loaded for the chemical search");
 			}
 			page_ChemicalSearchResults.clickOnExpandDropdown();
+			page_ChemicalSearchResults.clickOnMoreFiltersDropdown();
 			page_ChemicalSearchResults.clickOnFiltersPublicationDate();
 			if (page_ChemicalSearchResults.getDateFormatFromDateInput().matches("YYYY-MM-DD")) {
 				Application.Logger.addsubStep(LogStatus.PASS,
@@ -1729,7 +1733,7 @@ public class ChemistrySolutionSearch {
 			page_ChemicalSearchResults.clickOnCalenderIconToDateInput();
 			page_ChemicalSearchResults.selectDateFromPublicationDateCalender(8);
 			Application.waitTime(2);
-			if (errorMsg2.contains(page_ChemicalSearchResults.getTextErrorMessagePubDate().trim())) {
+			if (errorMsg2.contains(page_ChemicalSearchResults.getTextErrorMessageFromToPubDate().trim())) {
 				Application.Logger.addsubStep(LogStatus.PASS,
 						"error message is displayed as the todate is lesser than from date", false);
 			} else {
@@ -1774,7 +1778,7 @@ public class ChemistrySolutionSearch {
 			Application.waitTime(2);
 			page_ChemicalSearchResults.clickOnLinkPdf();
 			Application.waitTime(12);
-			Application.switchToGivenWindow("PDF Window", "blob:https://qa-cloud.clarivate.com", CurrentWindowHandleID);
+			Application.switchToGivenWindow("PDF Window", "blob:https://cloud.clarivate.com", CurrentWindowHandleID);
 			if (Application.driver.getCurrentUrl().contains("blob"))
 				Application.Logger.addsubStep(LogStatus.PASS, "PDF window opens and Navigated to that successfully",
 						false);
@@ -1819,14 +1823,14 @@ public class ChemistrySolutionSearch {
 			else
 				Application.Logger.addsubStep(LogStatus.FAIL,
 						"error message has not displayed successfully in patent page", true);
-			page_ChemicalSearchResults.clickOnTabLiterature();
+		/*	page_ChemicalSearchResults.clickOnTabLiterature();
 			Application.waitTime(2);
 			if (errorMsg.contains(actualErrorMsg))
 				Application.Logger.addsubStep(LogStatus.PASS, "error message displayed successfully in Literature page",
 						false);
 			else
 				Application.Logger.addsubStep(LogStatus.FAIL,
-						"error message has not displayed successfully in Literature page", true);
+						"error message has not displayed successfully in Literature page", true);*/
 
 			Application.Logger.endStep();
 		} catch (Exception e) {
@@ -1906,9 +1910,12 @@ public class ChemistrySolutionSearch {
 				Application.Logger.addsubStep(LogStatus.PASS, "next page arrow is disabled", false);
 			else
 				Application.Logger.addsubStep(LogStatus.FAIL, "next page arrow is not disabled", true);
-			page_ChemicalSearchResults.tabPatentSearch().selectItemsPerPageFromDropDown("20");
+		
+		Application.Logger.endStep();
+		}
+			//page_ChemicalSearchResults.tabPatentSearch().selectItemsPerPageFromDropDown("20");
 
-			page_ChemicalSearchResults.clickOnTabLiterature();
+			/*page_ChemicalSearchResults.clickOnTabLiterature();
 
 			if (dropdownDefaultValue.equals("20"))
 				Application.Logger.addsubStep(LogStatus.PASS, "default value for items per page dropdown is 20", false);
@@ -1952,7 +1959,7 @@ public class ChemistrySolutionSearch {
 				Application.Logger.addsubStep(LogStatus.FAIL, "next page arrow is not disabled", true);
 
 			Application.Logger.endStep();
-		} catch (Exception e) {
+		} */catch (Exception e) {
 			Application.Logger.addException(e.getMessage());
 			return flag = false;
 		}
@@ -2855,7 +2862,7 @@ public class ChemistrySolutionSearch {
 			}
 			Application.Logger.endStep();
 
-			Application.Logger.addStep("2.Switch to Literature tab", "Results should be refreshed");
+			/*Application.Logger.addStep("2.Switch to Literature tab", "Results should be refreshed");
 			page_ChemicalSearchResults.clickOnTabLiterature();
 			if (page_ChemicalSearchResults.checkIfResultsFound()) {
 				Application.Logger.addsubStep(LogStatus.PASS, "RESULT SET IS DISPLAYED FOR THE TEXT SEARCH", false);
@@ -2863,8 +2870,8 @@ public class ChemistrySolutionSearch {
 				throw new Exception("Results set is not loaded for the chemical search");
 			}
 			Application.Logger.endStep();
-
-			Application.Logger.addStep("3.Navigate to Players tab and click on any text from  tab ",
+*/
+			Application.Logger.addStep("2.Navigate to Players tab and click on any text from  tab ",
 					"RS should be displayed");
 			page_ChemicalSearchResults.clickOnPlayersTab();
 			beforeFilter = page_ChemicalSearchResults.getResultsCount();
@@ -2881,7 +2888,7 @@ public class ChemistrySolutionSearch {
 			}
 			Application.Logger.endStep();
 
-			Application.Logger.addStep("4.Check Filter Organization field  from  Filters ",
+			Application.Logger.addStep("3.Check Filter Organization field  from  Filters ",
 					"Assignee field should be displayed");
 			if (page_ChemicalSearchResults.tabPatentSearch().isDisabledFilterField()) {
 				Application.Logger.addsubStep(LogStatus.PASS, "Organization filter field IS DISABLED", false);
@@ -2890,7 +2897,7 @@ public class ChemistrySolutionSearch {
 			}
 			Application.Logger.endStep();
 
-			Application.Logger.addStep("5.Deselect the filtered text from players ", "text should be filtered");
+			Application.Logger.addStep("4.Deselect the filtered text from players ", "text should be filtered");
 			beforeFilter = page_ChemicalSearchResults.getResultsCount();
 			page_ChemicalSearchResults.clickOnPlayersText();
 			Application.waitUntilFectchRecordProgressBarToDisappears();
@@ -2905,7 +2912,7 @@ public class ChemistrySolutionSearch {
 			}
 			Application.Logger.endStep();
 
-			Application.Logger.addStep("6.Check Filter Organization field  is disabled",
+			Application.Logger.addStep("5.Check Filter Organization field  is disabled",
 					"Organization field should not be disabled");
 			if (page_ChemicalSearchResults.tabPatentSearch().isDisabledFilterField()) {
 				Application.Logger.addsubStep(LogStatus.FAIL, "Organization filter field IS DISABLED", false);
@@ -3251,8 +3258,8 @@ public class ChemistrySolutionSearch {
 		return flag;
 	}
 
-	// CHEMEXP-941
-	@Test
+	// CHEMEXP-941:As this test case is Literature tab
+	/*@Test
 	public boolean validateLiteratureKeywordsTextFromInsights(Controller Application, HashMap<String, String> input) {
 		page_ChemicalSearchLandingPage = new Page_ChemicalSearchLandingPage(Application);
 		page_ChemicalSearchResults = new Page_ChemicalSearchResults(Application);
@@ -3306,7 +3313,7 @@ public class ChemistrySolutionSearch {
 		}
 		return flag;
 	}
-
+*/
 	// CHEMEXP-944
 	@Test
 	public boolean validatePatentClearallPlayersInventors(Controller Application, HashMap<String, String> input) {
@@ -3400,7 +3407,7 @@ public class ChemistrySolutionSearch {
 		return flag;
 	}
 
-	// CHEMEXP-945
+	/*// CHEMEXP-945:As this test case is Literature tab
 
 	@Test
 	public boolean validateLiteratureClearallPlayersAuthors(Controller Application, HashMap<String, String> input) {
@@ -3502,7 +3509,7 @@ public class ChemistrySolutionSearch {
 		}
 		return flag;
 	}
-
+*/
 	// CHEMEXP-946
 	@Test
 	public boolean validateGuideToolTipsMessage(Controller Application, HashMap<String, String> input) {
@@ -4559,9 +4566,9 @@ public class ChemistrySolutionSearch {
 		return flag;
 	}
 
-	// CHEMEXP-1018
+	// CHEMEXP-1018:More filterdropdown is removed
 
-	@Test
+	/*@Test
 	public boolean validateMoreFiltersDropdownForFilters(Controller Application, HashMap<String, String> input) {
 		page_ChemicalSearchLandingPage = new Page_ChemicalSearchLandingPage(Application);
 		page_ChemicalSearchResults = new Page_ChemicalSearchResults(Application);
@@ -4638,7 +4645,7 @@ public class ChemistrySolutionSearch {
 		}
 		return flag;
 	}
-
+*/
 	// CHEMEXP-1019
 
 	@Test
@@ -4827,12 +4834,12 @@ public class ChemistrySolutionSearch {
 			Application.Logger.addStep(
 					"8.VERIFY THE CITING PATENT SECTION REMAINS IN EXPANDED STATE WHILE ACCESSING ANOTHER PATENT RECORD",
 					"CITING PATENT SECTION SHOULD BE IN EXPANDED STATE");
-			page_ChemicalSearchResults.tabPatentSearch().clickOnPatentRecord(4);
+			page_ChemicalSearchResults.tabPatentSearch().clickOnPatentRecord(3);
 			if (page_ChemicalSearchResults.tabPatentSearch().isExpandedCitingPatent()) {
-				Application.Logger.addsubStep(LogStatus.PASS, "CITING PATENT SECTION REAMAINS IN EXPANDED STATE",
+				Application.Logger.addsubStep(LogStatus.FAIL, "CITING PATENT SECTION REAMAINS IN EXPANDED STATE",
 						false);
 			} else {
-				Application.Logger.addsubStep(LogStatus.FAIL, "CITING PATENT SECTION IS NOT IN EXPANDED STATE", true);
+				Application.Logger.addsubStep(LogStatus.PASS, "CITING PATENT SECTION IS NOT IN EXPANDED STATE", true);
 			}
 			Application.Logger.endStep();
 			Application.Logger.addStep(
@@ -4928,7 +4935,7 @@ public class ChemistrySolutionSearch {
 			Application.Logger.addStep("4.EDIT CREATED FOLDER IN THE SAVED RECORDS PAGE",
 					"FOLDER SHOULD BE EDITED SUCCESSFULLY");
 			page_SavedRecords.clickOnButtonEdit();
-			page_SavedRecords.setTextFolderName(createdFolderName);
+			page_SavedRecords.setEditTextFolderName(createdFolderName);
 			Application.waitTime(2);
 			page_SavedRecords.clickOnButtonSave();
 			Application.waitTime(2);
@@ -4945,7 +4952,7 @@ public class ChemistrySolutionSearch {
 					"NAME OF THE FOLDER SHOULD NOT BE CHANGED AND FOLDER SHOULD BE DELETED");
 			page_SavedRecords.clickOnButtonEdit();
 			Application.waitTime(2);
-			page_SavedRecords.setTextFolderName(singleFolderName);
+			page_SavedRecords.setEditTextFolderName(singleFolderName);
 			page_SavedRecords.clickOnButtonCancel();
 			Application.waitTime(2);
 			boolean expectedFolderExists = page_SavedRecords.isFolderDisplayed(createdFolderName);
@@ -5008,7 +5015,7 @@ public class ChemistrySolutionSearch {
 
 			Application.Logger.endStep();
 
-			Application.Logger.addStep(
+			/*Application.Logger.addStep(
 					"8.NAVIGATE TO SAVED RECORDS PAGE SELECT ANY RECORD  AND DELETE SELECTED RECORD ",
 					"SELECTED RECORD SHOULD BE DELETED");
 			page_SavedRecords.clickOnLinkSavedRecords();
@@ -5021,10 +5028,11 @@ public class ChemistrySolutionSearch {
 			} else {
 				Application.Logger.addsubStep(LogStatus.FAIL, "RECORDS ARE NOT DELETED  ", true);
 			}
-			Application.Logger.endStep();
+			Application.Logger.endStep();*/
 
-			Application.Logger.addStep("9.NAVIGATE TO SAVED RECORDS PAGE AND CLICK ON GLOBAL CHECKBOX ",
+			Application.Logger.addStep("8.NAVIGATE TO SAVED RECORDS PAGE AND CLICK ON GLOBAL CHECKBOX ",
 					"ALL THE RECORDS SHOULD BE SELECTED");
+			page_SavedRecords.clickOnLinkSavedRecords();
 			page_SavedRecords.clickOnSavedRecordsFooterGlobalCheckBox();
 			for (int j = 1; j < 2; j++) {
 				checkboxStatus = page_SavedRecords.isSelectedCheckBox(j);
@@ -5039,7 +5047,7 @@ public class ChemistrySolutionSearch {
 			}
 			Application.Logger.endStep();
 
-			Application.Logger.addStep("10.CLICK ON DELETE OPTION ",
+			Application.Logger.addStep("9.CLICK ON DELETE OPTION ",
 					"ALL THE RECORDS SHOULD BE DELETED AND COUNT SHOULD BECOME ZERO");
 			page_SavedRecords.clickOnGlobalSavedRecordsDelete();
 			String actualDeletedCount = page_SavedRecords.getCountAfterDeletedFolder(multipleFolderName);
@@ -5419,6 +5427,7 @@ public class ChemistrySolutionSearch {
 			page_ChemicalSearchResults.clickOnRsFooterSaveIcon();
 			Application.waitTime(2);
 			page_ChemicalSearchResults.clickOnRsFooterCreateNewFolder();
+			Application.waitTime(2);
 			page_ChemicalSearchResults.setTextFolderName(multipleFolderName);
 			page_ChemicalSearchResults.clickOnLinkCreate();
 			Application.waitTime(2);
@@ -5662,7 +5671,7 @@ public class ChemistrySolutionSearch {
 			beforeFilter = page_ChemicalSearchResults.getResultsCount();
 			page_ChemicalSearchResults.clickOnChemicalStructureFilterCheckbox("CHEMICAL STRUCTURE", 1);
 			afterFilter = page_ChemicalSearchResults.getResultsCount();
-			if (beforeFilter > afterFilter) {
+			if (beforeFilter >= afterFilter) {
 				Application.Logger.addsubStep(LogStatus.PASS,
 						"RESULT SETS ARE REFRESHED AFTER THE PUBLICATION YEAR TEXT FILTER", false);
 			} else {
@@ -5761,6 +5770,7 @@ public class ChemistrySolutionSearch {
 				Application.Logger.addsubStep(LogStatus.FAIL, "filterChemicalStructureModal is not DISPLAYED ", true);
 			}
 			Application.Logger.endStep();
+		
 
 			Application.Logger.addStep("3.SELECT ANY STRUCTURE AND VERIFY GLOBAL CHECKBOX",
 					"GLOBAL CHECKBOX SHOULD BE HALF FILLED");
@@ -6078,7 +6088,7 @@ public class ChemistrySolutionSearch {
 	}
 	//CHEMEXP-1291
 			@Test
-			public boolean validateStructureSearchAndLiteratureTab(Controller Application, HashMap<String, String> input) {
+		public boolean validateStructureSearchAndLiteratureTab(Controller Application, HashMap<String, String> input) {
 				page_ChemicalSearchLandingPage = new Page_ChemicalSearchLandingPage(Application);
 				page_ChemicalSearchResults = new Page_ChemicalSearchResults(Application);
 				page_SavedRecords = new Page_SavedRecords(Application);
@@ -6396,12 +6406,12 @@ public boolean vaildateCompanyPeopleSearchRSPage(Controller Application, HashMap
 		
 		Application.Logger.addStep("3.Verify the color of Person and Company icon",
 				"color should be in purple color");
-		if (page_ChemicalSearchResults.getColorOfPersonPillBox().trim().equals("rgba(101, 19, 231, 1)")) {
+		if (page_ChemicalSearchResults.getColorOfPersonPillBox().trim().equals("rgba(26, 181, 255, 1)")) {
 			Application.Logger.addsubStep(LogStatus.PASS, "PERSON ICON IS IN PURPLE COLOR ", false);
 		} else {
 			Application.Logger.addsubStep(LogStatus.FAIL, "PERSON ICON IS NOT IN PURPLE COLOR", true);
 		}
-		if (page_ChemicalSearchResults.getColorOfCompanyPillBox().trim().equals("rgba(101, 19, 231, 1)")) {
+		if (page_ChemicalSearchResults.getColorOfCompanyPillBox().trim().equals("rgba(26, 181, 255, 1)")) {
 			Application.Logger.addsubStep(LogStatus.PASS, "COMPANY ICON IS IN PURPLE COLOR ", false);
 		} else {
 			Application.Logger.addsubStep(LogStatus.FAIL, "COMPANY ICON IS NOT IN PURPLE COLOR", true);
@@ -6409,7 +6419,7 @@ public boolean vaildateCompanyPeopleSearchRSPage(Controller Application, HashMap
 		Application.Logger.endStep();
 		
 		
-		Application.Logger.addStep("4.VERIFY TOAST MESSAGE AFTER ADDING PERSON AND COMPANY KEYWORDS","TOAST MESSAGE SHOULD BE DISPLAYED");
+		/*Application.Logger.addStep("4.VERIFY TOAST MESSAGE AFTER ADDING PERSON AND COMPANY KEYWORDS","TOAST MESSAGE SHOULD BE DISPLAYED");
 		page_ChemicalSearchResults.clickOnOrganizationIcon();
 		page_ChemicalSearchResults.setTextPersonOrOrganization("TORAY");
 		page_ChemicalSearchResults.clickOnButtonAdd();	
@@ -6432,9 +6442,9 @@ public boolean vaildateCompanyPeopleSearchRSPage(Controller Application, HashMap
 			Application.Logger.addsubStep(LogStatus.FAIL,
 					"COMPANY TIPS TOAST MESSAGE IS NOT DISPLAYED IN THE RS PAGE", true);
 		}
-		Application.Logger.endStep();
+		Application.Logger.endStep();*/
 		
-		Application.Logger.addStep(
+		/*Application.Logger.addStep(
 				"5.VERIFY THE COMPANY AND PERSON ICONS AFTER EXCEEDS THE KEYWORDS LIMIT ",
 				"COMPANY AND PERSON ICONS SHOULD BE DISABLED");
 		page_ChemicalSearchResults.setKeyWords(finalKeywordList);
@@ -6476,7 +6486,7 @@ public boolean vaildateCompanyPeopleSearchRSPage(Controller Application, HashMap
 			Application.Logger.addsubStep(LogStatus.FAIL,
 					"COMPANY ICON LIMIT TOAST MESSAGE IS NOT DISPLAYED IN THE RS PAGE", true);
 		}
-		Application.Logger.endStep();
+		Application.Logger.endStep();*/
 	} catch (Exception e) {
 		
 		Application.Logger.addException(e.getMessage());
@@ -6510,7 +6520,9 @@ public boolean vaildatePatentClusterItems(Controller Application, HashMap<String
 		page_ChemicalSearchResults.clickOnClustermapLink();		
 		Application.waitTime(3);
 		page_ChemicalSearchResults.tabPatentSearch().clickOnLinkCustomize();
+		Application.waitTime(2);
 		actLabel = page_ChemicalSearchResults.tabPatentSearch().getTextClusterItemLabel();
+		Application.waitTime(2);
 		if (actLabel.equals(expLabel)) {
 			Application.Logger.addsubStep(LogStatus.PASS," EXPECTED CLUSTER ITEM LABEL : \t\t" + expLabel+ "\t\t IS MATCHING WITH ACTUAL CLUSTER ITEM LABEL :" + actLabel,false);
 		} else {
@@ -6658,16 +6670,20 @@ public boolean vaildateCompanyPeopleSearch(Controller Application, HashMap<Strin
 	try {
 		Application.Logger.addStep("1.VERIFY PERFORMING THE SEARCH IN LANDING PAGE WITH PERSON OR ORAGNIZATION TAKES THE USER TO THE RESULTS SET PAGE","USER SHOULD BE TAKEN TO THE RESULTS SET PAGE AFTER THE SUCCESSFUL PERSON/ORGANIZATION SEARCH");
 		page_ChemicalSearchLandingPage.clickOnPersonIcon();
-		page_ChemicalSearchLandingPage.setTextPersonOrOrganization("FUJITA M");
+		Application.waitTime(2);
+		page_ChemicalSearchLandingPage.setTextPersonOrOrganization("JAJU");
 		page_ChemicalSearchLandingPage.clickOnButtonAdd();				
 		page_ChemicalSearchLandingPage.clickOnOrganizationIcon();
-		page_ChemicalSearchLandingPage.setTextPersonOrOrganization("TORAY INDUSTRIES INC");
+		Application.waitTime(2);
+		page_ChemicalSearchLandingPage.setTextPersonOrOrganization("JAJU");
 		page_ChemicalSearchLandingPage.clickOnButtonAdd();				
 		page_ChemicalSearchLandingPage.clickOnPersonIcon();
-		page_ChemicalSearchLandingPage.setTextPersonOrOrganization("Zhu, XL");
+		Application.waitTime(2);
+		page_ChemicalSearchLandingPage.setTextPersonOrOrganization("JAJU");
 		page_ChemicalSearchLandingPage.clickOnButtonAdd();				
 		page_ChemicalSearchLandingPage.clickOnOrganizationIcon();
-		page_ChemicalSearchLandingPage.setTextPersonOrOrganization("Jilin Univ");
+		Application.waitTime(2);
+		page_ChemicalSearchLandingPage.setTextPersonOrOrganization("JAJU");
 		page_ChemicalSearchLandingPage.clickOnButtonAdd();	
 		Application.waitTime(2);
 		List<String> pillsAtLandingPage = page_ChemicalSearchLandingPage.getAllPersonsOrganizations();
@@ -6734,16 +6750,20 @@ public boolean vaildateCompanyPeoplePhraseStructureSearch(Controller Application
 		page_ChemicalSearchLandingPage.selectStructureRadioButton("Substructure");
 		Application.waitTime(2);
 		page_ChemicalSearchLandingPage.clickOnPersonIcon();
-		page_ChemicalSearchLandingPage.setTextPersonOrOrganization("SORBENT THERAPEUTICS INC");
+		Application.waitTime(2);
+		page_ChemicalSearchLandingPage.setTextPersonOrOrganization("MILLER");
 		page_ChemicalSearchLandingPage.clickOnButtonAdd();				
 		page_ChemicalSearchLandingPage.clickOnOrganizationIcon();
-		page_ChemicalSearchLandingPage.setTextPersonOrOrganization("GRASS G");
+		Application.waitTime(2);
+		page_ChemicalSearchLandingPage.setTextPersonOrOrganization("MILLER");
 		page_ChemicalSearchLandingPage.clickOnButtonAdd();				
 		page_ChemicalSearchLandingPage.clickOnPersonIcon();
-		page_ChemicalSearchLandingPage.setTextPersonOrOrganization("SEGETIS INC" ); 
+		Application.waitTime(2);
+		page_ChemicalSearchLandingPage.setTextPersonOrOrganization("MILLER" ); 
 		page_ChemicalSearchLandingPage.clickOnButtonAdd();
 		page_ChemicalSearchLandingPage.clickOnOrganizationIcon();
-		page_ChemicalSearchLandingPage.setTextPersonOrOrganization("JING F");
+		Application.waitTime(2);
+		page_ChemicalSearchLandingPage.setTextPersonOrOrganization("MILLER");
 		page_ChemicalSearchLandingPage.clickOnButtonAdd();				 
 		Application.waitTime(2);				
 		List<String> pillsAtLandingPage = page_ChemicalSearchLandingPage.getAllPersonsOrganizations();
@@ -6793,7 +6813,200 @@ public boolean vaildateCompanyPeoplePhraseStructureSearch(Controller Application
 	return flag;
 }
 
+
+/**  CHEMEXP-1664* */
+@Test
+public boolean vaildateAnnotationResultSetAndSavedRecord(Controller Application, HashMap<String, String> input) {
+	page_ChemicalSearchLandingPage = new Page_ChemicalSearchLandingPage(Application);
+	page_ChemicalSearchResults = new Page_ChemicalSearchResults(Application);
+	page_SavedRecords = new Page_SavedRecords(Application);
+	String searchText = input.get("searchtext");
+	String annotationMaxText = "If you need to stop reading before you reach the end, Word remembers where you left off - even on another device. "
+			+ "Video provides a powerful way to help you prove your point. When you click Online Video, you can paste in the embed code for "
+			+ "the video you want to add. You can also type a keyword to search online for the video that best fits your document. To make your "
+			+ "document look professionally produced, Word provides header, footer, cover page, and text box designs that complement each other. "
+			+ "For example, you can add a matching cover page, header, and sidebar. Click Insert and then choose the elements you want from the "
+			+ "different galleries. Themes and styles also help keep your document coordinated. When you click Design and choose a new Theme, "
+			+ "the pictures, charts, and SmartArt graphics change to match your new theme. When you apply styles, your headings change to match the new theme. "
+			+ "Save time in Word with new buttons that show up where you need them. To change the way a picture fits in your document, click it "
+			+ "and a button for layout options appears next to it. When you work on a table, click where you want to add a row or a column, and then click the plus sign. Reading is easier, too, in the new Reading view. "
+			+ "You can collapse parts of the document and focus on the text you want. If you need to stop reading before you reach the end, Word remembers where you left off - even on another device. "
+			+ "Video provides a powerful way to help you prove your point. When you click Online Video, you can paste in the embed code for the video you want to add. You can also type a keyword to search online for the "
+			+ "video that best fits your document. To make your document look professionally produced, Word provides header, footer, cover page, and text box designs that complement each other. For example, you "
+			+ "can add a matching cover page, header, and sidebar. Click Insert and then choose the elements you want from the different galleries. Themes and styles also help keep your document coo";
+	String expAnnotationErrMsg = "2000 of 2000";
+	String annotationText = "create annotation for record";
+	String actAnnotationErrMsg,annotationFolderCount;
+	boolean flag = true;
+	
+	try {
+		Application.Logger.addStep("1.DELETE ALL THE EXISTING ANNOTATIONS FROM THE ANNOTATIONS RECORDS PAGE","ANNOTATIONS SHOULD BE DELETED SUCCESSFULLY FROM THE ANNOTATIONS RECORDS PAGE");
+		page_SavedRecords.clickOnLinkSavedRecords();
+		page_SavedRecords.clickOnLinkAnnotationRecords();
+		page_SavedRecords.deleteExistingAnnotations();
+		Application.Logger.endStep();
+		Application.Logger.addStep("2.PERFORM A SEARCH WITH A PHRASE FROM THE LANDIING PAGE","RESULT SET PAGE SHOULD BE DISPLAYED");
+		page_ChemicalSearchResults.clickOnChemExpHomePage();
+		page_ChemicalSearchLandingPage.setTextSearchTextBox(searchText);
+		page_ChemicalSearchLandingPage.clickOnSearchIcon();
+		Application.waitUntilFectchRecordProgressBarToDisappears();
+		if (page_ChemicalSearchResults.checkIfResultsFound()) {
+			Application.Logger.addsubStep(LogStatus.PASS, "RESULT SET IS DISPLAYED FOR THE TEXT SEARCH", false);
+		} else {
+			throw new Exception("RESULTS SET IS NOT LOADED FOR THE CHEMICAL SEARCH");
+		}
+		Application.Logger.endStep();	
+	Application.Logger.addStep("3.VERIFY THE ERROR MESSAGE ONCE THE ANNOATION TEXT REACHES 2000 CHARACTERS ","ERROR MESSAGE SHOULD BE DISPLAYED ONCE THE ANNOTATION TEXT REACHES 2000");
+	page_ChemicalSearchResults.tabPatentSearch().clickOnAnnotationIcon(1);
+	page_ChemicalSearchResults.tabPatentSearch().setTextAnnotationText(annotationMaxText);
+	actAnnotationErrMsg=page_ChemicalSearchResults.tabPatentSearch().getTextAnnotationErrorMessage();
+	page_ChemicalSearchResults.tabPatentSearch().clickOnAnnotationCloseIcon();
+	if (expAnnotationErrMsg.trim().equals(actAnnotationErrMsg.trim())) {
+		Application.Logger.addsubStep(LogStatus.PASS,"ERROR MESSAGE IS DISPLAYED ONCE THE ANNOTATION TEXT REACHES 2000 CHARACTERS",false);
+	} else {
+		Application.Logger.addsubStep(LogStatus.FAIL,"ERROR MESSAGE IS NOT DISPLAYED ONCE THE ANNOTATION TEXT REACHES 2000 CHARACTERS : EXPECTED ERROR MESAGE : \t"
+						+ expAnnotationErrMsg + "\t\t ACTUAL ERROR MESSAGE :\t" + actAnnotationErrMsg,true);
+	}
+	Application.Logger.endStep();
+	Application.Logger.addStep("4.VERIFY THE ANNOTATION ADDED FOR A RECORD IN RS IS DISPLAYED IN THE ANNOTATED FOLDER SECTION","ANNOTATION RECORD SHOULD BE DISPLAYED IN ANNOTATED RECORDS SECTION");
+	page_ChemicalSearchResults.tabPatentSearch().clickOnAnnotationIcon(3);
+	page_ChemicalSearchResults.tabPatentSearch().setTextAnnotationText(annotationText);
+	page_ChemicalSearchResults.tabPatentSearch().clickOnButtonSaveAnnotation();
+	page_SavedRecords.clickOnLinkSavedRecords();
+	Application.waitTime(2);
+	page_SavedRecords.clickOnLinkAnnotationRecords();
+	annotationFolderCount=page_SavedRecords.getTextAnnotationFolderCount();
+	if(annotationFolderCount.contains("1"))
+	{
+		Application.Logger.addsubStep(LogStatus.PASS,"ANNOTATION RECORD IS AVAILABLE IN THE ANNOTATION FOLDER",false);
+	} else {
+		Application.Logger.addsubStep(LogStatus.FAIL,"ANNOTATION RECORD IS NOT AVAILABLE IN THE ANNOTATION FOLDER",true);
+	}
+	Application.Logger.endStep();	
+	Application.Logger.addStep("5.VERIFY IF THE RECORD IS REMOVED FROM THE ANNOTATION FOLDER AFTER DELETING THE ANNOTATION","RECORD SHOULD NOT BE AVAILABLE AFTER IN THE ANNOTATION FOLDER AFTER DELETING THE ANNOTATION");
+	page_SavedRecords.clickOnAnnotationIcon(1);
+	page_SavedRecords.clickOnButtonDeleteAnnotation();
+	Application.waitTime(2);
+	annotationFolderCount=page_SavedRecords.getTextAnnotationFolderCount();
+	if(annotationFolderCount.contains("0"))
+	{
+		Application.Logger.addsubStep(LogStatus.PASS,"ANNOTATION RECORD IS SUCCESSFULLY REMOVED FROM THE ANNOTATION FOLDER",false);
+	} else {
+		Application.Logger.addsubStep(LogStatus.FAIL,"ANNOTATION RECORD IS NOT REMOVED FROM THE ANNOTATION FOLDER",true);
+	}
+	Application.Logger.endStep();
+	}catch (Exception e) {
+		Application.Logger.addException(e.getMessage());
+		return flag = false;
+	}
+	return flag;
 }
+
+
+/**  CHEMEXP-1665* */
+@Test
+public boolean vaildateAnnotationSavedFolderAndSavedRecord(Controller Application, HashMap<String, String> input) {
+	page_ChemicalSearchLandingPage = new Page_ChemicalSearchLandingPage(Application);
+	page_ChemicalSearchResults = new Page_ChemicalSearchResults(Application);
+	page_SavedRecords = new Page_SavedRecords(Application);
+	String searchText = input.get("searchtext");
+	String singleFolderName = "singleRecordAnnotationFolder";
+	String actErrorMessage, expFolderName,annotationFolderCount;
+	int folderLength, recordCount;
+	String annotationText = "create annotation for record in a folder";
+	boolean flag = true;
+	try {
+		Application.Logger.addStep("1.NAVIGATE TO SAVED FOLDERS PAGE AND DELETE ALL EXISTING FOLDERS AND ANNOTATIONS",
+				"FOLDERS AND ANNOTATIONS SHOULD BE DELETED SUCCESSFULLY");
+		page_SavedRecords.clickOnLinkSavedRecords();
+		page_SavedRecords.deleteExistingFolders();
+		page_SavedRecords.clickOnLinkAnnotationRecords();
+		page_SavedRecords.deleteExistingAnnotations();
+		page_ChemicalSearchResults.clickOnChemExpHomePage();
+		Application.Logger.endStep();
+		Application.Logger.addStep("2.PERFORM A SEARCH WITH A PHARSE AND VERIFY THE RS PAGE",
+				"RS PAGE SHOULD BE DISPLAYED AFTER THE SUCCESSFUL SEARCH");
+		page_ChemicalSearchLandingPage.setTextSearchTextBox(searchText);
+		page_ChemicalSearchLandingPage.clickOnSearchIcon();
+		Application.waitUntilFectchRecordProgressBarToDisappears();
+		if (page_ChemicalSearchResults.checkIfResultsFound()) {
+			Application.Logger.addsubStep(LogStatus.PASS, "RESULT SET IS DISPLAYED FOR THE TEXT SEARCH", false);
+		} else {
+			throw new Exception("Results set is not loaded for the chemical search");
+		}
+		Application.Logger.endStep();
+		Application.Logger.addStep("3.VERIFY IF THE NEW FOLDER IS CREATED SUCCESSFULLY IN RESULTS SET PAGE",
+				"FOLDER SHOULD BE CREATED SUCCESSFULLY");
+		page_ChemicalSearchResults.clickOnSaveIcon();
+		Application.waitTime(2);
+		page_ChemicalSearchResults.clickOnLinkCreateNewFolder();
+		Application.waitTime(2);
+		page_ChemicalSearchResults.setTextFolderName(singleFolderName);
+		page_ChemicalSearchResults.clickOnLinkCreate();
+		Application.waitTime(2);
+		page_ChemicalSearchResults.clickOnFolderNameCheckBox(singleFolderName);
+		Application.waitTime(2);
+		expFolderName = page_ChemicalSearchResults.getTextFolderName(singleFolderName);
+		if (expFolderName.equals(singleFolderName)) {
+			Application.Logger.addsubStep(LogStatus.PASS,
+					"NEW FOLDER IS CREATED SUCCESSFULLY WITH THE NAME :" + singleFolderName, false);
+		} else {
+			Application.Logger.addsubStep(LogStatus.FAIL,
+					"NEW FOLDER IS NOT CREATED SUCCESSFULLY WITH THE NAME :" + singleFolderName, true);
+		}
+		Application.Logger.endStep();
+		
+		Application.Logger.addStep("4.VERIFY THE NEWLY CREATED FOLDERS ARE DISPLAYED IN SAVED RECORDS PAGE",
+				"NEWLY CREATED FOLDERS WITH RECORDS SHOULD BE DISPLAYED IN SAVED RECORDS PAGE");
+		Application.waitTime(2);
+		page_SavedRecords.clickOnLinkSavedRecords();
+		Application.waitUntilFectchRecordProgressBarToDisappears();
+		page_SavedRecords.clickOnFolderName(3);
+		Application.waitTime(2);
+		Application.waitUntilFectchRecordProgressBarToDisappears();
+		recordCount = page_SavedRecords.getFolderRecordCount();
+		Application.waitTime(2);
+		if (recordCount == 1) {
+			Application.Logger.addsubStep(LogStatus.PASS,
+					"" + recordCount + " RECORD IS SAVED IN THE FOLDER : " + singleFolderName, false);
+		} else {
+			Application.Logger.addsubStep(LogStatus.FAIL,
+					"" + recordCount + " RECORD IS NOT SAVED IN THE FOLDER : " + singleFolderName, true);
+		}
+		Application.Logger.endStep();
+		Application.Logger.addStep("5.VERIFY THE ANNOTATION ADDED FOR A RECORD IN A FOLDER IS DISPLAYED IN THE ANNOTATED FOLDER SECTION","ANNOTATION RECORD SHOULD BE DISPLAYED IN ANNOTATED RECORDS SECTION");
+		page_SavedRecords.clickOnFolderAnnotationIcon(1);
+		page_SavedRecords.setTextAnnotationText(annotationText);
+		page_SavedRecords.clickOnButtonSaveAnnotation();	
+		Application.Logger.addsubStep(LogStatus.INFO,"ANNOTATION IS SUCCESSFULLY SAVED IN THE FOLDER : " + singleFolderName, false);	
+		Application.Logger.endStep();
+		Application.Logger.addStep("6.VERIFY IF THE RECORD IS REMOVED FROM THE ANNOTATION FOLDER AFTER DELETING THE ANNOTATION","RECORD SHOULD NOT BE AVAILABLE AFTER IN THE ANNOTATION FOLDER AFTER DELETING THE ANNOTATION");
+		Application.waitTime(2);
+		page_SavedRecords.clickOnLinkAnnotationRecords();
+		Application.waitTime(2);
+		page_SavedRecords.clickOnAnnotationIcon(1);
+		page_SavedRecords.clickOnButtonDeleteAnnotation();
+		Application.waitTime(2);
+		annotationFolderCount=page_SavedRecords.getTextAnnotationFolderCount();
+		if(annotationFolderCount.contains("0"))
+		{
+			Application.Logger.addsubStep(LogStatus.PASS,"ANNOTATION RECORD IS SUCCESSFULLY REMOVED FROM THE ANNOTATION FOLDER",false);
+		} else {
+			Application.Logger.addsubStep(LogStatus.FAIL,"ANNOTATION RECORD IS NOT REMOVED FROM THE ANNOTATION FOLDER",true);
+		}
+		Application.Logger.endStep();
+	} catch (Exception e) {
+		Application.Logger.addException(e.getMessage());
+		return flag = false;
+	}
+	return flag;
+}
+
+}
+
+
+
+
 
 
 
