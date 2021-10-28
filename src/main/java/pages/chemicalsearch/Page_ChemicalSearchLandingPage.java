@@ -49,7 +49,7 @@ public class Page_ChemicalSearchLandingPage extends Controller {
 	@FindBy(xpath = "//section[2]/div[1]/button[3]")
 	private WebElement btnSearchIconStatus;
 
-	@FindBy(css = "#cdk-overlay-0 > div > div > button:nth-child(3) > span")
+	@FindBy(css = "#mat-menu-panel-2 > div > button:nth-child(3) > span")
 	private WebElement showTipsTxt;
 
 	@FindBy(xpath = "//button//span/span/mat-icon[@class ='mat-icon notranslate material-icons mat-icon-no-color']")
@@ -82,7 +82,7 @@ public class Page_ChemicalSearchLandingPage extends Controller {
 	@FindBy(css = "#mat-slide-toggle-1-input")
 	private WebElement supportTipsOnOff;
 
-	@FindBy(css = "div.links > button:nth-child(5) > span")
+	@FindBy(css = "button:nth-child(4) > span")
 	private WebElement supportLink;
 	
 	@FindBy(xpath = "//*[@id='Path']")
@@ -102,6 +102,22 @@ public class Page_ChemicalSearchLandingPage extends Controller {
 	
 	@FindBy(css = "div:nth-child(2) > h3")
 	private WebElement structureLable;
+	
+	@FindBy(xpath = "//app-structure-search/section/div[2]/div")
+	private WebElement chemicalNameSearchTab;
+	
+	@FindBy(xpath = "//app-structure-search/div[2]/section/div/input")
+	private WebElement chemicalNameSearchTxtBox;
+	
+	@FindBy(xpath = "//mat-option[1]/span/div")
+	private WebElement chemicalNameSearchFirstItem;
+	
+	@FindBy(xpath = "//mat-dialog-actions/button[2]/span")
+	private WebElement ChemicalNameApplyBtn;
+	
+
+	@FindBy(xpath = "//app-structure-search-modal/div/div[1]/h2")
+	private WebElement modifyChemicalNameLabel;
 	
 	
 
@@ -522,19 +538,119 @@ public class Page_ChemicalSearchLandingPage extends Controller {
  			List<String> Labels =new ArrayList<String>();
  				for(int i=1;i<=4;i++)
  				{
- 					WebElement element = controller.driver.findElement(By.cssSelector("mat-chip:nth-child("+i+") > div.cdx-chip-block > span > span.cdx-chip-name"));
+ 					WebElement element = controller.driver.findElement(By.cssSelector("div > mat-chip:nth-child("+i+") > div.cdx-chip-block > span > span.cdx-chip-name"));
  					String Label = controller.getText(element);
  					Labels.add(Label); 					
   				}
  			
 		return Labels;
      	}catch (Exception e) {
-     		throw new Exception("getAllPersonsOrganizations is not working" + e);
+     		throw new Exception("getAllPersonsOrganizationsRSPage is not working" + e);
+     	}
+	}
+
+	
+	@SuppressWarnings("static-access")
+	public List<String> getAllPersonsOrganizationsStructureSearch() throws Exception{
+		try {
+			
+ 			List<String> Labels =new ArrayList<String>();
+ 				for(int i=2;i<=5;i++)
+ 				{
+ 					WebElement element = controller.driver.findElement(By.cssSelector("div > mat-chip:nth-child("+i+") > div.cdx-chip-block > span > span.cdx-chip-name"));
+ 					String Label = controller.getText(element);
+ 					Labels.add(Label); 					
+  				}
+ 			
+		return Labels;
+     	}catch (Exception e) {
+     		throw new Exception("getAllPersonsOrganizationsRSPage is not working" + e);
      	}
 	}
 	
 	
+	public void clickOnTabChemicalNameSearch() throws Exception {
+		try {
+			waitUntilElementIsDisplayed(chemicalNameSearchTab);
+			jsClick(chemicalNameSearchTab);
+			} catch (Exception ex) {
+			throw new Exception("clickOnTabChemicalNameSearch is not working" + ex);
+		}
+	}	
 
-}
+	public void setTextChemicalNameSearchTextBox(String value) throws Exception {
+		try {
+			waitUntilElementIsDisplayed(chemicalNameSearchTxtBox);
+			click(chemicalNameSearchTxtBox);
+			setText(chemicalNameSearchTxtBox, value);
+			Actions action = new Actions(driver);
+			action.moveToElement(chemicalNameSearchFirstItem).click().build().perform();
+			controller.waitTime(2);
+			} catch (Exception e) {
+			throw new Exception("setTextChemicalNameSearchTextBox is not working.." + e);
+		}
+	}
+	
+	public void clickOnButtonApply() throws Exception {
+		try {
+			waitUntilElementIsDisplayed(ChemicalNameApplyBtn);
+			click(ChemicalNameApplyBtn);
+			} catch (Exception ex) {
+			throw new Exception("clickOnButtonApply is not working" + ex);
+		}
+	}
+	
+	public void clickOnPillBox(int pillNumber) throws Exception {
+		try 
+		{
+			WebElement ele=driver.findElement(By.xpath("(//div[@class='cdx-chip-block']//span[@class='cdx-chip-name'])["+pillNumber+"]"));
+		    ele.click();
+		 }
+		catch (Exception e) 
+		 {
+			throw new Exception("clickOnPillBox is not working.." + e);
+		 }
+	}
+	
+	
+	public String getTextModifyChemicalTitle() throws Exception {
+		try {
+			String expMsg = "";
+			waitUntilElementIsDisplayed(modifyChemicalNameLabel);
+			if (controller.isElementDisplayed(modifyChemicalNameLabel))
+				expMsg = controller.getText(modifyChemicalNameLabel);
+			return expMsg;
+		} catch (Exception e) {
+			throw new Exception("getTextModifyChemicalTitle is not working.." + e);
+		}
+	}
+	
+	
+	public void clickOnPersonOrgPillBox(int pillNumber) throws Exception {
+		try 
+		{
+			WebElement ele=driver.findElement(By.xpath("//div/div[1]/div/mat-chip-list/div/mat-chip["+pillNumber+"]"));
+		    ele.click();
+		 }
+		catch (Exception e) 
+		 {
+			throw new Exception("clickOnPersonOrgPillBox is not working.." + e);
+		 }
+	}
+	
+	public String getColorOfPersonOrgPillBox(int pillNumber) throws Exception {
+		try 
+		{
+		WebElement ele=driver.findElement(By.xpath("//div/div[1]/div/mat-chip-list/div/mat-chip["+pillNumber+"]"));
+		  return ele.getAttribute("class");
+		 }catch (Exception e) {
+		 throw new Exception("getColorOfPersonOrgPillBox is not working.." + e);
+			}
+		}
+		 
+		
+	}
+
+
 
 

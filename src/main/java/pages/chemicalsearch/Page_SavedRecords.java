@@ -14,7 +14,6 @@ import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import com.relevantcodes.extentreports.LogStatus;
-import pages.literaturesearch.Tab_LiteratureSearch;
 import pages.patentsearch.Tab_PatentSearch;
 import support.Controller;
 
@@ -417,7 +416,7 @@ public String getValueFromItemsPerPageDropdown() throws Exception {
 public void selectItemsPerPageFromDropDown(String itemValue) throws Exception {
 	try {
 		clickOnItemsPerPageDropDown();
-        List<WebElement> listOfDropdownValue = driver.findElements(By.xpath("//div[3]/div[2]/div/div/div/mat-option/span"));
+        List<WebElement> listOfDropdownValue = driver.findElements(By.xpath("//div/mat-option/span"));
 		for (WebElement dropdownValue:listOfDropdownValue)
 		{
 			if(dropdownValue.getText().equalsIgnoreCase(itemValue))

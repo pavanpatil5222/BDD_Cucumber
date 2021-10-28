@@ -16,7 +16,7 @@ import support.Controller;
  * @author Anand/Rashmi
  *
  */
-public class Tab_LiteratureSearch extends Controller{
+/*public class Tab_LiteratureSearch extends Controller{
 	
 	@FindBy(css = "app-result-set:nth-child(1) > section > mat-card > mat-card-content > section:nth-child(3) > div > span")
 	private WebElement linkMoreLikeThis;
@@ -890,4 +890,4 @@ public void clickOnFirstBubble() throws Exception {
 		throw new Exception("clickOnFirstBubble is not working" + ex);
 	}
 }
-}
+}*/
