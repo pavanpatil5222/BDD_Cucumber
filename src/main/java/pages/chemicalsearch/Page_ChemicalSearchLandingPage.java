@@ -30,18 +30,22 @@ public class Page_ChemicalSearchLandingPage extends Controller {
 	@FindBy(css = "div:nth-child(1) > button:nth-child(2) > span > mat-icon")
 	private WebElement personIcon;	
 	
-	@FindBy(css = "div.bottom-icons > button:nth-child(1) > span > mat-icon")
+	@FindBy(xpath = "//div/div[1]/div[3]/section[2]/div[2]/button[2]")
 	private WebElement organizationIcon;
 
-	@FindBy(css = "section.add-button > button")
+	@FindBy(xpath = "//app-chem-pill-input-modal/section/div/button")
 	private WebElement btnAdd;
 	
 	@FindBy(xpath = "//input[contains(@placeholder,'Enter name')]")
 	private WebElement txtCompanyPerson;
 	
 	
-	@FindBy(xpath = "//section[2]/app-page-home/div/section/app-structure-search/div[1]/div/section[2]/div[1]/button[1]/span/span")
+	@FindBy(xpath = "//section[1]/div/section[2]/div[1]/button[1]")
 	private WebElement btn_ClearX;
+	
+	@FindBy(css = "div:nth-child(2) > button:nth-child(3) > span > span")
+	private WebElement closeIcon;
+	
 	//section[2]/app-page-home/div/section/app-structure-search/div/section[2]/div[1]/button[1]/span
 	@FindBy(css = "span:nth-child(3) > button > span > img")
 	private WebElement rsFooterSaveIcon;
@@ -52,7 +56,7 @@ public class Page_ChemicalSearchLandingPage extends Controller {
 	@FindBy(css = "#mat-menu-panel-2 > div > button:nth-child(3) > span")
 	private WebElement showTipsTxt;
 
-	@FindBy(xpath = "//button//span/span/mat-icon[@class ='mat-icon notranslate material-icons mat-icon-no-color']")
+	@FindBy(css = "span > span > mat-icon")
 	private WebElement btnSearchIcon;
 
 	@FindBy(xpath = " //textarea[@placeholder='Enter keywords, phrases or text blocks to search...']")
@@ -103,16 +107,16 @@ public class Page_ChemicalSearchLandingPage extends Controller {
 	@FindBy(css = "div:nth-child(2) > h3")
 	private WebElement structureLable;
 	
-	@FindBy(xpath = "//app-structure-search/section/div[2]/div")
+	@FindBy(xpath = "//section/section[1]/div[2]/div")
 	private WebElement chemicalNameSearchTab;
 	
-	@FindBy(xpath = "//app-structure-search/div[2]/section/div/input")
+	@FindBy(xpath = "//section/section[2]/section[2]/div/div[1]/input")
 	private WebElement chemicalNameSearchTxtBox;
 	
 	@FindBy(xpath = "//mat-option[1]/span/div")
 	private WebElement chemicalNameSearchFirstItem;
 	
-	@FindBy(xpath = "//mat-dialog-actions/button[2]/span")
+	@FindBy(xpath = "//mat-dialog-actions/button[2]")
 	private WebElement ChemicalNameApplyBtn;
 	
 
@@ -481,6 +485,21 @@ public class Page_ChemicalSearchLandingPage extends Controller {
 			throw new Exception("clickOnButtonX is not working" + ex);
 		}
 	}
+	
+	public void clickOnCloseIcon() throws Exception {
+		try {
+			System.out.println("test");
+			//WebElement ele = driver.findElement(By.xpath("//section[2]/div[2]/button[3]/span/span"));
+			//jsClickforReskinningElements(ele);
+			waitUntilElementIsDisplayed(closeIcon);
+			jsClick(closeIcon);
+			//jsClickforReskinningElements(closeIcon);
+		} catch (Exception ex) {
+			throw new Exception("clickOnCloseIcon is not working" + ex);
+		}
+	}
+	
+	
 	public String getTextStructureSearchLable() throws Exception {
 		try {
 			String expMsg = "";
@@ -503,7 +522,7 @@ public class Page_ChemicalSearchLandingPage extends Controller {
 	
 	public void clickOnOrganizationIcon() throws Exception {
 		try {
-			waitUntilElementIsDisplayed(organizationIcon);
+		//	waitUntilElementIsDisplayed(organizationIcon);
 			organizationIcon.click();
 			} catch (Exception ex) {
 			throw new Exception("clickOnOrganizationIcon is not working" + ex);

@@ -35,7 +35,7 @@ public class Page_ChemicalSearchResults extends Controller{
 	@FindBy(xpath = "//button[contains(@title,'company/organization' )]")
 	private WebElement organizationIcon;
 
-	@FindBy(css = "section.add-button > button")
+	@FindBy(xpath = "//app-chem-pill-input-modal/section/div/button")
 	private WebElement btnAdd;
 	
 	@FindBy(xpath = "//input[contains(@placeholder,'Enter name')]")
@@ -71,7 +71,7 @@ public class Page_ChemicalSearchResults extends Controller{
 	private WebElement globalCheckBox;
 	@FindBy(xpath="//div/div[1]/section[3]/section/button/span/span")
 	private WebElement linkCreateNewFolder;
-	@FindBy(css="app-result-set:nth-child(1) > section > aside > section:nth-child(3) > div > span:nth-child(1) > button > span > img")
+	@FindBy(css="section.result-set > section > app-result-set:nth-child(1) > section > section > section:nth-child(3) > div > span:nth-child(1) > button")
 	private WebElement saveIcon;
 	@FindBy(css="#saveto-container > section.footer-section > form > section:nth-child(1) > div:nth-child(2) > span")
 	private WebElement folderErrorMessage;
@@ -97,7 +97,7 @@ public class Page_ChemicalSearchResults extends Controller{
 	@FindBy(xpath="//section[3]/form/section[1]/mat-form-field/div/div[1]/div[3]/input")
 	private WebElement txtFolderName;
 	
-	@FindBy(xpath="//div[@class='result-count']")
+	@FindBy(css="section.result-count > div")
 	private WebElement getResultsCount;
 		
 	@FindBy(xpath = " //div[@class='chart']//*[name()='svg']//*[name()='circle']")
@@ -113,6 +113,9 @@ public class Page_ChemicalSearchResults extends Controller{
 	
 	@FindBy(xpath = "//div[9]/button/span[contains(.,'More filters')]")
 	private WebElement moreFiltersDropdown;
+	
+	@FindBy(xpath = "(//span[contains(.,'More filters')])[4]")
+	private WebElement moreSmartFiltersDropdown;
 
 	//@FindBy(xpath = "(//section[@class='filter-details']//div[@class='mat-form-field-infix']//mat-icon)[1]")
 	
@@ -172,7 +175,10 @@ public class Page_ChemicalSearchResults extends Controller{
 	@FindBy(xpath = "//button[contains(@title,'clear search')]")
 	private WebElement buttonCrossMark;
 
-	@FindBy(xpath = "//input[@maxlength='40']")
+	@FindBy(xpath = "//section[2]/app-chem-pills/section/section/div/section[1]/button/span/mat-icon")
+	private WebElement clickPlusIcon;
+	
+	@FindBy(xpath = "//div/div/app-chem-pill-input-modal/section/div/input")
 	private WebElement txtKeyWord;
 	
 	@FindBy(xpath = "//div/div/div[1]/mat-form-field/div/div[1]/div[2]/mat-datepicker-toggle/button")
@@ -190,11 +196,18 @@ public class Page_ChemicalSearchResults extends Controller{
 	@FindBy(xpath = "//div[contains(text(),'Publication Date')]")
 	private WebElement filters_PublicationDate;
 	
+	@FindBy(xpath = "(//input[@placeholder='YYYY-MM-DD'])[1]")
+	private WebElement filtersFromPublicationDate;
+	
+
+	@FindBy(xpath = "(//input[@placeholder='YYYY-MM-DD'])[2]")
+	private WebElement filterToPublicationDate;
+	
 	//@FindBy(xpath = "//div//input[contains(@placeholder,'YYYY-MM-DD')]')]")
 	//private WebElement format_FromDateInput;
 	
-	@FindBy(xpath = "//input[contains(@class,'mat-input-element mat-form-field-autofill-control ng-tns-c29-60 cdk-text-field-autofill-monitored')]")
-		private WebElement format_FromDateInput;
+	@FindBy(xpath = "//div[1]/mat-form-field/div/div[1]/div[1]/input")
+	private WebElement format_FromDateInput;
 	
 	//@FindBy(xpath = "//input[contains(@class,'fromDateInput')]")
 	//private WebElement format_FromDateInput;
@@ -203,7 +216,7 @@ public class Page_ChemicalSearchResults extends Controller{
 	private WebElement label_ToDate;
 	
 	//@FindBy(xpath = "//input[contains(@class,'toDateInput')]")
-	@FindBy(xpath = "//input[contains(@class,'mat-input-element mat-form-field-autofill-control ng-tns-c29-60 cdk-text-field-autofill-monitored')]")
+	@FindBy(xpath = "//div[2]/mat-form-field/div/div[1]/div[1]/input")
 	private WebElement format_ToDateInput;
 	
 	@FindBy(xpath = "//app-page-search-result/div/section/app-no-result-bar//h1")
@@ -242,7 +255,7 @@ public class Page_ChemicalSearchResults extends Controller{
 	@FindBy(xpath = " //div[contains(@class, 'sub-keyword')]//button[contains(@class, 'cdx-but-link')]")
 	private WebElement linkSubKeyword;
 	
-	@FindBy(xpath = " //div[@class='chart']//*[name()='svg']//*[name()='line']")
+	@FindBy(xpath = " //div[@class='chart']//*[name()='svg']//*[name()='line'][3]")
 	private WebElement bubbleLine;
 	
 	@FindBy(xpath = " //div[contains(normalize-space(text()), 'Players' )]")
@@ -254,7 +267,7 @@ public class Page_ChemicalSearchResults extends Controller{
 	@FindBy(xpath = " //section[contains(@class, 'major-player')]//div[@class='chart']//*[name()='svg']//*[name()='rect']")
 	private WebElement barPlayers;
 	
-	@FindBy(xpath = " //section[contains(@class, 'major-player')]//div[@class='chart']//*[name()='svg']//*[name()='text']")
+	@FindBy(xpath = " //section[contains(@class, 'major-player')]//div[@class='chart']//*[name()='svg']//*[name()='text'][3]")
 	private WebElement textPlayers;
 	
 	@FindBy(xpath = " //section[contains(@class, 'major-inventor')]//div[@class='chart']//*[name()='svg']//*[name()='rect']")
@@ -281,10 +294,10 @@ public class Page_ChemicalSearchResults extends Controller{
 	@FindBy(css = "app-suggested-keyword > section > section.title > app-tour-guide > section > div.hotspot > mat-icon")
 	private WebElement guidedInsightsTipsKeyword;
 	
-	@FindBy(css = "app-result-count-bar > section > section.result-set > section > section > button > span")
+	@FindBy(css = "section.button-section > section > button > span")
 	private WebElement linkManageFields;
 	
-	@FindBy(xpath = "//mat-icon[contains(.,'edit')]")
+	@FindBy(xpath = "//app-keyword-search/section/div[2]/section[2]/app-chem-pills/section/section/div/mat-form-field/div/div[1]/div/mat-chip-list/div/mat-chip[1]/div[2]/span[2]")
 	private WebElement button_Edit;
 	
 	@FindBy(xpath = "//section[@class='sketch']")
@@ -297,13 +310,13 @@ public class Page_ChemicalSearchResults extends Controller{
 	private WebElement btnCancel;
 	
 		
-	@FindBy(xpath = "//mat-icon[contains(.,' close ')]")
+	@FindBy(xpath = "(//mat-icon[@role='button'][contains(.,'close')])[1]")
 	private WebElement structurePillX;
 	
 	@FindBy(css = "polygon[fill='#A9A9B0']")
 	private WebElement structureSearchIconDisable;
 	
-	@FindBy(css = "polygon[fill='#008A73']")
+	@FindBy(xpath = "//section/app-keyword-search/section/div[3]/button[1]")
 	private WebElement structureSearchIconEnable;
 	
       public Page_ChemicalSearchResults(Controller controller) {
@@ -335,12 +348,11 @@ public class Page_ChemicalSearchResults extends Controller{
 	}
 
 	public void closeAllExistingKeyWords() throws Exception{
-		//controller.hoverOnWebelement(keyWordMouseHover);
-		List<WebElement> closekeywords = driver.findElements(By.cssSelector("#mat-chip-list-2 > div > mat-chip > mat-icon"));
+		List<WebElement> closekeywords = driver.findElements(By.xpath("//section[2]/app-chem-pills/section/section/div/mat-form-field/div/div[1]/div/mat-chip-list/div/mat-chip/button/span/mat-icon"));
 		System.out.println("size" + closekeywords.size());
 		if (closekeywords.size() > 0) {
 			for (WebElement ele : closekeywords) {
-				WebElement closekeyword = driver.findElement(By.cssSelector("#mat-chip-list-2 > div > mat-chip > mat-icon"));
+				WebElement closekeyword = driver.findElement(By.xpath("//section[2]/app-chem-pills/section/section/div/mat-form-field/div/div[1]/div/mat-chip-list/div/mat-chip/button/span/mat-icon"));
 				waitTime(1);
 				jsScrollToElement(closekeyword);
 				controller.jsClick(closekeyword);
@@ -364,6 +376,7 @@ public class Page_ChemicalSearchResults extends Controller{
 		for (String keys: keywords) {
 		keywordtxt.add(keys);
 		}
+		clickPlusIcon.click();
 		for(int i=0;i<keywordtxt.size();i++)
 			 {
 			//waitUntilElementIsDisplayed(mouseHoverFirstKeyWord);
@@ -373,7 +386,7 @@ public class Page_ChemicalSearchResults extends Controller{
 			setText(txtKeyWord, keywordtxt.get(i));
 				 new Actions(driver).sendKeys(Keys.ENTER).build().perform();
 				 controller.waitTime(1);
-			 }
+				 }
 			} catch (Exception e) {
 			throw new Exception("setKeyWords is not working.." + e);
 		}
@@ -387,13 +400,22 @@ public class Page_ChemicalSearchResults extends Controller{
 			throw new Exception("clickOnRsFooterSaveIcon is not working" + ex);
 		}
 	}
+	
+	public void clickOnKeywordPlusIcon() throws Exception {
+		try {
+			jsClick(clickPlusIcon);
+		} catch (Exception ex) {
+			throw new Exception("clickOnKeywordPlusIcon is not working" + ex);
+		}
+	}
+	
 	public void setFirstKeyWord(List <String> keywords) throws Exception {
 		try {
 		 List<String> keywordtxt = new ArrayList<String>();
 		for (String keys: keywords) {
 		keywordtxt.add(keys);
 		}
-		
+		clickPlusIcon.click();
 		for(int i=0;i<keywordtxt.size();i++)
 			 {
 				txtKeyWord.click();
@@ -530,9 +552,9 @@ public class Page_ChemicalSearchResults extends Controller{
 	
 	public String getDateFormatFromDateInput() throws Exception {
 		try {
-			controller.jsScrollToElement(filters_PublicationDate);
+			controller.jsScrollToElement(filtersFromPublicationDate);
 		   // String fromDateInput=controller.getElementAttribute(format_FromDateInput, "aria-label");
-		    String fromDateInput=controller.getElementAttribute(format_FromDateInput, "placeholder");
+		    String fromDateInput=controller.getElementAttribute(filtersFromPublicationDate, "placeholder");
 			return fromDateInput;	
 		 }catch (Exception e) {
 		return "";
@@ -541,8 +563,8 @@ public class Page_ChemicalSearchResults extends Controller{
 	
 	public String getDateFormatToDateInput() throws Exception {
 		try {
-			controller.jsScrollToElement(filters_PublicationDate);
-		    String toDateInput=controller.getElementAttribute(format_ToDateInput, "placeholder" );
+			controller.jsScrollToElement(filterToPublicationDate);
+		    String toDateInput=controller.getElementAttribute(filterToPublicationDate, "placeholder" );
 			return toDateInput;	
 		 }catch (Exception e) {
 		return "";
@@ -745,7 +767,7 @@ public class Page_ChemicalSearchResults extends Controller{
 	
 	public void setDateInFromDateInput(String dateFormat) throws Exception {
 		try {
-			super.click(format_FromDateInput);
+			jsClick(format_FromDateInput);			
 			setText(format_FromDateInput, dateFormat);
 			driver.findElement(By.xpath("//html")).click();
 			} catch (Exception e) {
@@ -755,7 +777,7 @@ public class Page_ChemicalSearchResults extends Controller{
 	
 	public void setDateInToDateInput(String dateFormat) throws Exception {
 		try {
-			super.click(format_ToDateInput);
+			jsClick(format_ToDateInput);	
 			setText(format_ToDateInput, dateFormat);
 			driver.findElement(By.xpath("//html")).click();
 			} catch (Exception e) {
@@ -1629,8 +1651,8 @@ public boolean isDisplayedKeywords(int recordnumber) throws Exception {
 public String getTextImageSize(int recordnumber) throws Exception {
 	try {
 		String size;
-		WebElement img = controller.driver.findElement(By.xpath("//app-result-set["+recordnumber+"]/section/aside"));
-		size=controller.getElementAttribute(img, "style");
+		WebElement img = controller.driver.findElement(By.xpath("//app-result-set["+recordnumber+"]/section/section/div[2]/img"));
+		size=controller.getElementAttribute(img, "width");
 		return size;
 		} catch (Exception ex) {
 		throw new Exception("getTextImageSize is not working" + ex);
@@ -1765,7 +1787,8 @@ public int getFolderNameSize(String checkboxname) throws Exception {
 }
 public boolean isSelectedRSCheckBox(int checkboxnum) throws Exception {
 	try {
-	WebElement ele = controller.driver.findElement(By.xpath("//app-result-set["+checkboxnum+"]/section/aside/div[1]/span[1]/mat-checkbox"));
+	@SuppressWarnings("static-access")
+	WebElement ele = controller.driver.findElement(By.xpath("//app-result-set["+checkboxnum+"]/section/section/div[1]/span[1]/mat-checkbox"));
 	String bool = controller.getElementAttribute(ele, "class");
 	if(bool.contains("checked"))
 		return true;
@@ -1780,9 +1803,9 @@ public String getColorOfStructureSerachPillBox() throws Exception {
 		waitUntilElementIsDisplayed(getResultsCount);
 	    //WebElement ele=driver.findElement(By.xpath("//mat-chip[contains(@class,'mat-chip mat-focus-indicator structure-chip mat-primary mat-standard-chip mat-chip-with-trailing-icon ng-star-inserted')]"));
 	  //mat-chip[contains(@class,'mat-chip mat-focus-indicator small structure mat-primary mat-standard-chip ng-star-inserted')]  
-		WebElement ele=driver.findElement(By.xpath("//mat-chip[contains(@class,'mat-chip mat-focus-indicator small structure mat-primary mat-standard-chip mat-chip-with-trailing-icon ng-star-inserted')]"));
-	    System.out.println(ele.getCssValue("background-color"));
-		return ele.getCssValue("background-color");	
+		WebElement ele=driver.findElement(By.xpath("//div[2]/section[2]/app-chem-pills/section/section/div/mat-form-field/div/div[1]/div/mat-chip-list/div/mat-chip[1]"));
+	   // System.out.println(ele.getCssValue("background-color"));
+		return ele.getAttribute("class");
 	 }catch (Exception e) {
 		 throw new Exception("getColorOfStructureSerachPillBox is not working.." + e);
 	}
@@ -1832,16 +1855,23 @@ public void clickOnStructurePillX() throws Exception {
 }
 public void clickOnPersonIcon() throws Exception {
 	try {
-		waitUntilElementIsDisplayed(personIcon);
-		personIcon.click();
+		//waitUntilElementIsDisplayed(personIcon);
+		//personIcon.click();
+		//jsClick(personIcon);
+		//Actions action = new Actions(driver);
+		//action.moveToElement(personIcon).perform();
+		jsScrollToElement(personIcon);
 		} catch (Exception ex) {
 		throw new Exception("clickOnPersonIcon is not working" + ex);
 	}
 }
 public void clickOnOrganizationIcon() throws Exception {
 	try {
-		waitUntilElementIsDisplayed(organizationIcon);
-		organizationIcon.click();
+		//waitUntilElementIsDisplayed(organizationIcon);
+		//jsClick(organizationIcon);
+		//Actions action = new Actions(driver);
+		//action.moveToElement(organizationIcon).perform();
+		jsScrollToElement(organizationIcon);
 		} catch (Exception ex) {
 		throw new Exception("clickOnOrganizationIcon is not working" + ex);
 	}
@@ -1995,8 +2025,8 @@ public boolean isDisabledStructureSearchIcon() throws Exception {
 public boolean isEnabledStructureSearchIcon() throws Exception {
 	try {
 		waitUntilElementIsDisplayed(structureSearchIconEnable);
-		String fill = getElementAttribute(structureSearchIconEnable, "fill");
-		if(fill.contains("#008A73"))
+		String fill = getElementAttribute(structureSearchIconEnable, "color");
+		if(fill.contains("primary"))
 		return true;
 		else
 		return false;

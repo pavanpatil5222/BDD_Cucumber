@@ -40,7 +40,7 @@ public class Page_SavedRecords extends Controller {
 	@FindBy(xpath = "//section[2]/section/form/section/section[1]/section[1]/section[1]/section/div")
 	private WebElement savedRecordsTitle;
 	
-	@FindBy(xpath = "//div/div/div[1]/div[2]")
+	@FindBy(xpath = "//mat-accordion/mat-expansion-panel[1]/div/div/div[1]")
 	private WebElement recordViewTitle;
 	
 	@FindBy(xpath = "//section[@class='actions']/button[@title='Delete record(s)']")
@@ -339,7 +339,7 @@ public void clickOnSavedRecordCheckBox() throws Exception {
 
 	public String getTitleRecordView() throws Exception {
 		waitUntilElementIsDisplayed(recordViewTitle);
-		return controller.getText(recordViewTitle);
+		return recordViewTitle.getAttribute("title");
 	}
 	
 	public void clickOnTitle() throws Exception {
@@ -503,7 +503,7 @@ public void deleteExistingAnnotations() throws Exception{
 @SuppressWarnings("static-access")
 public void clickOnAnnotationIcon(int recordnumber) throws Exception {
 	try {
-		WebElement ele = controller.driver.findElement(By.xpath("//app-page-saved-records/section/section[2]/section/form/section/section[1]/section/section["+recordnumber+"]/section[1]/section[2]/button/span/mat-icon"));
+		WebElement ele = controller.driver.findElement(By.xpath("//section/section["+recordnumber+"]/section/section/section[1]/section[3]/button"));
 		jsClick(ele);
 	} catch (Exception ex) {
 		throw new Exception("clickOnAnnotationIcon is not working" + ex);

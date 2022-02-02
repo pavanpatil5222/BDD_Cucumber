@@ -47,7 +47,7 @@ public class Tab_PatentSearch extends Controller {
 	@FindBy(css = "mat-dialog-content > section > div:nth-child(3) > button")
 	private WebElement btnRestoreDefaults;
 	
-	@FindBy(xpath="(//span[contains(.,'View as result set')])[1]")
+	@FindBy(xpath="//mat-expansion-panel[6]/div/div/div/button")
     private WebElement citingPatentViewAsResultSet;
 	@FindBy(xpath = "//section/div[2]/div[2]/mat-paginator/div/div/div/button[2]")
 	private WebElement imgViewerArrowNextPage;
@@ -58,7 +58,7 @@ public class Tab_PatentSearch extends Controller {
 	@FindBy(css = "div:nth-child(2) > div:nth-child(2) > mat-paginator > div > div > div > div")
 	private WebElement paginatorRange;
        
-    @FindBy(xpath="(//span[contains(.,'View as result set')])[2]")
+    @FindBy(xpath="//mat-expansion-panel[7]/div/div/div/button")
     private WebElement citedPatentViewAsResultSet;
     
     @FindBy(xpath = "//a[contains(.,'See all')]")
@@ -85,7 +85,7 @@ public class Tab_PatentSearch extends Controller {
 	@FindBy(xpath = "//app-result-paginator-bar/section/section/span/mat-checkbox/label/div/input")
 	private WebElement globalCheckBox;
 	
-	@FindBy(xpath = "//app-keyword-search/mat-chip-list/div/mat-chip/div[2]/span[2]")
+	@FindBy(xpath = "//div/mat-chip/div[2]/span[2]/span")
 	private WebElement patentViewAsResultSet;
 
 	@FindBy(css = "div > div.sec1 > div.publication-number")
@@ -141,28 +141,28 @@ public class Tab_PatentSearch extends Controller {
 	@FindBy(css = "section > app-result-set:nth-child(1) > section > mat-card > mat-card-content > div:nth-child(1) > section.assignee.ng-star-inserted > p > span > span > button")
 	private WebElement linkAssignee;
 
-	@FindBy(css = "div > mat-chip > div > span > span")
+	@FindBy(xpath = "//app-keyword-search/app-chem-pills/section/section/mat-chip-list/div/mat-chip/div[2]/span[2]/span")
 	private WebElement moreLikeKeyword;
 
 	@FindBy(css = "section.insights-chart > app-suggested-keyword > section > section.view.disable-click")
 	private WebElement keywordDisable;
 
-	@FindBy(css = "#chemexp > section:nth-child(2) > app-page-search-result > div > section > section > section.result-set > section > app-result-set:nth-child(1) > section > mat-card > mat-card-content > div:nth-child(1) > section.inventor.ng-star-inserted > p > span > span:nth-child(1) > button > span > p")
+	@FindBy(xpath = "//app-result-set[1]/section/mat-card/mat-card-content/div[1]/section[2]/p/span/span[1]/button/span/span")
 	private WebElement linkInventor;
 
-	@FindBy(css = "section.result-set > section > app-result-set:nth-child(1) > section > aside > section:nth-child(4) > button > span")
+	@FindBy(xpath = "//app-result-set[1]/section/section/section[2]/button/span")
 	private WebElement linkMoreLikeThis;
 
-	@FindBy(css = "#mat-chip-list-1 > div > mat-chip > mat-icon")
+	@FindBy(xpath = "//section/section/app-keyword-search/app-chem-pills/section/section/mat-chip-list/div/mat-chip/button/span/mat-icon")
 	private WebElement moreLikeCloseIcon;
 
-	@FindBy(css = "app-result-set:nth-child(1) > section > aside > div:nth-child(1) > span.pn")
+	@FindBy(xpath = "//app-result-set[1]/section/section/div[1]/span[2]")
 	private WebElement rsPublicationNumber;
 
-	@FindBy(css = "div:nth-child(1) > section.assignee > span > span > button")
+	@FindBy(xpath = "//mat-expansion-panel[1]/div/div/div[3]/section[1]/span/span/button/span/p")
 	private WebElement patentRecordViewAssignee;
 
-	@FindBy(css = "div:nth-child(1) > section.inventor > span > span:nth-child(1) > button > span > p")
+	@FindBy(xpath = "//mat-expansion-panel[1]/div/div/div[3]/section[2]/span/span[1]/button/span/p")
 	private WebElement patentRecordViewInventor;
 
 	@FindBy(xpath = "//app-result-search-bar/section/section/div[1]/div[2]/div[2]")
@@ -192,7 +192,7 @@ public class Tab_PatentSearch extends Controller {
 	@FindBy(xpath = " //app-page-search-result/div/section/section/section[3]/section[2]/div[3]/div/span")
 	private WebElement tabInventors;
 
-	@FindBy(xpath = " //section[contains(@class, 'major-inventor')]//div[@class='chart']//*[name()='svg']//*[name()='text']")
+	@FindBy(xpath = "//section[contains(@class, 'major-inventor')]//div[@class='chart']//*[name()='svg']//*[name()='text'][3]")
 	private WebElement textInventors;
 
 	@FindBy(xpath = " //section[@class='filter-details']//div[@class='ng-star-inserted']//mat-expansion-panel[1][contains(@class, 'disable-click')]")
@@ -207,7 +207,7 @@ public class Tab_PatentSearch extends Controller {
 	@FindBy(xpath = "//span[@class='material-icons'][contains(.,'close')]")
 	private WebElement closePatentRecord;
 
-	@FindBy(css = "div > svg > g > text:nth-child(31)")
+	@FindBy(css = "#plus_txt_0")
 	private WebElement patnetInsightsKeyword;
 
 	@FindBy(xpath = "//app-result-count-bar//section//span[@class='result-count']")
@@ -267,7 +267,7 @@ public class Tab_PatentSearch extends Controller {
 	@FindBy(xpath = "//mat-panel-title[contains(text(),'What are the suggested keywords?')]/ancestor::app-cluster-map/preceding-sibling::*//child::div[contains(text(),'Filter')]")
 	private WebElement labelFilters_SuggestedKeywords;
 
-	@FindBy(xpath = "//div/div[1]/span/span")
+	@FindBy(xpath = "//app-result-paginator-bar/section/section[2]/mat-paginator/div/div/div[1]/mat-form-field/div/div[1]/div/mat-select/div/div[1]/span/span")
 	private WebElement value_Dropdown;
 
 	@FindBy(xpath = "//button[contains(@aria-label,'Next page')]")
@@ -360,10 +360,10 @@ public class Tab_PatentSearch extends Controller {
 	@FindBy(xpath = "//app-result-count-bar/section/section[3]/button")
 	WebElement btn_Insights;
 
-	@FindBy(css = "app-result-set:nth-child(1) > section > aside > section:nth-child(3) > div > span:nth-child(2) > button")
-	private WebElement thumsUpIcon;
+	@FindBy(css = "app-result-set:nth-child(1) > section > section > section:nth-child(3) > div > span:nth-child(2) > button")
+	private WebElement thumsUpIcon;	
 
-	@FindBy(css = "section > app-result-set:nth-child(1) > section > aside > section:nth-child(3) > div > span:nth-child(3) > button")
+	@FindBy(css = "app-result-set:nth-child(1) > section > section > section:nth-child(3) > div > span:nth-child(3) > button")
 	private WebElement thumbsDownIcon;
 
 	@FindBy(xpath = "//app-publication-year/section/mat-expansion-panel/mat-expansion-panel-header/span[2]")
@@ -591,7 +591,7 @@ public class Tab_PatentSearch extends Controller {
 	public boolean isDisplayedImg(int rowNumber) throws Exception {
 		try {
 			WebElement eleImage = driver.findElement(By.cssSelector(
-					"app-result-set:nth-child(" + rowNumber + ") > section > aside > div.image-block > img"));
+					"app-result-set:nth-child(" + rowNumber + ") > section > section > div.image-block > img"));
 			boolean blnChkImage = controller.isElementDisplayed(eleImage);
 			if (blnChkImage)
 				return true;
@@ -1767,9 +1767,7 @@ public class Tab_PatentSearch extends Controller {
 
 	public void clickOnButtonThumsUp(int recordNumber) throws Exception {
 		try {
-			WebElement listOfThumsUp = driver.findElement(By.cssSelector("section > app-result-set:nth-child("
-					+ recordNumber
-					+ ") > section > aside > section:nth-child(3) > div > span:nth-child(2) > button > span > mat-icon"));
+			WebElement listOfThumsUp = driver.findElement(By.cssSelector("section > app-result-set:nth-child("+recordNumber+") > section > section > section:nth-child(3) > div > span:nth-child(2) > button > span > mat-icon"));
 			controller.jsClick(listOfThumsUp);
 			controller.Logger.addsubStep(LogStatus.INFO, "Clicked On Thumbs Up Button Successfully", false);
 		} catch (Exception e) {
@@ -1779,7 +1777,7 @@ public class Tab_PatentSearch extends Controller {
 
 	public boolean isDisplayedButtonThumsUpWithFillColor(int recordNumber) throws Exception {
 		try {
-			WebElement listOfThumsUp = driver.findElement(By.cssSelector("app-result-set:nth-child("+recordNumber+") > section > aside > section:nth-child(3) > div > span:nth-child(2) > button > span > mat-icon > svg > g >path"));
+			WebElement listOfThumsUp = driver.findElement(By.cssSelector("section > app-result-set:nth-child("+recordNumber+") > section > section > section:nth-child(3) > div > span:nth-child(2) > button > span > mat-icon > svg > g > path"));
 			if (controller.getElementAttribute(listOfThumsUp, "stroke").contains("#008474")) {
 				return true;
 			} else {
@@ -1794,7 +1792,7 @@ public class Tab_PatentSearch extends Controller {
 
 	public boolean isDisplayedButtonThumsDownWithFillColor(int recordNumber) throws Exception {
 		try {
-			WebElement listOfThumsDown = driver.findElement(By.cssSelector("section > app-result-set:nth-child("+recordNumber+") > section > aside > section:nth-child(3) > div > span:nth-child(3) > button > span > mat-icon > svg > g > path"));
+			WebElement listOfThumsDown = driver.findElement(By.cssSelector("section > app-result-set:nth-child("+recordNumber+") > section > section > section:nth-child(3) > div > span:nth-child(3) > button > span > mat-icon > svg > g > path"));
 			if (controller.getElementAttribute(listOfThumsDown, "stroke").contains("#008474")) {
 				return true;
 			} else {
@@ -1808,9 +1806,7 @@ public class Tab_PatentSearch extends Controller {
 
 	public void clickOnButtonThumsDown(int recordNumber) throws Exception {
 		try {
-			WebElement listOfThumsDown = driver.findElement(By.cssSelector("section > app-result-set:nth-child("
-					+ recordNumber
-					+ ") > section > aside > section:nth-child(3) > div > span:nth-child(3) > button > span > mat-icon"));
+			WebElement listOfThumsDown = driver.findElement(By.cssSelector("section > app-result-set:nth-child("+recordNumber+") > section > section > section:nth-child(3) > div > span:nth-child(3) > button > span > mat-icon"));
 			controller.jsClick(listOfThumsDown);
 			controller.Logger.addsubStep(LogStatus.INFO, "Clicked On Thumbs Down Button Successfully", false);
 		} catch (Exception e) {
@@ -2045,7 +2041,7 @@ public class Tab_PatentSearch extends Controller {
 
 	public String getTextInventor(int rownumber) throws Exception {
 		try {
-			WebElement inventor = driver.findElement(By.cssSelector("#chemexp > section:nth-child(2) > app-page-search-result > div > section > section > section.result-set > section > app-result-set:nth-child("+rownumber+") > section > mat-card > mat-card-content > div:nth-child(1) > section.inventor.ng-star-inserted > p > span > span:nth-child(1) > button > span > p"));
+			WebElement inventor = driver.findElement(By.xpath("//app-result-set["+rownumber+"]/section/mat-card/mat-card-content/div[1]/section[2]/p/span/span[1]/button/span/span"));
 			return inventor.getText();
 		} catch (Exception ex) {
 			throw new Exception("getTextInventor is not working" + ex);
@@ -2582,7 +2578,7 @@ public class Tab_PatentSearch extends Controller {
 		try {
 			
  			List<String> citemLabels =new ArrayList<String>();
- 				for(int i=2;i<=13;i++)
+ 				for(int i=1;i<=12;i++)
  				{
  					WebElement element = controller.driver.findElement(By.xpath("(//input[contains(@maxlength,'40')])["+i+"]"));
  					String citemLabel = controller.getJSText(element);
@@ -2603,7 +2599,7 @@ public class Tab_PatentSearch extends Controller {
 	}
 	public void deleteExistingClusterItems() throws Exception {
 		try {
-			for(int i=2;i<=13;i++)
+			for(int i=1;i<=12;i++)
 			{
 			 WebElement clusterItem = driver.findElement(By.xpath("(//input[contains(@maxlength,'40')])["+i+"]"));
 			 clusterItem.click();
@@ -2700,7 +2696,7 @@ public class Tab_PatentSearch extends Controller {
 @SuppressWarnings("static-access")
 public void clickOnAnnotationIcon(int recordnumber) throws Exception {
 	try {
-		WebElement ele = controller.driver.findElement(By.xpath("//section/app-result-set["+recordnumber+"]/section/aside/section[1]/div/span[6]/button"));
+		WebElement ele = controller.driver.findElement(By.xpath("//app-result-set["+recordnumber+"]/section/section/section[1]/div/span[6]/button"));
 		jsClick(ele);
 	} catch (Exception ex) {
 		throw new Exception("clickOnAnnotationIcon is not working" + ex);
