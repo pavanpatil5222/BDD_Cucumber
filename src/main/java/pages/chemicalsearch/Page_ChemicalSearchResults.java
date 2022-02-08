@@ -319,6 +319,12 @@ public class Page_ChemicalSearchResults extends Controller{
 	@FindBy(xpath = "//section/app-keyword-search/section/div[3]/button[1]")
 	private WebElement structureSearchIconEnable;
 	
+	@FindBy(xpath = "//section/section[2]/section[2]/mat-form-field/div/div[1]/div[3]/mat-select")
+	private WebElement dropdown_ItemsPerPage;
+	
+	@FindBy(xpath = "//mat-select/div/div[1]/span/span")
+	private WebElement value_Dropdown;
+	
       public Page_ChemicalSearchResults(Controller controller) {
 		super(controller);
 		PageFactory.initElements(driver, this);
@@ -383,9 +389,10 @@ public class Page_ChemicalSearchResults extends Controller{
 			//Actions action = new Actions(driver);
 			//action.moveToElement(mouseHoverFirstKeyWord).perform();
 			txtKeyWord.click();
+			controller.waitTime(2);
 			setText(txtKeyWord, keywordtxt.get(i));
 				 new Actions(driver).sendKeys(Keys.ENTER).build().perform();
-				 controller.waitTime(1);
+				 controller.waitTime(2);
 				 }
 			} catch (Exception e) {
 			throw new Exception("setKeyWords is not working.." + e);
@@ -1115,7 +1122,7 @@ public class Page_ChemicalSearchResults extends Controller{
 	 
 	 public void clickOnFiltersBasedOnFiltersName(String filtersName) throws Exception {
 			try {
-				WebElement filterName=driver.findElement(By.xpath("//span[@class='mat-content']//div[contains(text(),'"+filtersName+"')]"));
+				WebElement filterName=driver.findElement(By.xpath("//div[contains(text(),'"+filtersName+"')]"));
 				super.jsClick(filterName);
 				} catch (Exception ex) {
 				throw new Exception("clickOn filter is not working" + ex);
@@ -1861,6 +1868,7 @@ public void clickOnPersonIcon() throws Exception {
 		//Actions action = new Actions(driver);
 		//action.moveToElement(personIcon).perform();
 		jsScrollToElement(personIcon);
+		jsClick(personIcon);
 		} catch (Exception ex) {
 		throw new Exception("clickOnPersonIcon is not working" + ex);
 	}
@@ -1872,6 +1880,7 @@ public void clickOnOrganizationIcon() throws Exception {
 		//Actions action = new Actions(driver);
 		//action.moveToElement(organizationIcon).perform();
 		jsScrollToElement(organizationIcon);
+		jsClick(organizationIcon);
 		} catch (Exception ex) {
 		throw new Exception("clickOnOrganizationIcon is not working" + ex);
 	}
@@ -2036,4 +2045,69 @@ public boolean isEnabledStructureSearchIcon() throws Exception {
 
 	}
 
+public void clickOnItemsPerPageDropDown() throws Exception {
+	try {
+		super.jsClick(dropdown_ItemsPerPage);
+		} catch (Exception ex) {
+		throw new Exception("clickOnItemsPerPageDropDown is not working" + ex);
+	}
+
+}
+
+
+public String getValueFromRsSortOptionsPageDropdown() throws Exception {
+	try {
+		return controller.getText(value_Dropdown);
+		} catch (Exception ex) {
+		throw new Exception("getValueFromItemsPerPageDropdown is not working" + ex);
+	}
+}
+
+public void selectRsSortOptionsFromDropDown(String itemValue) throws Exception {
+	try {
+		clickOnItemsPerPageDropDown();
+        List<WebElement> listOfDropdownValue = driver.findElements(By.xpath("//div/mat-option/span"));
+		for (WebElement dropdownValue:listOfDropdownValue)
+		{
+			if(dropdownValue.getText().equalsIgnoreCase(itemValue))
+			{
+				dropdownValue.click();
+				waitUntilFectchRecordProgressBarToDisappears();
+				break;
+			}
+		}
+		} catch (Exception ex) {
+		throw new Exception("selectItemsPerPageFromDropDown is not working" + ex);
+	}
+}
+
+
+public List<String> getAllFilterOptions(String filtername) throws Exception{
+	try {
+		clickOnFiltersBasedOnFiltersName(filtername);
+		List<WebElement> options = driver.findElements(By.xpath("//label[contains(@for,'smartflt-1-')]"));
+			List<String> optionlabels =new ArrayList<String>();
+			
+			if(options.size() > 0) {
+				 for(WebElement element:options) {
+					String optionlabel = controller.getText(element);
+					optionlabels.add(optionlabel); 					
+				}
+			}
+			return optionlabels;
+ 	}catch (Exception e) {
+ 		throw new Exception("getAllFilterOptions is not working" + e);
+ 	}
+}
+
+	public void clickOnLabel() throws Exception {
+		try {
+	WebElement element = driver.findElement(By.cssSelector("div.cdx-header-branding > div > div > svg"));
+	Actions actions = new Actions(driver);
+	actions.moveToElement(element).click().build().perform();
+	controller.waitTime(3);
+	} catch (Exception e) {
+		throw new Exception("clickOnLabel is not working on " + e);
+	}
+}
 }

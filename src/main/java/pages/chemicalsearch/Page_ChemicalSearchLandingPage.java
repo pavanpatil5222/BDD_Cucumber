@@ -123,6 +123,9 @@ public class Page_ChemicalSearchLandingPage extends Controller {
 	@FindBy(xpath = "//app-structure-search-modal/div/div[1]/h2")
 	private WebElement modifyChemicalNameLabel;
 	
+
+	@FindBy(xpath = "//section[1]/button[2]")
+	private WebElement linkHistory;
 	
 
 	public Page_ChemicalSearchLandingPage(Controller controller) {
@@ -162,7 +165,9 @@ public class Page_ChemicalSearchLandingPage extends Controller {
 	public void setTextSearchTextBox(String value) throws Exception {
 		try {
 			waitUntilElementIsDisplayed(txtSearchBox);
+			controller.waitTime(2);
 			click(txtSearchBox);
+			controller.waitTime(2);
 			setText(txtSearchBox, value);
 		} catch (Exception e) {
 			throw new Exception("setTextSearchTextBox is not working.." + e);
@@ -557,7 +562,7 @@ public class Page_ChemicalSearchLandingPage extends Controller {
  			List<String> Labels =new ArrayList<String>();
  				for(int i=1;i<=4;i++)
  				{
- 					WebElement element = controller.driver.findElement(By.cssSelector("div > mat-chip:nth-child("+i+") > div.cdx-chip-block > span > span.cdx-chip-name"));
+ 					WebElement element = controller.driver.findElement(By.xpath("//div/mat-form-field/div/div[1]/div/mat-chip-list/div/mat-chip["+i+"]/div[2]/span[2]"));
  					String Label = controller.getText(element);
  					Labels.add(Label); 					
   				}
@@ -574,9 +579,9 @@ public class Page_ChemicalSearchLandingPage extends Controller {
 		try {
 			
  			List<String> Labels =new ArrayList<String>();
- 				for(int i=2;i<=5;i++)
+ 				for(int i=1;i<=5;i++)
  				{
- 					WebElement element = controller.driver.findElement(By.cssSelector("div > mat-chip:nth-child("+i+") > div.cdx-chip-block > span > span.cdx-chip-name"));
+ 					WebElement element = controller.driver.findElement(By.xpath("//div/mat-form-field/div/div[1]/div/mat-chip-list/div/mat-chip["+i+"]/div[2]/span[2]"));
  					String Label = controller.getText(element);
  					Labels.add(Label); 					
   				}
@@ -667,6 +672,29 @@ public class Page_ChemicalSearchLandingPage extends Controller {
 			}
 		}
 		 
+	
+	public void clickOnLinkHistory() throws Exception {
+		try {
+			waitUntilElementIsDisplayed(linkHistory);
+			click(linkHistory);
+			} catch (Exception ex) {
+			throw new Exception("clickOnLinkHistory is not working" + ex);
+		}
+	}
+	
+	
+	public void clickOnLabel() throws Exception {
+	try {
+	WebElement element = driver.findElement(By.cssSelector("h1.ng-star-inserted"));
+	Actions actions = new Actions(driver);
+	actions.moveToElement(element).click().build().perform();
+	controller.waitTime(3);
+	} catch (Exception e) {
+	throw new Exception("clickOnLabel is not working on " + e);
+	}
+	}
+
+
 		
 	}
 

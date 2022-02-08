@@ -198,7 +198,7 @@ public class Tab_PatentSearch extends Controller {
 	@FindBy(xpath = " //section[@class='filter-details']//div[@class='ng-star-inserted']//mat-expansion-panel[1][contains(@class, 'disable-click')]")
 	private WebElement filterFieldDisable;
 
-	@FindBy(xpath = "//span[@class='mat-button-wrapper'][contains(.,'Clear all')]")
+	@FindBy(css = "section.sticky > section > button")
 	WebElement button_ClearAllFilter;
 
 	@FindBy(xpath = "(//mat-card-subtitle[contains(@class,'title mat-card-subtitle')])[1]")
@@ -741,7 +741,7 @@ public class Tab_PatentSearch extends Controller {
 
 	public boolean isEnabledButtonClearAll() throws Exception {
 		try {
-			controller.waitTime(2);
+			controller.waitTime(3);
 			return controller.isElementDisplayed(button_ClearAllFilter);
 
 		} catch (Exception e) {
@@ -2662,9 +2662,9 @@ public class Tab_PatentSearch extends Controller {
 		try {
 			
  			List<String> Labels =new ArrayList<String>();
- 				for(int i=4;i<=7;i++)
+ 				for(int i=1;i<=5;i++)
  				{
- 					WebElement element = controller.driver.findElement(By.cssSelector("mat-chip:nth-child("+i+") > div.cdx-chip-block > span.cdx-chip-name"));
+ 					WebElement element = controller.driver.findElement(By.xpath("//div/mat-form-field/div/div[1]/div/mat-chip-list/div/mat-chip["+i+"]/div[2]/span[2]"));
  					String Label = controller.getText(element);
  					Labels.add(Label); 					
   				}
@@ -2680,9 +2680,9 @@ public class Tab_PatentSearch extends Controller {
 		try {
 			
  			List<String> Labels =new ArrayList<String>();
- 				for(int i=2;i<=5;i++)
+ 				for(int i=1;i<=4;i++)
  				{
- 					WebElement element = controller.driver.findElement(By.cssSelector("mat-chip:nth-child("+i+") > div.cdx-chip-block > span.cdx-chip-name"));
+ 					WebElement element = controller.driver.findElement(By.xpath("//div/mat-form-field/div/div[1]/div/mat-chip-list/div/mat-chip["+i+"]/div[2]/span[2]"));
  					String Label = controller.getText(element);
  					Labels.add(Label); 					
   				}
@@ -2735,6 +2735,20 @@ public void clickOnAnnotationCloseIcon() throws Exception {
 		cancelAnnotation.click();
 	} catch (Exception ex) {
 		throw new Exception("clickOnAnnotationCloseIcon is not working" + ex);
+	}
+}
+
+
+public void clickOnLinkPdf() throws Exception {
+	try {
+		List<WebElement> listOfPdfLink = driver.findElements(By.cssSelector("tbody > tr > td:nth-child(5) > button > span > mat-icon"));
+		for(WebElement firstLink:listOfPdfLink) {
+			super.jsClick(firstLink);
+			break;
+			//controller.waitTime(2);
+		}
+		} catch (Exception ex) {
+		throw new Exception("clickOnlink pdf is not working" + ex);
 	}
 }
 }
