@@ -120,10 +120,10 @@ public class Tab_PatentSearch extends Controller {
 	@FindBy(xpath = "//app-record-view/section/div/div[1]/div[1]/div")
 	private WebElement patRecordViewTitle;
 
-	@FindBy(xpath = "//app-record-view/section/div//mat-accordion//mat-expansion-panel[4]//mat-expansion-panel-header")
+	@FindBy(xpath = "//app-record-view/section/div/section/mat-accordion/mat-expansion-panel[5]/mat-expansion-panel-header")
 	private WebElement dwpiPatentTableAttribute;
 
-	@FindBy(xpath = "//app-record-view/section/div//mat-accordion//mat-expansion-panel[4]//mat-expansion-panel-header/span/mat-panel-title")
+	@FindBy(xpath = "//mat-panel-title[contains(.,'DWPI family')]")
 	private WebElement dwpiTableLink;
 
 	@FindBy(xpath = "//table[contains(@class, 'dw-family')]//button[1]")
@@ -852,8 +852,9 @@ public class Tab_PatentSearch extends Controller {
 			String selectedDropdownValue = getValueFromItemsPerPageDropdown();
 			int selectedValue = Integer.parseInt(selectedDropdownValue);
 			while (i < j) {
-				clickOnArrowNextPage();
+				clickOnArrowNextPage();				
 				waitUntilFectchRecordProgressBarToDisappears();
+				controller.waitTime(3);
 				i += selectedValue;
 			}
 		} catch (Exception ex) {
@@ -2117,7 +2118,9 @@ public class Tab_PatentSearch extends Controller {
 		try {
 			String collapse;
 			waitUntilElementIsDisplayed(dwpiPatentTableAttribute);
+			controller.waitTime(2);
 			collapse = controller.getElementAttribute(dwpiPatentTableAttribute, "aria-expanded");
+			controller.waitTime(2);
 			if (collapse.equals("true"))
 				return true;
 			else

@@ -1748,8 +1748,8 @@ public class ChemistrySolutionSearch {
 			} else {
 				Application.Logger.addsubStep(LogStatus.FAIL,
 						"error message is not displayed as the todate is lesser than from date", true);
-			}
-			Application.Logger.endStep();*/
+			}*/
+			Application.Logger.endStep();
 		} catch (Exception e) {
 			Application.Logger.addException(e.getMessage());
 			return flag = false;
@@ -5040,6 +5040,7 @@ public class ChemistrySolutionSearch {
 			page_ChemicalSearchResults.clickOnFolderNameCheckBox(multipleFolderName);
 			Application.waitTime(2);
 			expFolderName = page_ChemicalSearchResults.getTextFolderName(multipleFolderName);
+			Application.waitTime(2);
 			if (expFolderName.equals(multipleFolderName)) {
 				Application.Logger.addsubStep(LogStatus.PASS,
 						"NEW FOLDER IS CREATED SUCCESSFULLY IN THE RS FOOTER WITH THE NAME :" + multipleFolderName,
@@ -5101,7 +5102,7 @@ public class ChemistrySolutionSearch {
 					"ALL THE RECORDS SHOULD BE DELETED AND COUNT SHOULD BECOME ZERO");
 			page_SavedRecords.clickOnGlobalSavedRecordsDelete();
 			String actualDeletedCount = page_SavedRecords.getCountAfterDeletedFolder(multipleFolderName);
-			String expectedDeletedCount = multipleFolderName + " - 0";
+			String expectedDeletedCount = "multipleRecordFolder ( 0 )";
 			if (expectedDeletedCount.trim().equals(actualDeletedCount.trim())) {
 				Application.Logger.addsubStep(LogStatus.PASS, "RECORDS ARE DELETED SUCCESSFULLY ", false);
 			} else {
@@ -5537,7 +5538,7 @@ public class ChemistrySolutionSearch {
 			Application.waitTime(2);
 			page_SavedRecords.clickOnLinkSavedRecords();
 			Application.waitUntilFectchRecordProgressBarToDisappears();
-			page_SavedRecords.clickOnFolderName(4);
+			page_SavedRecords.clickOnFolderName(2);
 			Application.waitTime(2);
 			Application.waitUntilFectchRecordProgressBarToDisappears();
 			recordCount = page_SavedRecords.getFolderRecordCount();
@@ -5549,7 +5550,7 @@ public class ChemistrySolutionSearch {
 				Application.Logger.addsubStep(LogStatus.FAIL,
 						"" + recordCount + " RECORDS ARE NOT SAVED IN THE FOLDER : " + multipleFolderName, true);
 			}
-			page_SavedRecords.clickOnFolderName(6);
+			page_SavedRecords.clickOnFolderName(4);
 			Application.waitUntilFectchRecordProgressBarToDisappears();
 			recordCount = page_SavedRecords.getFolderRecordCount();
 			if (recordCount == 1) {
@@ -6104,6 +6105,7 @@ public class ChemistrySolutionSearch {
 			Application.Logger.endStep();
 
 			Application.Logger.addStep("4.ENTER TEXT ON TEXTBOX AND CLICK ON APPLY BUTTON", "RESULT SET IS REFRESHED");
+			Application.waitTime(2);
 			page_ChemicalSearchLandingPage.setTextSmileyTextBox(smiley);
 			Application.waitTime(2);
 			page_ChemicalSearchLandingPage.selectStructureRadioButton("Substructure");

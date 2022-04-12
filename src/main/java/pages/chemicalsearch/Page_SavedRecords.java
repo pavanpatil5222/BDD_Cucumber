@@ -173,7 +173,7 @@ public class Page_SavedRecords extends Controller {
 	public boolean isFolderDisplayed(String checkboxname) throws Exception {
 		try {
 			WebElement ele = controller.driver
-					.findElement(By.xpath("//section[@class='saved-records']//span[contains(text(), '" + checkboxname + "')]/ancestor::button"));
+					.findElement(By.xpath("//span[contains(@title,'" + checkboxname + "')]/ancestor::button"));
 			return isElementDisplayed(ele);
 		} catch (Exception ex) {
 			throw new Exception("isFolderDisplayed is not working" + ex);
@@ -354,8 +354,9 @@ public void clickOnSavedRecordCheckBox() throws Exception {
 	public int getFolderNameSize(String checkboxname) throws Exception {
 		try {
 			WebElement ele = controller.driver
-					.findElement(By.xpath("//section[@class='saved-records']//span[contains(text(), '" + checkboxname + "')]/ancestor::button"));
-			 return getText(ele).length();
+					.findElement(By.xpath("//span[contains(@title,'" + checkboxname + "')]"));
+			String eleAttribute=controller.getElementAttribute(ele, "title");
+			 return eleAttribute.length();
 		} catch (Exception ex) {
 			throw new Exception("getFolderNameSize is not working" + ex);
 		}
@@ -363,7 +364,7 @@ public void clickOnSavedRecordCheckBox() throws Exception {
 	
 	public void clickOnFolderName(int foldernumber) throws Exception {
 		try {
-			WebElement ele=	driver.findElement(By.xpath("//app-page-saved-records/section/section[1]/section/button["+foldernumber+"]/span"));
+			WebElement ele=	driver.findElement(By.xpath("(//span[contains(@class,'ng-star-inserted')])["+foldernumber+"]"));
 			jsClick(ele);
 			controller.waitUntilFectchRecordProgressBarToDisappears();
 			} catch (Exception ex) {
@@ -416,6 +417,7 @@ public String getValueFromItemsPerPageDropdown() throws Exception {
 public void selectItemsPerPageFromDropDown(String itemValue) throws Exception {
 	try {
 		clickOnItemsPerPageDropDown();
+		controller.waitTime(3);
         List<WebElement> listOfDropdownValue = driver.findElements(By.xpath("//div/mat-option/span"));
 		for (WebElement dropdownValue:listOfDropdownValue)
 		{

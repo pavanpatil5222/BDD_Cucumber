@@ -1659,7 +1659,9 @@ public String getTextImageSize(int recordnumber) throws Exception {
 	try {
 		String size;
 		WebElement img = controller.driver.findElement(By.xpath("//app-result-set["+recordnumber+"]/section/section/div[2]/img"));
+		controller.waitTime(2);
 		size=controller.getElementAttribute(img, "width");
+		controller.waitTime(2);
 		return size;
 		} catch (Exception ex) {
 		throw new Exception("getTextImageSize is not working" + ex);
@@ -1735,7 +1737,7 @@ public void clickOnPreviousPage() throws Exception {
 @SuppressWarnings("static-access")
 public void clickOnFolderNameCheckBox(String checkboxname) throws Exception {
 	try {
-		WebElement ele = controller.driver.findElement(By.xpath("//app-result-set-saveto-modal/div/div[1]/section[2]/mat-selection-list/mat-list-item/div/label[contains(.,"+checkboxname+")]/preceding-sibling::input[@role='checkbox']"));
+		WebElement ele = controller.driver.findElement(By.xpath("//label[contains(@title,'"+checkboxname +"')]/preceding-sibling::input[@role='checkbox']"));
 		if(!ele.isSelected())
 		{	
 			Actions action = new Actions(driver);
@@ -1748,7 +1750,7 @@ public void clickOnFolderNameCheckBox(String checkboxname) throws Exception {
 
 public String getTextFolderName(String checkboxname) throws Exception {
 	try {
-	WebElement ele = controller.driver.findElement(By.xpath("//app-result-set-saveto-modal/div/div[1]/section[2]/mat-selection-list/mat-list-item/div/label[contains(@title,'"+checkboxname+"')]"));
+	WebElement ele = controller.driver.findElement(By.xpath("//label[contains(@title,'"+checkboxname +"')]"));
 	String txt = controller.getElementAttribute(ele, "title");
 	return txt;
 } catch (Exception ex) {
@@ -1784,7 +1786,7 @@ public String getTextFolderErrorMEssage() throws Exception {
 @SuppressWarnings("static-access")
 public int getFolderNameSize(String checkboxname) throws Exception {
 	try {
-	WebElement ele = controller.driver.findElement(By.xpath("//app-result-set-saveto-modal/div/div[1]/section[2]/mat-selection-list/mat-list-item/div/label[contains(@title,'"+checkboxname+"')]"));
+	WebElement ele = controller.driver.findElement(By.xpath("//label[contains(@title,'"+checkboxname+"')]"));
 	String txt = controller.getElementAttribute(ele, "title");
 	int length=txt.length();
 	return length;
