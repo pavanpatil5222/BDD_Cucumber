@@ -1786,8 +1786,11 @@ public class ChemistrySolutionSearch {
 			}
 			Application.waitTime(4);
 			String currentWindowHandleID=Application.driver.getWindowHandle();
+			Application.waitTime(4);
 			page_ChemicalSearchResults.clickOnLinkPdf();
 			Application.waitTime(20);
+			//Application.waitUntilWindowCountAsGiven(2);
+			//Application.waitTime(4);
 			//Application.switchToGivenWindow("PDF Window", "blob:https://cloud.clarivate.com", CurrentWindowHandleID);
 			
 			Application.switchToOtherWindow(currentWindowHandleID);
@@ -5728,7 +5731,9 @@ public class ChemistrySolutionSearch {
 					"RESULTS COUNT SHOULD BE REFRESHED");
 			int resultsCounts = page_ChemicalSearchResults.getResultsCount();
 			beforeFilter = page_ChemicalSearchResults.getResultsCount();
+			Application.waitTime(3);
 			page_ChemicalSearchResults.clickOnChemicalStructureFilterCheckbox("CHEMICAL STRUCTURE", 1);
+			Application.waitTime(3);
 			afterFilter = page_ChemicalSearchResults.getResultsCount();
 			if (beforeFilter >= afterFilter) {
 				Application.Logger.addsubStep(LogStatus.PASS,
@@ -5756,7 +5761,9 @@ public class ChemistrySolutionSearch {
 			Application.Logger.addStep("4.SELECT ANY STRUCTURE AND CLICK ON APPLY FILTERS",
 					"RESULTS COUNT SHOULD BE REFRESHED");
 			page_ChemicalSearchResults.filterChemicalStructure().clickOnSingleStructure();
+			Application.waitTime(3);
 			page_ChemicalSearchResults.filterChemicalStructure().clickOnButtonApplyFilters();
+			Application.waitUntilFectchRecordProgressBarToDisappears();
 			Application.waitTime(2);
 			int resultsCountAfterFilterChemicalStructure = page_ChemicalSearchResults.getResultsCount();
 			if (resultsCountAfterFilterChemicalStructure <= resultsCount) {
@@ -5771,6 +5778,7 @@ public class ChemistrySolutionSearch {
 					"RESULTS COUNT SHOULD BE REFRESHED");
 			int resultCount = page_ChemicalSearchResults.getResultsCount();
 			page_ChemicalSearchResults.tabPatentSearch().clickOnLinkSeeAllStructures();
+			Application.waitTime(3);
 			page_ChemicalSearchResults.filterChemicalStructure().clickOnGlobalStructureCheckbox();
 			page_ChemicalSearchResults.filterChemicalStructure().clickOnButtonApplyFilters();
 			Application.waitTime(2);
@@ -6105,9 +6113,9 @@ public class ChemistrySolutionSearch {
 			Application.Logger.endStep();
 
 			Application.Logger.addStep("4.ENTER TEXT ON TEXTBOX AND CLICK ON APPLY BUTTON", "RESULT SET IS REFRESHED");
-			Application.waitTime(2);
+			Application.waitTime(3);
 			page_ChemicalSearchLandingPage.setTextSmileyTextBox(smiley);
-			Application.waitTime(2);
+			Application.waitTime(3);
 			page_ChemicalSearchLandingPage.selectStructureRadioButton("Substructure");
 			Application.waitTime(2);
 			page_ChemicalSearchResults.clickOnStructureButtonApply();

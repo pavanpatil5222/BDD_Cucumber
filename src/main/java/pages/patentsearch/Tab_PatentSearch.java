@@ -841,6 +841,7 @@ public class Tab_PatentSearch extends Controller {
 		try {
 
 			String paginationRange = getTextPaginatorRange();
+			controller.waitTime(3);
 			String[] paginationValue = paginationRange.split("of");
 			String nextRange = paginationValue[1].trim();
 			int j = Integer.parseInt(nextRange);
@@ -850,7 +851,9 @@ public class Tab_PatentSearch extends Controller {
 			String valueForFirstRange = firstRangeAfterSplit[1].trim();
 			int i = Integer.parseInt(valueForFirstRange);
 			String selectedDropdownValue = getValueFromItemsPerPageDropdown();
+			controller.waitTime(3);
 			int selectedValue = Integer.parseInt(selectedDropdownValue);
+			controller.waitTime(3);
 			while (i < j) {
 				clickOnArrowNextPage();				
 				waitUntilFectchRecordProgressBarToDisappears();

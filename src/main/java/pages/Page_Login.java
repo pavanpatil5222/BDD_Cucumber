@@ -25,6 +25,10 @@ public class Page_Login extends Controller {
 	WebElement textbox_Password;
 	@FindBy(xpath="//button[@title= 'Login']")
 	WebElement btn_Login;
+	@FindBy(xpath="//*[@id='onetrust-accept-btn-handler']")
+	WebElement button_Cookies_AcceptAll;
+	@FindBy(xpath="//*[@id='onetrust-banner-sdk']")
+	WebElement footer_banner;
 	
 	
 	public Page_Login(Controller controller){
@@ -62,6 +66,11 @@ public class Page_Login extends Controller {
 		  controller.Logger.Logger.log(LogStatus.PASS, "Login is happend"); 
 		 else
 		  controller.Logger.Logger.log(LogStatus.FAIL, "Login not happend");
+		  
+		 if (isDisplayedManageCookiePreferencesBanner()) {
+			  controller.Logger.Logger.log(LogStatus.INFO, "Cookies footer banner is displayed and Clicked on Accept all cookies button");
+			  clickOnButtonAcceptAllCookies();
+			  }
 		 
     	
  }
@@ -76,6 +85,28 @@ public class Page_Login extends Controller {
 		controller.waitTime(1);
 		return getText(loginerr);
 		}
+	
+	public void clickOnButtonAcceptAllCookies() throws Exception {
+	try {
+	click(button_Cookies_AcceptAll);
+	} catch (Exception e) {
+	throw new Exception("clickOnButtonAcceptAllCookies is not working " + e);
+	}
+	}
+
+
+	public boolean isDisplayedManageCookiePreferencesBanner() throws Exception {
+	boolean status =false;
+	try {
+	waitUntilElementIsDisplayed(footer_banner);
+	status = footer_banner.isDisplayed();
+	} catch (Exception e) {
+	status = false;
+	}
+	return status;
+	}
+
+
 	
 	
 }

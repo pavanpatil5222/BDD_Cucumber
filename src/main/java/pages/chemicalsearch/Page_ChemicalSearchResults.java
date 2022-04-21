@@ -1395,8 +1395,9 @@ public void clickOnLinkPdf() throws Exception {
 		List<WebElement> listOfPdfLink = driver.findElements(By.cssSelector("section > div > span:nth-child(4) > button > span > mat-icon"));
 		for(WebElement firstLink:listOfPdfLink) {
 			super.jsClick(firstLink);
+			controller.waitTime(3);
 			break;
-			//controller.waitTime(2);
+			
 		}
 		} catch (Exception ex) {
 		throw new Exception("clickOnlink pdf is not working" + ex);
