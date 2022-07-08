@@ -66,18 +66,11 @@ public class Tab_PatentSearch extends Controller {
 	@FindBy(xpath = "//app-record-view/section/div/section/mat-accordion/mat-expansion-panel[3]/mat-expansion-panel-header")
 	private WebElement hitStructureLink;	
 
-    //@FindBy(xpath = "(//mat-panel-title[contains(@class,'mat-expansion-panel-header-title citation-headers')])[1]")
 	@FindBy(xpath = "//span/mat-panel-title[contains(text(),'Citing patents')]")
     private WebElement citingPatentLink;
     
     @FindBy(xpath = "//span/mat-panel-title[contains(text(),' Cited patents ')]")
     private WebElement citedPatentLink;    
-
-	/*@FindBy(xpath = "//mat-accordion/mat-expansion-panel[6]/mat-expansion-panel-header/span/mat-panel-title")
-	private WebElement citingPatentLink;
-
-	@FindBy(xpath = "//mat-accordion/mat-expansion-panel[7]/mat-expansion-panel-header/span/mat-panel-title")
-	private WebElement citedPatentLink;*/
 
 	@FindBy(xpath = "//app-record-view/section/div//mat-accordion/mat-expansion-panel[6]/mat-expansion-panel-header")
 	private WebElement citingPatentLinkAttribute;
@@ -103,9 +96,7 @@ public class Tab_PatentSearch extends Controller {
 	@FindBy(xpath = "//app-record-view/section/div//mat-accordion/mat-expansion-panel[7]/mat-expansion-panel-header")
 	private WebElement citedPatentLinkAttribute;
 
-	
 	@FindBy(xpath = "//mat-expansion-panel[6]/mat-expansion-panel-header/span/mat-panel-title")
-	
 	private WebElement citingPatentCount;
 
 	@FindBy(xpath = "//mat-expansion-panel[7]/mat-expansion-panel-header/span/mat-panel-title")
@@ -132,7 +123,7 @@ public class Tab_PatentSearch extends Controller {
 	@FindBy(xpath = "//app-record-view/section/div/div[1]/div[1]/div")
 	private WebElement recordViewDwpiPublicationNumber;
 
-	@FindBy(xpath = "//div[@class='mat-select-arrow']")
+	@FindBy(xpath = "(//span[text()='More filters'])[1]")
 	private WebElement dropdownMoreFilters;
 
 	@FindBy(xpath = "//section[contains(@class, 'add')]//button[contains(@class, 'add-button')]")
@@ -387,8 +378,6 @@ public class Tab_PatentSearch extends Controller {
 	@FindBy(xpath = "//button/span[contains(.,'See all structures')]")
 	private WebElement seeAllStructuresLink;
 	 
-	
-	
 	@FindBy(xpath = "//div[@class='structure-search-modal']")
 	private WebElement filterChemicalStructureModal;
 	
@@ -840,25 +829,25 @@ public class Tab_PatentSearch extends Controller {
 	public void clickOnArrowNextPageTillLastPage() throws Exception {
 		try {
 
-			String paginationRange = getTextPaginatorRange();
-			controller.waitTime(3);
-			String[] paginationValue = paginationRange.split("of");
-			String nextRange = paginationValue[1].trim();
-			int j = Integer.parseInt(nextRange);
-			String firstRange = paginationValue[0].trim();
-			String[] firstRangeAfterSplit = firstRange.split("�");
-			//String[] firstRangeAfterSplit = firstRange.split("–");
-			String valueForFirstRange = firstRangeAfterSplit[1].trim();
-			int i = Integer.parseInt(valueForFirstRange);
-			String selectedDropdownValue = getValueFromItemsPerPageDropdown();
-			controller.waitTime(3);
-			int selectedValue = Integer.parseInt(selectedDropdownValue);
-			controller.waitTime(3);
-			while (i < j) {
-				clickOnArrowNextPage();				
-				waitUntilFectchRecordProgressBarToDisappears();
-				controller.waitTime(3);
-				i += selectedValue;
+			 String paginationRange = getTextPaginatorRange();
+	            controller.waitTime(3);
+	            String[] paginationValue = paginationRange.split("of");
+	            String nextRange = paginationValue[1].trim();
+	            int j = Integer.parseInt(nextRange);
+	            String firstRange = paginationValue[0].trim();
+	            String[] firstRangeAfterSplit = firstRange.split("–");
+	            //String[] firstRangeAfterSplit = firstRange.split("â€“");
+	            String valueForFirstRange = firstRangeAfterSplit[1].trim();
+	            int i = Integer.parseInt(valueForFirstRange);
+	            String selectedDropdownValue = getValueFromItemsPerPageDropdown();
+	            controller.waitTime(3);
+	            int selectedValue = Integer.parseInt(selectedDropdownValue);
+	            controller.waitTime(3);
+	            while (i < j) {
+	                clickOnArrowNextPage();                
+	                waitUntilFectchRecordProgressBarToDisappears();
+	                controller.waitTime(3);
+	                i += selectedValue;
 			}
 		} catch (Exception ex) {
 			throw new Exception("clickOn arrow next page is not working" + ex);
@@ -2751,7 +2740,6 @@ public void clickOnLinkPdf() throws Exception {
 		for(WebElement firstLink:listOfPdfLink) {
 			super.jsClick(firstLink);
 			break;
-			//controller.waitTime(2);
 		}
 		} catch (Exception ex) {
 		throw new Exception("clickOnlink pdf is not working" + ex);

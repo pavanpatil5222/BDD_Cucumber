@@ -11,9 +11,12 @@ import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.FindBy;
+import org.openqa.selenium.support.FindBys;
 import org.openqa.selenium.support.PageFactory;
 
 import com.relevantcodes.extentreports.LogStatus;
+
+import pages.literaturesearch.Tab_LiteratureSearch;
 import pages.patentsearch.Tab_PatentSearch;
 import support.Controller;
 /**
@@ -30,8 +33,6 @@ public class Page_ChemicalSearchResults extends Controller{
 	@FindBy(xpath = "//span[contains(.,'Structure')]")
 	private WebElement txtStructure;
 	
-	//btnPersonIconStatus
-	
 	@FindBy(xpath = "//button[contains(@title,'company/organization' )]")
 	private WebElement organizationIcon;
 
@@ -41,38 +42,27 @@ public class Page_ChemicalSearchResults extends Controller{
 	@FindBy(xpath = "//input[contains(@placeholder,'Enter name')]")
 	private WebElement txtCompanyPerson;
 	
-	/*@FindBy(css="#cdk-overlay-2 > snack-bar-container > simple-snack-bar > span")
-	private WebElement companyPersonToastMsg;*/
-	
-	//body > div.cdk-overlay-container > div > div
-	
-	@FindBy(css="body > div.cdk-overlay-container > div > div")
+	@FindBy(xpath = "//div[@class='cdk-overlay-container']")
 	private WebElement companyPersonToastMsg;
 	
-	//#cdk-overlay-1 > snack-bar-container > simple-snack-bar > span
-	@FindBy(css="#cdk-overlay-4 > snack-bar-container > simple-snack-bar > span")
+	@FindBy(xpath = "//div[@class='cdk-overlay-container']")
 	private WebElement personLimitToastMsg;
 	
-	@FindBy(css="#cdk-overlay-5 > snack-bar-container > simple-snack-bar > span")
+	@FindBy(xpath = "//div[@class='cdk-overlay-container']")
 	private WebElement companyLimitToastMsg;
 	
-	
-	//#cdk-overlay-4 > snack-bar-container > simple-snack-bar > span
-	
-	/*@FindBy(xpath = "//span[contains(.,'Company pill is added')]")
-	private WebElement companyPersonToastMsg;*/
 	@FindBy(css="body > div.cdk-overlay-container > div > div")
 	private WebElement personToastMsg;
-	/*@FindBy(xpath = "//span[contains(.,'Person pill is added')]")
-	private WebElement personToastMsg;*/
-	
 	
 	@FindBy(xpath="//app-result-paginator-bar/section/section[1]/span[1]/mat-checkbox/label/div/input")
 	private WebElement globalCheckBox;
+	
 	@FindBy(xpath="//div/div[1]/section[3]/section/button/span/span")
 	private WebElement linkCreateNewFolder;
+	
 	@FindBy(css="section.result-set > section > app-result-set:nth-child(1) > section > section > section:nth-child(3) > div > span:nth-child(1) > button")
 	private WebElement saveIcon;
+	
 	@FindBy(css="#saveto-container > section.footer-section > form > section:nth-child(1) > div:nth-child(2) > span")
 	private WebElement folderErrorMessage;
 	
@@ -106,8 +96,6 @@ public class Page_ChemicalSearchResults extends Controller{
 	@FindBy(xpath = "//textarea[contains(@maxlength,'2000')]")
 	private WebElement txtSearchBox;
 	
-	//" //section[@class='filter-section ng-star-inserted']//div[contains(text(),'" + filter + "')]"
-	//@FindBy(xpath = "//section[@class='filter-section']//div[@class='ng-star-inserted']//mat-expansion-panel[1]")
 	@FindBy(xpath = "//section[@class='filter-section ng-star-inserted']//div[contains(text(),'Assignee')]")
 	private WebElement collapseExpand;
 	
@@ -116,12 +104,9 @@ public class Page_ChemicalSearchResults extends Controller{
 	
 	@FindBy(xpath = "(//span[contains(.,'More filters')])[4]")
 	private WebElement moreSmartFiltersDropdown;
-
-	//@FindBy(xpath = "(//section[@class='filter-details']//div[@class='mat-form-field-infix']//mat-icon)[1]")
 	
 	@FindBy(xpath = "//div/mat-chip[1]/button/span/mat-icon")
 	private WebElement xMark;
-	
 	
 	@FindBy(xpath = "//span[text()='Filtered by 1 fields']")
 	private WebElement label_filteredByOneFields;
@@ -141,7 +126,6 @@ public class Page_ChemicalSearchResults extends Controller{
 	@FindBy(xpath = "(//span[@class='cdx-chip-name'])[1]")
 	private WebElement keyWordMouseHover;
 		
-	//@FindBy(xpath = "(//span[@class='cdx-chip-name'])[1]")
 	@FindBy(xpath = "(//span[@class='cdx-chip-name ng-star-inserted'])[1]")
 	private WebElement mouseHoverFirstKeyWord;
 	
@@ -198,24 +182,16 @@ public class Page_ChemicalSearchResults extends Controller{
 	
 	@FindBy(xpath = "(//input[@placeholder='YYYY-MM-DD'])[1]")
 	private WebElement filtersFromPublicationDate;
-	
 
 	@FindBy(xpath = "(//input[@placeholder='YYYY-MM-DD'])[2]")
 	private WebElement filterToPublicationDate;
 	
-	//@FindBy(xpath = "//div//input[contains(@placeholder,'YYYY-MM-DD')]')]")
-	//private WebElement format_FromDateInput;
-	
 	@FindBy(xpath = "//div[1]/mat-form-field/div/div[1]/div[1]/input")
 	private WebElement format_FromDateInput;
-	
-	//@FindBy(xpath = "//input[contains(@class,'fromDateInput')]")
-	//private WebElement format_FromDateInput;
 	
 	@FindBy(xpath = "//div//span[text()='to']")
 	private WebElement label_ToDate;
 	
-	//@FindBy(xpath = "//input[contains(@class,'toDateInput')]")
 	@FindBy(xpath = "//div[2]/mat-form-field/div/div[1]/div[1]/input")
 	private WebElement format_ToDateInput;
 	
@@ -267,7 +243,7 @@ public class Page_ChemicalSearchResults extends Controller{
 	@FindBy(xpath = " //section[contains(@class, 'major-player')]//div[@class='chart']//*[name()='svg']//*[name()='rect']")
 	private WebElement barPlayers;
 	
-	@FindBy(xpath = " //section[contains(@class, 'major-player')]//div[@class='chart']//*[name()='svg']//*[name()='text'][3]")
+	@FindBy(xpath = "//section[@id='major-player']//*[name()='text' and @id='playerText_0']")
 	private WebElement textPlayers;
 	
 	@FindBy(xpath = " //section[contains(@class, 'major-inventor')]//div[@class='chart']//*[name()='svg']//*[name()='rect']")
@@ -308,7 +284,6 @@ public class Page_ChemicalSearchResults extends Controller{
 	
 	@FindBy(xpath = "//button/span[contains(.,' Cancel ')]")
 	private WebElement btnCancel;
-	
 		
 	@FindBy(xpath = "(//mat-icon[@role='button'][contains(.,'close')])[1]")
 	private WebElement structurePillX;
@@ -324,6 +299,12 @@ public class Page_ChemicalSearchResults extends Controller{
 	
 	@FindBy(xpath = "//mat-select/div/div[1]/span/span")
 	private WebElement value_Dropdown;
+	
+	@FindBy(xpath = "//button[@title='person']")
+	private WebElement MousehoverPersonIcon;
+	
+	@FindBy(xpath = "//button[@title='company/organization']")
+	private WebElement MousehoverOrganizationIcon;
 	
       public Page_ChemicalSearchResults(Controller controller) {
 		super(controller);
@@ -385,9 +366,6 @@ public class Page_ChemicalSearchResults extends Controller{
 		clickPlusIcon.click();
 		for(int i=0;i<keywordtxt.size();i++)
 			 {
-			//waitUntilElementIsDisplayed(mouseHoverFirstKeyWord);
-			//Actions action = new Actions(driver);
-			//action.moveToElement(mouseHoverFirstKeyWord).perform();
 			txtKeyWord.click();
 			controller.waitTime(2);
 			setText(txtKeyWord, keywordtxt.get(i));
@@ -469,12 +447,12 @@ public class Page_ChemicalSearchResults extends Controller{
 		return Integer.parseInt(totaltxt);
 	}
 	
-/*	public int getLiteratureResultsCount() throws Exception {
+	public int getLiteratureResultsCount() throws Exception {
 		 waitUntilElementIsDisplayed(getLiteratureResultsCount);
 		String totaltxt = getText(getLiteratureResultsCount).trim();
 		totaltxt = totaltxt.replace(",", "").replaceAll("[\\D]", "");
 		return Integer.parseInt(totaltxt);
-	}*/
+	}
 	
 	public String getTabPatentResultsCount() throws Exception,NumberFormatException {
 		 waitUntilElementIsDisplayed(driver.findElement(By.xpath("//app-result-search-bar/section/section/div[1]/div[2]/div[2]")));
@@ -483,12 +461,12 @@ public class Page_ChemicalSearchResults extends Controller{
 		return totaltxt;
 	}
 	
-	/*public String getTabLiteratureResultsCount() throws Exception {
+	public String getTabLiteratureResultsCount() throws Exception {
 		 waitUntilElementIsDisplayed(driver.findElement(By.xpath("//app-result-search-bar/section/section/div[2]/div[2]/div[2]")));
 		String totaltxt = getText(driver.findElement(By.xpath("//app-result-search-bar/section/section/div[2]/div[2]/div[2]"))).trim();
 		totaltxt = totaltxt.replaceAll(" ", "");
 		return totaltxt;
-	}*/
+	}
 	
 	public boolean isDisplayedFilterFieldsInCollapsedState() throws Exception {
 		try {
@@ -560,7 +538,6 @@ public class Page_ChemicalSearchResults extends Controller{
 	public String getDateFormatFromDateInput() throws Exception {
 		try {
 			controller.jsScrollToElement(filtersFromPublicationDate);
-		   // String fromDateInput=controller.getElementAttribute(format_FromDateInput, "aria-label");
 		    String fromDateInput=controller.getElementAttribute(filtersFromPublicationDate, "placeholder");
 			return fromDateInput;	
 		 }catch (Exception e) {
@@ -612,7 +589,7 @@ public class Page_ChemicalSearchResults extends Controller{
 	public boolean isDisplayedSearchBoxNextToTabLiturature() throws Exception {
 		try {
 			waitUntilElementIsDisplayed(getResultsCount);
-		    boolean status=controller.isElementDisplayed(driver.findElement(By.xpath("//div[contains(@ng-reflect-klass,'tab tab-2')]/following-sibling::app-keyword-search//section[@class='ng-star-inserted']")));
+		    boolean status=controller.isElementDisplayed(driver.findElement(By.xpath("//div[@fxflexalign='center']")));
 			return status;	
 		 }catch (Exception e) {
 		return false;
@@ -652,7 +629,6 @@ public class Page_ChemicalSearchResults extends Controller{
 	
 	public String getColorOfPillBox(int pillNumber) throws Exception {
 		try {
-			//waitUntilElementIsDisplayed(getResultsCount);
 			WebElement ele=driver.findElement(By.xpath("//div/mat-chip-list/div/mat-chip["+pillNumber+"]"));
 		    return ele.getAttribute("class");
 		 }catch (Exception e) {
@@ -671,7 +647,7 @@ public class Page_ChemicalSearchResults extends Controller{
 		}
 	}
 	
-/*	public boolean isDisplayedTabLiterature() throws Exception {
+	public boolean isDisplayedTabLiterature() throws Exception {
 		try {
 			waitUntilElementIsDisplayed(getResultsCount);
 		    boolean status=controller.isElementDisplayed(tabLiterature);
@@ -679,7 +655,7 @@ public class Page_ChemicalSearchResults extends Controller{
 		 }catch (Exception e) {
 		return false;
 		}
-	}*/
+	}
 	
 	public boolean isNotDisplayedToastMessage() throws Exception {
 		try {
@@ -792,7 +768,7 @@ public class Page_ChemicalSearchResults extends Controller{
 		}
 	}
 		
-/*	public void clickOnTabLiterature() {
+	public void clickOnTabLiterature() {
 		try {
 		
 			WebElement ele=driver.findElement(By.xpath("//*[@id='tab-2']"));
@@ -815,7 +791,7 @@ public class Page_ChemicalSearchResults extends Controller{
 		} catch (Exception e) {
 			controller.Logger.addException("clickOnTabLiterature is not working"+e.getMessage());
 		}
-	}*/
+	}
 	
 	public void clickOnTabPatent() {
 		try {
@@ -886,7 +862,6 @@ public class Page_ChemicalSearchResults extends Controller{
 	public boolean isDisplayedPillBox(int pillNumber) throws Exception {
 		try 
 		{
-			//waitUntilElementIsDisplayed(getResultsCount);
 			WebElement ele=driver.findElement(By.xpath("(//span[contains(@class,'cdx-chip-name')])["+pillNumber+"]"));
 		    boolean toDateInput=controller.isElementDisplayed(ele);
 			return toDateInput;	
@@ -1163,9 +1138,9 @@ public class Page_ChemicalSearchResults extends Controller{
 		return new Tab_PatentSearch(controller);
 	}
 	
-	/*public Tab_LiteratureSearch tabLiteratureSearch() {
+	public Tab_LiteratureSearch tabLiteratureSearch() {
 		return new Tab_LiteratureSearch(controller);
-	}	*/
+	}	
 	
 	public Page_ManageFields manageFields() {
 		return new Page_ManageFields(controller);
@@ -1474,8 +1449,9 @@ public void clickOnPlayersText() throws Exception {
 	try {
 		waitUntilElementIsDisplayed(textPlayers);
 		Actions builder = new Actions(driver);
-		builder.click(textPlayers).build().perform();
-	} catch (Exception ex) {
+		builder.click(textPlayers).build().perform();		
+	}
+	catch (Exception ex) {
 		throw new Exception("line between bubble  is not working" + ex);
 }
 }
@@ -1811,10 +1787,7 @@ public boolean isSelectedRSCheckBox(int checkboxnum) throws Exception {
 public String getColorOfStructureSerachPillBox() throws Exception {
 	try {
 		waitUntilElementIsDisplayed(getResultsCount);
-	    //WebElement ele=driver.findElement(By.xpath("//mat-chip[contains(@class,'mat-chip mat-focus-indicator structure-chip mat-primary mat-standard-chip mat-chip-with-trailing-icon ng-star-inserted')]"));
-	  //mat-chip[contains(@class,'mat-chip mat-focus-indicator small structure mat-primary mat-standard-chip ng-star-inserted')]  
 		WebElement ele=driver.findElement(By.xpath("//div[2]/section[2]/app-chem-pills/section/section/div/mat-form-field/div/div[1]/div/mat-chip-list/div/mat-chip[1]"));
-	   // System.out.println(ele.getCssValue("background-color"));
 		return ele.getAttribute("class");
 	 }catch (Exception e) {
 		 throw new Exception("getColorOfStructureSerachPillBox is not working.." + e);
@@ -1865,11 +1838,6 @@ public void clickOnStructurePillX() throws Exception {
 }
 public void clickOnPersonIcon() throws Exception {
 	try {
-		//waitUntilElementIsDisplayed(personIcon);
-		//personIcon.click();
-		//jsClick(personIcon);
-		//Actions action = new Actions(driver);
-		//action.moveToElement(personIcon).perform();
 		jsScrollToElement(personIcon);
 		jsClick(personIcon);
 		} catch (Exception ex) {
@@ -1878,10 +1846,6 @@ public void clickOnPersonIcon() throws Exception {
 }
 public void clickOnOrganizationIcon() throws Exception {
 	try {
-		//waitUntilElementIsDisplayed(organizationIcon);
-		//jsClick(organizationIcon);
-		//Actions action = new Actions(driver);
-		//action.moveToElement(organizationIcon).perform();
 		jsScrollToElement(organizationIcon);
 		jsClick(organizationIcon);
 		} catch (Exception ex) {
@@ -1901,7 +1865,7 @@ public void clickOnButtonAdd() throws Exception {
 public void setTextPersonOrOrganization(String value) throws Exception {
 	try {
 		waitUntilElementIsDisplayed(txtCompanyPerson);
-		//txtCompanyPerson.click();
+		txtCompanyPerson.click();
 		setText(txtCompanyPerson, value);
 	} catch (Exception e) {
 		throw new Exception("setTextPersonOrOrganization is not working.." + e);
@@ -1925,7 +1889,6 @@ public String getTextPersonToastMessage() throws Exception {
 	try {
 		String expMsg="";
 		waitUntilElementIsDisplayed(personToastMsg);
-		//controller.waitTime(2);
 		if(controller.isElementDisplayed(personToastMsg))
 		expMsg= controller.getText(personToastMsg);
 		return expMsg;
@@ -1959,7 +1922,6 @@ public String getTextPersonLimitToastMessage() throws Exception {
 	try {
 		String expMsg="";
 		waitUntilElementIsDisplayed(personLimitToastMsg);
-		//controller.waitTime(2);
 		if(controller.isElementDisplayed(personLimitToastMsg))
 		expMsg= controller.getText(personLimitToastMsg);
 		return expMsg;
@@ -1971,7 +1933,6 @@ public String getTextCompanyLimitToastMessage() throws Exception {
 	try {
 		String expMsg="";
 		waitUntilElementIsDisplayed(companyLimitToastMsg);
-		//controller.waitTime(2);
 		if(controller.isElementDisplayed(companyLimitToastMsg))
 		expMsg= controller.getText(companyLimitToastMsg);
 		return expMsg;
@@ -2111,6 +2072,30 @@ public List<String> getAllFilterOptions(String filtername) throws Exception{
 	controller.waitTime(3);
 	} catch (Exception e) {
 		throw new Exception("clickOnLabel is not working on " + e);
-	}
+	}		
 }
+	
+	public void HoverOnPersonIcon() throws Exception{
+		try
+		{
+			waitUntilElementIsDisplayed(MousehoverPersonIcon);
+			Actions action = new Actions(driver);
+			action.moveToElement(MousehoverPersonIcon).perform();
+		}
+		catch (Exception e) {
+			throw new Exception("HoverOnPersonIcon is not working on " + e);
+		}
+	}
+	
+	public void HoverOnOrganizationIcon() throws Exception{
+		try
+		{
+			waitUntilElementIsDisplayed(MousehoverOrganizationIcon);
+			Actions action = new Actions(driver);
+			action.moveToElement(MousehoverOrganizationIcon).perform();
+		}
+		catch (Exception e) {
+			throw new Exception("HoverOnOrganizationIcon is not working on " + e);
+		}
+	}
 }

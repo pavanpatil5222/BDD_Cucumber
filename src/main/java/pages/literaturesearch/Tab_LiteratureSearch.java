@@ -16,18 +16,23 @@ import support.Controller;
  * @author Anand/Rashmi
  *
  */
-/*public class Tab_LiteratureSearch extends Controller{
+public class Tab_LiteratureSearch extends Controller{
 	
-	@FindBy(css = "app-result-set:nth-child(1) > section > mat-card > mat-card-content > section:nth-child(3) > div > span")
-	private WebElement linkMoreLikeThis;
-	@FindBy(xpath = "//div[1]/mat-dialog-content/section[2]/div[2]/button")
-	private WebElement btnRestoreDefaults;
+	@FindBy(xpath = "//*/section[2]//div/section/section/section[2]/section/app-result-set[1]//section[2]/div/button")
+	private WebElement linkMoreLikeThis;	
+	
+	@FindBy(xpath = "//span[text()=' Restore defaults ']")
+	private WebElement btnRestoreDefaults;	
+	
 	@FindBy(xpath = "(//input[@maxlength='40'])[2]")
 	private WebElement txtFirstClusterItem;
+	
 	@FindBy(xpath = "(//input[@maxlength='40'])[3]")
 	private WebElement txtSecondClusterItem;
+	
 	@FindBy(css = "#mat-hint-0 > span")
 	private WebElement txtClusterErrMsg;
+	
 	@FindBy(xpath = "//div[@class='chart']//*[name()='svg']//*[name()='circle']")
 	private WebElement firstBubble;
 
@@ -40,10 +45,10 @@ import support.Controller;
 	@FindBy(xpath = "//div[2]/mat-dialog-actions/button[2]")
 	private WebElement btnApply;
 	
-	@FindBy(xpath = "(//mat-icon[contains(@class,'mat-icon notranslate mat-chip-remove mat-chip-trailing-icon material-icons mat-icon-no-color')])[2]")
+	@FindBy(xpath = "(//button//span//mat-icon[text()='close'])[6]")
 	private WebElement moreLikeCloseIcon;
 	
-	@FindBy(css = "app-record-view > section > div > div.body-content > div:nth-child(1) > span:nth-child(2) > a")
+	@FindBy(xpath = "//app-record-view/section/div/div[2]/div[1]/span/span[1]/button")
 	private WebElement rsAuthor;
 	
 	@FindBy(xpath="//div[@title='Structure search not yet available for Literature']")
@@ -52,7 +57,7 @@ import support.Controller;
 	@FindBy(css = "section.insights-chart > app-suggested-keyword > section > section.view.disable-click")
 	private WebElement keywordDisable;
 	
-	@FindBy(css = "div > mat-chip > div > span > span")
+	@FindBy(xpath = "//app-keyword-search/app-chem-pills/section/section/mat-chip-list/div/mat-chip/div[2]/span[2]/span")
 	private WebElement moreLikeKeyword;
 	
 	@FindBy(xpath="//app-result-search-bar/section/section/div[2]/div[2]/div[2]")
@@ -142,19 +147,19 @@ import support.Controller;
 	@FindBy(css="#label_txt_0")
 	private WebElement literatureInsightsKeyword;
 
-	@FindBy(css="div:nth-child(1) > button > span > mat-icon")
+	@FindBy(xpath ="//app-result-set[1]/section/mat-card/mat-card-content/section[2]/div/div[1]/button")
 	private WebElement thumsUpIcon;
 	
-	@FindBy(css="section > mat-card > mat-card-content > section:nth-child(3) > div > div:nth-child(2) > button > span > mat-icon")
+	@FindBy(xpath ="//app-result-set[1]/section/mat-card/mat-card-content/section[2]/div/div[2]/button")
 	private WebElement thumbsDownIcon;
 		
-	@FindBy(xpath = " //div[contains(normalize-space(text()), 'Authors' )]")
+	@FindBy(xpath = "//div[@id='insights-tab-3']")
 	private WebElement tabAuthors;
 	
 	@FindBy(xpath = " //section[contains(@class, 'major-inventor')]//div[@class='chart']//*[name()='svg']//*[name()='rect']")
 	private WebElement barAuthors;
 
-	@FindBy(xpath = " //section[contains(@class, 'major-inventor')]//div[@class='chart']//*[name()='svg']//*[name()='text']")
+	@FindBy(xpath = "//section[@id='major-inventor']//*[name()='text' and @id='playerText_0']")
 	private WebElement textAuthors;
 	
 	@FindBy(xpath="//app-publication-year/section/mat-expansion-panel/mat-expansion-panel-header/span[2]")
@@ -163,10 +168,10 @@ import support.Controller;
 	@FindBy(xpath="//app-publication-year/section/mat-expansion-panel/mat-expansion-panel-header/span[1]")
     private WebElement publicationYearLabel;
 	
-	@FindBy(xpath="//app-publication-year/section/mat-expansion-panel/div/div/section/button[1]/span/mat-icon")
+	@FindBy(xpath="//button[@class='mat-focus-indicator decrement-btn mat-icon-button mat-button-base']")
     private WebElement publicationYearLeftArrow;
 	
-	@FindBy(xpath="//app-publication-year/section/mat-expansion-panel/div/div/section/button[2]/span/mat-icon")
+	@FindBy(xpath="//button[@class='mat-focus-indicator increment-btn mat-icon-button mat-button-base']")
     private WebElement publicationYearRightArrow;
 	
 	@FindBy(xpath="//div[contains(text(),'Publication year')]/ancestor::mat-expansion-panel-header")
@@ -255,8 +260,7 @@ import support.Controller;
 	
 	public boolean isDisplayedTitle(int rowNumber) throws Exception {
 		try{
-			List<WebElement> ele=driver.findElements(By.xpath("//mat-card-subtitle[@class='title ul mat-card-subtitle']"));
-			
+			List<WebElement> ele=driver.findElements(By.xpath("//mat-card-header[@class='mat-card-header']"));
 			WebElement eleTitle=ele.get(rowNumber);
 			boolean blnChkTitle=controller.isElementDisplayed(eleTitle);
 		
@@ -313,8 +317,8 @@ import support.Controller;
 			String iconStatus;
 			waitUntilElementIsDisplayed(thumsUpIcon);
 			jsClick(thumsUpIcon);
-			iconStatus=getElementAttribute(thumsUpIcon, "ng-reflect-svg-icon");
-			if(iconStatus.contains("thumbup-filled"))
+			iconStatus=getElementAttribute(thumsUpIcon, "class");
+			if(iconStatus.contains("focus"))
 			{
 			controller.Logger.addsubStep(LogStatus.PASS,"THUMBS UP ICON CHANGED TO SOLID GREEN COLOR", false); 
 			}
@@ -333,7 +337,7 @@ import support.Controller;
 		try {
 			String iconStatus;
 			waitUntilElementIsDisplayed(thumsUpIcon);
-			iconStatus=getElementAttribute(thumsUpIcon, "ng-reflect-svg-icon");
+			iconStatus=getElementAttribute(thumsUpIcon, "class");
 			return(iconStatus);
 			} catch (Exception ex) {
 			throw new Exception("clickOnThumbsUpIcon is not working" + ex);
@@ -344,7 +348,7 @@ import support.Controller;
 		try {
 			String iconStatus;
 			waitUntilElementIsDisplayed(thumbsDownIcon);
-			iconStatus=getElementAttribute(thumbsDownIcon, "ng-reflect-svg-icon");
+			iconStatus=getElementAttribute(thumbsDownIcon, "class");
 			return(iconStatus);
 			} catch (Exception ex) {
 			throw new Exception("checkThumbsDownHollowState is not working" + ex);
@@ -356,8 +360,8 @@ import support.Controller;
 			String iconStatus;
 			waitUntilElementIsDisplayed(thumbsDownIcon);
 			jsClick(thumbsDownIcon);
-			iconStatus=getElementAttribute(thumbsDownIcon, "ng-reflect-svg-icon");
-			if(iconStatus.contains("thumbdown-filled"))
+			iconStatus=getElementAttribute(thumbsDownIcon, "class");
+			if(iconStatus.contains("focus"))
 			{
 			controller.Logger.addsubStep(LogStatus.PASS,"THUMBS DOWN ICON CHANGED TO SOLID GREEN COLOR", false); 
 			}
@@ -375,11 +379,11 @@ import support.Controller;
 		int j=1;
 		boolean status=true;
 		try {
-			List<WebElement> thumbsUpIcons = driver.findElements(By.xpath("//section/div[2]/div[1]/button"));
+			List<WebElement> thumbsUpIcons = driver.findElements(By.xpath("//button[@title='Vote as relevant']"));
 			System.out.println("size" + thumbsUpIcons.size());
 			if (thumbsUpIcons.size() > 0) {
 				for (WebElement ele : thumbsUpIcons) {
-					if(controller.isElementDisplayed(driver.findElement(By.xpath("//section/div[2]/div[1]/button")))) {
+					if(controller.isElementDisplayed(driver.findElement(By.xpath("//button[@title='Vote as relevant']")))) {
 					controller.Logger.addsubStep(LogStatus.PASS,"THUMBS UP ICON IS DISPLAYED FOR THE RECORD:"+(j)+"", false);
 					j=j+1;
 				}
@@ -401,11 +405,11 @@ import support.Controller;
 		int j=1;
 		boolean status=true;
 		try {
-			List<WebElement> thumbsDownIcons = driver.findElements(By.xpath("//section/div[2]/div[2]/button"));
+			List<WebElement> thumbsDownIcons = driver.findElements(By.xpath("//button[@title='Vote as irrelevant']"));
 			System.out.println("size" + thumbsDownIcons.size());
 			if (thumbsDownIcons.size() > 0) {
 				for (WebElement ele : thumbsDownIcons) {
-					if(controller.isElementDisplayed(driver.findElement(By.xpath("//section/div[2]/div[2]/button")))) {
+					if(controller.isElementDisplayed(driver.findElement(By.xpath("//button[@title='Vote as irrelevant']")))) {
 					controller.Logger.addsubStep(LogStatus.PASS,"THUMBS DOWN ICON IS DISPLAYED FOR THE RECORD:"+(j)+"", false);
 					j=j+1;
 				}
@@ -453,8 +457,8 @@ import support.Controller;
 	{
 		try 
 		{
-			WebElement listOfThumsUp = driver.findElement(By.cssSelector("app-result-set:nth-child("+recordNumber+") > section > mat-card > mat-card-content > section:nth-child(3) > div > div:nth-child(1) > button > span > mat-icon"));
-			if(controller.getElementAttribute(listOfThumsUp, "ng-reflect-svg-icon").contains("filled")) 
+			WebElement listOfThumsUp = driver.findElement(By.cssSelector("app-result-set:nth-child("+recordNumber+") > section > mat-card > mat-card-content > section:nth-child(3) > div > div:nth-child(1) > button > span > mat-icon> svg > g > path"));
+			if(controller.getElementAttribute(listOfThumsUp, "stroke").contains("#008474")) 
 			{
 				return true;
 			}else 
@@ -474,8 +478,8 @@ import support.Controller;
 	{
 		try 
 		{
-			WebElement listOfThumsDown = driver.findElement(By.cssSelector("app-result-set:nth-child("+recordNumber+") > section > mat-card > mat-card-content > section:nth-child(3) > div > div:nth-child(2) > button > span > mat-icon"));
-			if(controller.getElementAttribute(listOfThumsDown, "ng-reflect-svg-icon").contains("filled")) 
+			WebElement listOfThumsDown = driver.findElement(By.cssSelector("app-result-set:nth-child("+recordNumber+") > section > mat-card > mat-card-content > section:nth-child(3) > div > div:nth-child(2) > button > span > mat-icon > svg > g > path"));
+			if(controller.getElementAttribute(listOfThumsDown, "stroke").contains("#008474")) 
 			{
 				return true;
 			}else 
@@ -613,8 +617,8 @@ import support.Controller;
 	public boolean isEnabledPYChartRightArrow() throws Exception {
 		try {
 			controller.waitUntilElementIsDisplayed(publicationYearRightArrow);
-			String color = controller.getElementAttribute(publicationYearRightArrow, "style");
-			if(color.contains("black"))
+			String color = controller.getElementAttribute(publicationYearRightArrow, "class");
+			if(color.contains("mat-focus-indicator increment-btn mat-icon-button mat-button-base"))
 			{
 			return true;
 			}
@@ -631,8 +635,8 @@ import support.Controller;
 	public boolean isEnabledPYCharLeftArrow() throws Exception {
 		try {
 			controller.waitUntilElementIsDisplayed(publicationYearLeftArrow);
-			String color = controller.getElementAttribute(publicationYearLeftArrow, "style");
-			if(color.contains("black"))
+			String color = controller.getElementAttribute(publicationYearLeftArrow, "class");
+			if(color.contains("mat-focus-indicator decrement-btn mat-icon-button mat-button-base"))
 			{
 			return true;
 			}
@@ -649,8 +653,8 @@ import support.Controller;
 	public boolean isDisabledPYChartRightArrow() throws Exception {
 		try {
 			controller.waitUntilElementIsDisplayed(publicationYearRightArrow);
-			String color = publicationYearRightArrow.getText();
-			if(color.contains("chevron_right"))
+			String color = controller.getElementAttribute(publicationYearRightArrow, "disabled");
+			if(color.contains("true"))
 			{
 			return true;
 			}
@@ -714,11 +718,11 @@ import support.Controller;
 	 
 
 	 public String getTextKeyWordMoreLike() throws Exception {
-			waitUntilElementIsDisplayed(moreLikeKeyword);
-			String morelikekeyword=controller.getElementAttribute(moreLikeKeyword, "title");
-			return(morelikekeyword);
+		 waitUntilElementIsDisplayed(moreLikeKeyword);
+		 String morelikekeyword=controller.getElementAttribute(moreLikeKeyword, "title");
+		 return(morelikekeyword);
 		}
-
+	 
 	 public String getTextLiteratureTitle(int recordnumber) throws Exception {
 		 try {
 			WebElement ele = driver.findElement(By.cssSelector("app-result-set:nth-child("+recordnumber+") > section > mat-card > mat-card-header > div > mat-card-subtitle"));
@@ -815,7 +819,7 @@ public List<String> getAllClusterItems() throws Exception{
 	try {
 		
 			List<String> citemLabels =new ArrayList<String>();
-				for(int i=2;i<=13;i++)
+				for(int i=1;i<=12;i++)
 				{
 					WebElement element = controller.driver.findElement(By.xpath("(//input[contains(@maxlength,'40')])["+i+"]"));
 					String citemLabel = controller.getJSText(element);
@@ -830,7 +834,7 @@ public List<String> getAllClusterItems() throws Exception{
 
 public void deleteExistingClusterItems() throws Exception {
 	try {
-		for(int i=2;i<=13;i++)
+		for(int i=1;i<=12;i++)
 		{
 		 WebElement clusterItem = driver.findElement(By.xpath("(//input[contains(@maxlength,'40')])["+i+"]"));
 		 clusterItem.click();
@@ -890,4 +894,4 @@ public void clickOnFirstBubble() throws Exception {
 		throw new Exception("clickOnFirstBubble is not working" + ex);
 	}
 }
-}*/
+}
