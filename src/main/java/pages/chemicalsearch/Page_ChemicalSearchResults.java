@@ -419,6 +419,7 @@ public class Page_ChemicalSearchResults extends Controller{
 		for (String keys: keywords) {
 		keywordtxt.add(keys);
 		}
+		clickPlusIcon.click();
 		for(int i=0;i<keywordtxt.size();i++)
 			 {
 				txtKeyWord.click();
@@ -1637,7 +1638,7 @@ public String getTextImageSize(int recordnumber) throws Exception {
 		String size;
 		WebElement img = controller.driver.findElement(By.xpath("//app-result-set["+recordnumber+"]/section/section/div[2]/img"));
 		controller.waitTime(2);
-		size=controller.getElementAttribute(img, "width");
+		size=controller.getElementAttribute(img, "style");
 		controller.waitTime(2);
 		return size;
 		} catch (Exception ex) {

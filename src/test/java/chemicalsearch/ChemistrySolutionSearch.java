@@ -8,6 +8,7 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.LinkedHashSet;
 import java.util.List;
+import java.util.Set;
 
 import org.testng.annotations.Test;
 
@@ -22,7 +23,7 @@ import utils.TestUtil;
 
 /**
  * 
- * @author Anand//Rashmi
+ * @author Anand//Rashmi/Pavan
  *
  */
 public class ChemistrySolutionSearch {
@@ -42,7 +43,7 @@ public class ChemistrySolutionSearch {
 		boolean blnchk = false;
 		boolean flag = true;
 		String patent = "Patent";
-		String literature = "Literature";
+		String literature = "Web of Science Literature";
 		String rsPatent, rsLiterature, rsSearchBox, expSearchText;
 		try {
 			Application.Logger.addStep("1.VERIFY SEARCH ICON WHEN TEXT IS NOT ENTERED IN THE SEARCH TEXT BOX",
@@ -300,6 +301,7 @@ public class ChemistrySolutionSearch {
 			} else {
 				Application.Logger.addsubStep(LogStatus.FAIL, "THUMBS DOWN ICON IS NOT IN HOLLOW STATE", false);
 			}
+			Application.Logger.endStep();
 			
 			Application.Logger.addStep("7.IN LITERATURE TAB, CLICK ON THUMBS DOWN ICON FOR A RECORD",
 					"ICON SHOULD BE SELECTED AND CHANGED TO SOLID GREEN");
@@ -369,7 +371,8 @@ public class ChemistrySolutionSearch {
 							+ "3.3. Abstract data\r\n" + "3.3.1. Use\r\n" + "3.3.2 Novelty\r\n" + "3.4 Image");
 			page_ChemicalSearchResults.clickOnLinkManageFields();
 			Application.waitTime(2);
-
+			Application.Logger.endStep();
+			
 			page_ChemicalSearchResults.manageFields().clickOnButtonClearAll();
 			page_ChemicalSearchResults.manageFields().selectManageFieldCheckBoxes(fields);
 			page_ChemicalSearchResults.manageFields().clickOnButtonApply();
@@ -938,7 +941,7 @@ public class ChemistrySolutionSearch {
 			page_ChemicalSearchResults.clickOnPillBox(1);
 			page_ChemicalSearchResults.clickOnSearchIcon();
 			Application.waitUntilFectchRecordProgressBarToDisappears();
-			Application.waitTime(4);
+			Application.waitTime(6);
 			if (page_ChemicalSearchResults.getColorOfPillBox(1).contains("state_1")) {
 				Application.Logger.addsubStep(LogStatus.PASS, "Pill box contains 'Green color' as Expected.", false);
 			} else {
@@ -1028,11 +1031,12 @@ public class ChemistrySolutionSearch {
 			}
 			Application.Logger.endStep();
 			
-			/*Application.Logger.addStep("2.Type/paste keywords in bottom section.",
+			Application.Logger.addStep("2.Type/paste keywords in bottom section.",
 					"Must be able to type/paste keywords in bottom section.");
 			page_ChemicalSearchResults.clickOnTabPatent();
 			page_ChemicalSearchResults.closeAllExistingKeyWords();
 			page_ChemicalSearchResults.AddKeyWordsBottomSection(finalKeywordList);
+			page_ChemicalSearchResults.clickOnSearchIcon();
 			List<String> listOfPills = page_ChemicalSearchResults.getListOfPillBoxes();
 			for (String pill : listOfPills) {
 				if (!pill.equals(searchText)) {
@@ -1043,7 +1047,7 @@ public class ChemistrySolutionSearch {
 							"Not able to typed/pasted keywords in bottom section.", true);
 				}
 			}
-			Application.Logger.endStep();*/
+			Application.Logger.endStep();
 			
 			Application.Logger.addStep("3.Edit Keywords in the search box",
 					"Search Icon Must turn green/become enabled if something is edited in the search box");
@@ -1061,7 +1065,7 @@ public class ChemistrySolutionSearch {
 			}
 			Application.Logger.endStep();
 			
-		/*	Application.Logger.addStep(
+			/*Application.Logger.addStep(
 					"4.type/insert/paste more text anywhere in-between the existing text in the top section.",
 					"Must be able to type/insert/paste more text anywhere in-between the existing text in the top section.");
 			page_ChemicalSearchResults.enterTextAnywhereInSearchBox("acid", 2);
@@ -1069,7 +1073,7 @@ public class ChemistrySolutionSearch {
 					false);
 			Application.Logger.endStep();*/
 			
-			Application.Logger.addStep("5.select and delete selected text in top section",
+			Application.Logger.addStep("4.select and delete selected text in top section",
 					"selected text should be selected in top section.");
 			page_ChemicalSearchResults.deleteText();
 			String expSearchText = page_ChemicalSearchResults.getTextOfSerachBox();
@@ -1539,7 +1543,7 @@ public class ChemistrySolutionSearch {
 	}
 
 	/** CHEMEXP-751--Patent-PDF not available */
-
+	@Test
 	public boolean validatePdfNotAvailable(Controller Application, HashMap<String, String> input) {
 		boolean flag = true;
 		try {
@@ -1578,7 +1582,7 @@ public class ChemistrySolutionSearch {
 	}
 
 	// CHEMEXP-758
-
+	@Test
 	public boolean validateFilterDataForDifferentFields(Controller Application, HashMap<String, String> input) {
 		boolean flag = true;
 
@@ -1674,11 +1678,10 @@ public class ChemistrySolutionSearch {
 	 * on the PDF icon Expected: 1.Should logged in successfully 2.Search is
 	 * performed 3.PDF is opened
 	 */
-
+	@Test
 	public boolean validatePdfFromResultSet(Controller Application, HashMap<String, String> input) {
 		boolean flag = true;
 		try {
-			String CurrentWindowHandleID = Application.driver.getWindowHandle();
 			Application.Logger.addStep("1.VERIFY PERFORMING THE SEARCH IN LANDING PAGE AND PDF GENERATION ",
 					"USER SHOULD BE TAKEN TO THE RESULTS SET PAGE AND PDF SHOULD GET GENERATED");
 			page_ChemicalSearchLandingPage = new Page_ChemicalSearchLandingPage(Application);
@@ -1693,22 +1696,23 @@ public class ChemistrySolutionSearch {
 				throw new Exception("Results set is not loaded for the chemical search");
 			}
 			Application.waitTime(4);
-			String currentWindowHandleID=Application.driver.getWindowHandle();
-			Application.waitTime(4);
 			page_ChemicalSearchResults.clickOnLinkPdf();
 			Application.waitTime(20);
-			//Application.waitUntilWindowCountAsGiven(2);
-			//Application.waitTime(4);
-			//Application.switchToGivenWindow("PDF Window", "blob:https://cloud.clarivate.com", CurrentWindowHandleID);
 			
-			Application.switchToOtherWindow(currentWindowHandleID);
-			Application.waitTime(5);
-			if (Application.driver.getCurrentUrl().contains("blob"))
-				Application.Logger.addsubStep(LogStatus.PASS, "PDF window opens and Navigated to that successfully",
+			Set<String> Ids = Application.driver.getWindowHandles();
+			ArrayList<String> al = new ArrayList<String>(Ids);
+			String MainID = al.get(0);
+			String ChildID = al.get(1);
+			System.out.println(MainID);
+			System.out.println(ChildID);
+			Application.driver.switchTo().window(ChildID);
+			
+			if (!MainID.equals(ChildID))
+				Application.Logger.addsubStep(LogStatus.PASS, "PDF window opened successfully",
 						false);
 			else
-				Application.Logger.addsubStep(LogStatus.FAIL, "PDF window opens has not opened", true);
-			Application.Logger.endStep();
+				Application.Logger.addsubStep(LogStatus.FAIL, "PDF window has not opened", true);
+		Application.Logger.endStep();
 		} catch (Exception e) {
 			Application.Logger.addException(e.getMessage());
 			return flag = false;
@@ -1725,7 +1729,7 @@ public class ChemistrySolutionSearch {
 	 * performed 3.Hmmm,we are not getting any results message should display
 	 * 4.Hmmm,we are not getting any results message should display
 	 */
-
+	@Test
 	public boolean validatePatentAndLiteratureNoResultsPage(Controller Application, HashMap<String, String> input) {
 		boolean flag = true;
 		try {
@@ -1764,7 +1768,7 @@ public class ChemistrySolutionSearch {
 		return flag;
 	}
 	/* CHEMEXP-760 */
-
+	@Test
 	public boolean validatePatentAndLiteratureResultSetPagination(Controller Application,HashMap<String, String> input) {
 		boolean flag = true;
 		try {
@@ -1889,7 +1893,7 @@ public class ChemistrySolutionSearch {
 		return flag;
 	}
 	/* CHEMEXP-761 */
-
+	@Test
 	public boolean validateFeedbackFunctionality(Controller Application, HashMap<String, String> input) {
 		boolean flag = true;
 		try {
@@ -1931,6 +1935,7 @@ public class ChemistrySolutionSearch {
 	/*
 	 * CHEMEXP-762
 	 */
+	@Test
 	public boolean validateFilterSelectDeselectCheckbox(Controller Application, HashMap<String, String> input) {
 		boolean flag = true;
 
@@ -1967,6 +1972,7 @@ public class ChemistrySolutionSearch {
 	 * 
 	 * CHEMEXP-754--Filters-Clear all Filters
 	 */
+	@Test
 	public boolean validateClearAllFilters(Controller Application, HashMap<String, String> input) {
 		boolean flag = true;
 
@@ -2024,6 +2030,7 @@ public class ChemistrySolutionSearch {
 	 * 
 	 * CHEMEXP-756--Filters-Clicking on X from pill box
 	 */
+	@Test
 	public boolean validateFiltersClickingOnXFromPillBox(Controller Application, HashMap<String, String> input) {
 		boolean flag = true;
 
@@ -2165,7 +2172,7 @@ public class ChemistrySolutionSearch {
 		return flag;
 	}
 	/* CHEMEXP-757 */
-
+	@Test
 	public boolean validateSearchBarAndHighlightingTheFilterList(Controller Application,
 			HashMap<String, String> input) {
 		boolean flag = true;
@@ -2237,7 +2244,7 @@ public class ChemistrySolutionSearch {
 
 	/* CHEMEXP-763 */
 
-	@SuppressWarnings("unlikely-arg-type")
+	@Test
 	public boolean validatePillFilterBox(Controller Application, HashMap<String, String> input) {
 		boolean flag = true;
 		try {
@@ -2289,7 +2296,7 @@ public class ChemistrySolutionSearch {
 
 	// CHEMEXP-931
 
-	// @Test
+	@Test
 	public boolean validateClustermapBubbleResultset(Controller Application, HashMap<String, String> input) {
 		page_ChemicalSearchLandingPage = new Page_ChemicalSearchLandingPage(Application);
 		page_ChemicalSearchResults = new Page_ChemicalSearchResults(Application);
@@ -3474,15 +3481,6 @@ public class ChemistrySolutionSearch {
 			page_ChemicalSearchLandingPage.clickOnLinkSupportMenu();
 			page_ChemicalSearchLandingPage.setTextSearchTextBox(searchText);
 			page_ChemicalSearchLandingPage.clickOnSearchIcon();
-			/*
-			 * Application.waitUntilFectchRecordProgressBarToDisappears(); if
-			 * (page_ChemicalSearchResults.checkIfResultsFound()) {
-			 * Application.Logger.addsubStep(LogStatus.PASS,
-			 * "RESULT SET IS DISPLAYED FOR THE TEXT SEARCH", false); } else {
-			 * throw new Exception(
-			 * "Results set is not loaded for the chemical search"); }
-			 */
-			// Application.waitTime(2);
 			actualToastMsg = page_ChemicalSearchResults.getTextGuidedTipsToastMessage();
 			if (expToastMsg.equals(actualToastMsg)) {
 				Application.Logger.addsubStep(LogStatus.PASS,
@@ -3501,14 +3499,6 @@ public class ChemistrySolutionSearch {
 				Application.Logger.addsubStep(LogStatus.FAIL,
 						"GUIDED TIPS KEYWORD CUE IS NOT DISPLAYED IN THE TOP SECTION OF THE RS PAGE", true);
 			}
-
-		/*	if (page_ChemicalSearchResults.isDisplayedInsightsGuidedTipsKeywordCue()) {
-				Application.Logger.addsubStep(LogStatus.PASS,
-						"GUIDED TIPS KEYWORD CUE IN INSIGHTS SECTION IS SUCCESSFULLY DISPLAYED", false);
-			} else {
-				Application.Logger.addsubStep(LogStatus.FAIL,
-						"GUIDED TIPS KEYWORD CUE IN INSIGHTS SECTION IS NOT DISPLAYED", true);
-			}*/
 			page_ChemicalSearchResults.clickOnChemExpHomePage();
 			Application.Logger.endStep();
 
@@ -4162,7 +4152,7 @@ public class ChemistrySolutionSearch {
 			page_ChemicalSearchResults.manageFields().clickOnButtonApply();
 			Application.waitTime(2);
 			imgSize = page_ChemicalSearchResults.getTextImageSize(1);
-			if (imgSize.contains("150")) {
+			if (imgSize.contains("150px")) {
 				Application.Logger.addsubStep(LogStatus.PASS, "SMALL SIZE IMAGE IS DISPLAYED IN RS", false);
 			} else {
 				Application.Logger.addsubStep(LogStatus.FAIL, "SMALL SIZE IMAGE IS NOT DISPLAYED IN RS", true);
@@ -4184,7 +4174,7 @@ public class ChemistrySolutionSearch {
 			Application.waitTime(2);
 			imgSize = page_ChemicalSearchResults.getTextImageSize(1);
 			Application.waitTime(4);
-			if (imgSize.contains("204")) {
+			if (imgSize.contains("280px")) {
 				Application.Logger.addsubStep(LogStatus.PASS, "MEDIUM SIZE IMAGE IS DISPLAYED IN RS", false);
 			} else {
 				Application.Logger.addsubStep(LogStatus.FAIL, "MEDIUM SIZE IMAGE IS NOT DISPLAYED IN RS", true);
@@ -4205,7 +4195,7 @@ public class ChemistrySolutionSearch {
 			page_ChemicalSearchResults.manageFields().clickOnButtonApply();
 			Application.waitTime(2);
 			imgSize = page_ChemicalSearchResults.getTextImageSize(1);
-			if (imgSize.contains("244")) {
+			if (imgSize.contains("360px")) {
 				Application.Logger.addsubStep(LogStatus.PASS, "LARGE SIZE IMAGE IS DISPLAYED IN RS", false);
 			} else {
 				Application.Logger.addsubStep(LogStatus.FAIL, "LARGE SIZE IMAGE IS NOT DISPLAYED IN RS", true);
@@ -4460,6 +4450,7 @@ public class ChemistrySolutionSearch {
 				Application.Logger.addsubStep(LogStatus.FAIL, "RESULT SETS ARE NOT REFRESHED  : \t"
 						+ beforeMoreLikeFilter + "\t\t AFTER FILTER :\t" + afterMoreLikeFilter, true);
 			}
+			Application.waitTime(3);
 			if (rsLitTitle.equals(moreLikeLitTitle)) {
 				Application.Logger.addsubStep(LogStatus.PASS, "MORE LIKE LITERATURE TITLE IN THE KEYWORD : \t\t"
 						+ moreLikeLitTitle + "\t\t IS MATCHING WITH RS LITERATURE TITLE :\t" + rsLitTitle, false);
@@ -4568,6 +4559,7 @@ public class ChemistrySolutionSearch {
 					"DWPI TABLE SECTION SHOULD BE EXPANDED BY DEFAULT");
 			page_ChemicalSearchResults.clickOnTabPatent();
 			page_ChemicalSearchResults.tabPatentSearch().clickOnPatentRecord(1);
+			Application.waitTime(3);
 			if (page_ChemicalSearchResults.tabPatentSearch().isExpandedDwpiTable()) {
 				Application.Logger.addsubStep(LogStatus.PASS, "DWPI TABLE SECTION IS EXPANDED BY DEFAULT", false);
 			} else {
@@ -5996,7 +5988,7 @@ public class ChemistrySolutionSearch {
 		return flag;
 	}
 	//CHEMEXP-1291
-			@Test
+		@Test
 		public boolean validateStructureSearchAndLiteratureTab(Controller Application, HashMap<String, String> input) {
 				page_ChemicalSearchLandingPage = new Page_ChemicalSearchLandingPage(Application);
 				page_ChemicalSearchResults = new Page_ChemicalSearchResults(Application);
@@ -7136,7 +7128,6 @@ public boolean vaildatePDFPatentRecordView(Controller Application, HashMap<Strin
 	page_ChemicalSearchResults = new Page_ChemicalSearchResults(Application);
 	boolean flag = true;
 	String searchText = input.get("searchtext");
-	String CurrentWindowHandleID = Application.driver.getWindowHandle();
 	try {
 		Application.Logger.addStep("1.PERFORM A SEARCH WITH A PHARSE AND VERIFY THE RS PAGE","RS PAGE SHOULD BE DISPLAYED AFTER THE SUCCESSFUL SEARCH");
 		page_ChemicalSearchLandingPage.setTextSearchTextBox(searchText);
@@ -7152,17 +7143,22 @@ public boolean vaildatePDFPatentRecordView(Controller Application, HashMap<Strin
 		Application.Logger.addStep("2.VERIFY THAT PDF WINDOW IS OPENED SUCCESSFULLY FROM THE PATENT RECORD VIEW","SEPERATE PDF WINDOW SHOULD BE OPENED ON CLICK OF THE PDF ICON");
 		page_ChemicalSearchResults.tabPatentSearch().clickOnPatentRecord(1);
 		Application.waitTime(3);
-		String currentWindowHandleID=Application.driver.getWindowHandle();
-		Application.waitTime(2);
 		page_ChemicalSearchResults.tabPatentSearch().clickOnLinkPdf();
 		Application.waitTime(15);			
-		Application.switchToOtherWindow(currentWindowHandleID);
-		Application.waitTime(5);
-		if (Application.driver.getCurrentUrl().contains("blob"))
-			Application.Logger.addsubStep(LogStatus.PASS, "PDF window opens and Navigated to that successfully",
+		
+		Set<String> Ids = Application.driver.getWindowHandles();
+		ArrayList<String> al = new ArrayList<String>(Ids);
+		String MainID = al.get(0);
+		String ChildID = al.get(1);
+		System.out.println(MainID);
+		System.out.println(ChildID);
+		Application.driver.switchTo().window(ChildID);
+		
+		if (!MainID.equals(ChildID))
+			Application.Logger.addsubStep(LogStatus.PASS, "PDF window opened successfully",
 					false);
 		else
-			Application.Logger.addsubStep(LogStatus.FAIL, "PDF window opens has not opened", true);
+			Application.Logger.addsubStep(LogStatus.FAIL, "PDF window has not opened", true);
 		Application.Logger.endStep();
 
 } catch (Exception e) {
