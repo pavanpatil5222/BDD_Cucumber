@@ -27,7 +27,7 @@ public class Page_Login extends Controller {
 	WebElement btn_Login;
 	@FindBy(xpath="//*[@id='onetrust-accept-btn-handler']")
 	WebElement button_Cookies_AcceptAll;
-	@FindBy(xpath="//*[@id='onetrust-banner-sdk']")
+	@FindBy(xpath="//*[@id='onetrust-group-container']")
 	WebElement footer_banner;
 	
 	

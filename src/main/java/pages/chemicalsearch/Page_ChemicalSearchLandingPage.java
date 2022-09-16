@@ -59,7 +59,7 @@ public class Page_ChemicalSearchLandingPage extends Controller {
 	@FindBy(css = "span > span > mat-icon")
 	private WebElement btnSearchIcon;
 
-	@FindBy(xpath = " //textarea[@placeholder='Enter keywords, phrases or text blocks to search...']")
+	@FindBy(xpath = "//textarea[@data-placeholder='Enter keywords, phrases or text blocks to search...']")
 	private WebElement txtSearchBox;
 
 	@FindBy(xpath = "//*[@id='mat-hint-0']/span")
