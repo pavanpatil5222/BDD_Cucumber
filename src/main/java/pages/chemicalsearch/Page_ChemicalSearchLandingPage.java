@@ -77,7 +77,7 @@ public class Page_ChemicalSearchLandingPage extends Controller {
 	@FindBy(xpath = "//button/span[contains(text(),'Contact us')]")
 	private WebElement link_ContactUs;
 
-	@FindBy(xpath = "//textarea[contains(@placeholder,'How can we improve?')]")
+	@FindBy(xpath = "//textarea[contains(@data-placeholder,'How can we improve?')]")
 	private WebElement feedback_Textarea;
 
 	@FindBy(css = "#mat-slide-toggle-1-input")

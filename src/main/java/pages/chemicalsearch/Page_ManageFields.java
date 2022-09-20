@@ -81,7 +81,7 @@ public class Page_ManageFields extends Controller{
 	
 	public void clickOnRadioButtonDrawingSize(int radiobutton) throws Exception {
 		try {
-			WebElement radiobtn=controller.driver.findElement(By.xpath("//mat-radio-group/mat-radio-button["+radiobutton+"]/label/div[1]/input"));
+			WebElement radiobtn=controller.driver.findElement(By.xpath("//mat-radio-group/mat-radio-button["+radiobutton+"]/label/span[1]/input"));
 			if(!radiobtn.isSelected())
 			jsClick(radiobtn);
 			else
@@ -117,7 +117,8 @@ public class Page_ManageFields extends Controller{
 	
 	public List<String> getAllManageFieldsOptions() throws Exception{
 		try {
-			List<WebElement> options = driver.findElements(By.xpath("//div/mat-checkbox/label/span[not(contains(., 'Filler'))]"));
+		//	List<WebElement> options = driver.findElements(By.xpath("//div/mat-checkbox/label/span[not(contains(., 'Filler'))]"));
+			List<WebElement> options = driver.findElements(By.xpath("//mat-dialog-content/section[1]//label/span[2][not(contains(., 'Filler'))]"));
  			List<String> optionlabels =new ArrayList<String>();
  			
  			if(options.size() > 0) {
@@ -137,7 +138,7 @@ public class Page_ManageFields extends Controller{
 		try {
 			String check;
 			for (String expectedField : fields) {
-				WebElement manageFieldCheckBox = controller.driver.findElement(By.xpath("//span[@class='mat-checkbox-label'][contains(text(),'"+expectedField+"')]//preceding-sibling::div//input[@type='checkbox']"));
+				WebElement manageFieldCheckBox = controller.driver.findElement(By.xpath("//span[@class='mat-checkbox-label'][contains(text(),'"+expectedField+"')]//preceding-sibling::span//input[@type='checkbox']"));
 				check=controller.getElementAttribute(manageFieldCheckBox, "aria-checked");
 				if(check.contains("false"))						
 				{
@@ -160,7 +161,7 @@ public class Page_ManageFields extends Controller{
 		try {
 			String check;
 			for (String expectedField : fields) {
-				WebElement manageFieldCheckBox = controller.driver.findElement(By.xpath("//span[@class='mat-checkbox-label'][contains(text(),'"+expectedField+"')]//preceding-sibling::div//input[@type='checkbox']"));
+				WebElement manageFieldCheckBox = controller.driver.findElement(By.xpath("//span[@class='mat-checkbox-label'][contains(text(),'"+expectedField+"')]//preceding-sibling::span//input[@type='checkbox']"));
 				check=controller.getElementAttribute(manageFieldCheckBox, "aria-checked");
 				if(check.contains("true"))						
 				{
@@ -182,7 +183,7 @@ public class Page_ManageFields extends Controller{
 			String check;
 			List<String>ariacheck = new ArrayList<String>();
 			for (String expectedField : fields) {
-				WebElement manageFieldCheckBox = controller.driver.findElement(By.xpath("//span[@class='mat-checkbox-label'][contains(text(),'"+expectedField+"')]//preceding-sibling::div//input[@type='checkbox']"));
+				WebElement manageFieldCheckBox = controller.driver.findElement(By.xpath("//span[@class='mat-checkbox-label'][contains(text(),'"+expectedField+"')]//preceding-sibling::span//input[@type='checkbox']"));
 				check=controller.getElementAttribute(manageFieldCheckBox, "aria-checked");
 				ariacheck.add(check);	
 			}
