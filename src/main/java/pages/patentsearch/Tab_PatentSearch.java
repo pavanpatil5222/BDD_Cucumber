@@ -75,7 +75,7 @@ public class Tab_PatentSearch extends Controller {
 	@FindBy(xpath = "//app-record-view/section/div//mat-accordion/mat-expansion-panel[6]/mat-expansion-panel-header")
 	private WebElement citingPatentLinkAttribute;
 
-	@FindBy(xpath = "//app-result-paginator-bar/section/section/span/mat-checkbox/label/div/input")
+	@FindBy(xpath = "//app-result-paginator-bar/section/section[1]/span[1]/mat-checkbox/label/span[1]/input")
 	private WebElement globalCheckBox;
 	
 	@FindBy(xpath = "//div/mat-chip/div[2]/span[2]/span")
@@ -87,7 +87,7 @@ public class Tab_PatentSearch extends Controller {
 	@FindBy(xpath = "//app-result-paginator-bar//section//span[contains(@class , 'record-selected-txt')]")
 	private WebElement recordSelection;
 
-	@FindBy(xpath = "//section[@class='card-section ng-star-inserted']//mat-checkbox//div/input")
+	@FindBy(xpath = "//app-result-set[1]/section/section/div[1]/span[1]/mat-checkbox/label/span[1]/input")
 	private WebElement singleRecordCheckBox;
 
 	@FindBy(xpath = "//span[@class='mat-option-text']")
@@ -835,7 +835,7 @@ public class Tab_PatentSearch extends Controller {
 	            String nextRange = paginationValue[1].trim();
 	            int j = Integer.parseInt(nextRange);
 	            String firstRange = paginationValue[0].trim();
-	            String[] firstRangeAfterSplit = firstRange.split("–");
+	            String[] firstRangeAfterSplit = firstRange.split("�");
 	            //String[] firstRangeAfterSplit = firstRange.split("â€“");
 	            String valueForFirstRange = firstRangeAfterSplit[1].trim();
 	            int i = Integer.parseInt(valueForFirstRange);
@@ -1894,7 +1894,7 @@ public class Tab_PatentSearch extends Controller {
 	public void clickOnPYChartExpandCollapseIcon() throws Exception {
 		try {
 			controller.waitUntilElementIsDisplayed(linkPublicationYear);
-			linkPublicationYear.click();
+			jsClick(linkPublicationYear);
 		} catch (Exception e) {
 			throw new Exception("clickOnPYChartExpandCollapseIcon is not working" + e);
 		}

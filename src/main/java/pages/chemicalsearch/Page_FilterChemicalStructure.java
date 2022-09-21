@@ -26,13 +26,13 @@ import support.Controller;
 public class Page_FilterChemicalStructure extends Controller {
 
 
-	@FindBy(xpath = "//div[@class='mat-card-header-text']//mat-checkbox//label//div/input")
+	@FindBy(xpath = "//app-filter-structure-search-modal/div/div[1]/mat-dialog-content/div/div[1]/mat-card/mat-card-header/div[1]/mat-card-title/mat-checkbox/label/span[1]/input")
 	private WebElement singleStructureCheckbox;
 	
 	@FindBy(xpath = "//button/span[contains(.,' Apply filters ')]")
 	private WebElement btnApplyFilters;
 	
-	@FindBy(xpath = "//div[@class='structure-footer']//mat-checkbox//label//div/input")
+	@FindBy(xpath = "//app-filter-structure-search-modal/div/div[2]/app-result-paginator-bar/section/section[1]/span[1]/mat-checkbox/label/span[1]/input")
 	private WebElement globalStructureCheckbox;
 	
 	@FindBy(xpath = "//app-result-paginator-bar//section//span[contains(@class , 'modal-global-chkbox-text ng-star-inserted')]")

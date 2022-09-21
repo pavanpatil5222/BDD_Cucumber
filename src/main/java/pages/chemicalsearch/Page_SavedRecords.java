@@ -34,7 +34,7 @@ public class Page_SavedRecords extends Controller {
 	
 	@FindBy(xpath="//section[@class='new-folder ng-star-inserted']/div")
 	private WebElement folderErrorMessage;
-	@FindBy(xpath="//app-page-saved-records/section/section[2]/section/form/section/section[2]/section[1]/mat-checkbox/label/div/input")
+	@FindBy(xpath="//app-page-saved-records/section/section[2]/section/form/section/section[2]/section[1]/mat-checkbox/label/span[1]/input")
 	private WebElement globalCheckBox;
 	
 	@FindBy(xpath = "//section[2]/section/form/section/section[1]/section[1]/section[1]/section/div")
@@ -58,7 +58,7 @@ public class Page_SavedRecords extends Controller {
 	@FindBy(css = "button.cdx-but-md.cdx-but-link.mat-button.mat-button-base.mat-primary > span")
 	private WebElement btnSavedRecords;
 	
-	@FindBy(xpath="//section[@class='paginator-bar bgwhite ng-star-inserted']//mat-checkbox/label/div")
+	@FindBy(xpath="//app-page-saved-records/section/section[2]/section/form/section/section[2]/section[1]/mat-checkbox/label/span[1]/input")
 	private WebElement globalSavedRecordsCheckBox;
 	
 	@FindBy(xpath="//section[@class='paginator-bar bgwhite ng-star-inserted']//section[@class='actions']/button/span")

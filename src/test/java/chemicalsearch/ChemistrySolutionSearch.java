@@ -1829,8 +1829,7 @@ public class ChemistrySolutionSearch {
 				Application.Logger.addsubStep(LogStatus.PASS, "max record that can display is 1000", false);
 			else
 				Application.Logger.addsubStep(LogStatus.FAIL, "max record that can display is not 1000", true);
-
-			page_ChemicalSearchResults.tabPatentSearch().selectItemsPerPageFromDropDown("100");
+			
 			page_ChemicalSearchResults.tabPatentSearch().clickOnArrowNextPageTillLastPage();
 
 			if (page_ChemicalSearchResults.tabPatentSearch().isDisabledNextPageArrow())
@@ -2268,7 +2267,7 @@ public class ChemistrySolutionSearch {
 			Application.waitUntilFectchRecordProgressBarToDisappears();
 			Application.waitTime(2);
 			if (page_ChemicalSearchResults.tabPatentSearch().isEnabledButtonClearAll()) {
-				Application.waitTime(2);
+				Application.waitTime(4);
 				Application.Logger.addsubStep(LogStatus.PASS, "ClearAll button is in enable mode", false);
 			} else {
 				Application.Logger.addsubStep(LogStatus.FAIL, "ClearAll button is in disable mode", true);
@@ -3607,8 +3606,7 @@ public class ChemistrySolutionSearch {
 			} else {
 				Application.Logger.addsubStep(LogStatus.FAIL, "PUBLICATION YEAR CHART IS NOT COLLAPSED", true);
 			}
-			Application.Logger.endStep();
-					page_ChemicalSearchResults.clickOnTabLiterature();
+			/*	page_ChemicalSearchResults.clickOnTabLiterature();
 			Application.waitUntilFectchRecordProgressBarToDisappears();
 			if (page_ChemicalSearchResults.tabLiteratureSearch().isDisplayedPublicationYearChartExpanded()) {
 				Application.Logger.addsubStep(LogStatus.PASS,
@@ -3618,7 +3616,7 @@ public class ChemistrySolutionSearch {
 						"PUBLICATION YEAR CHART IN LITERATURE TAB IS NOT DISPLAYED IN EXPANDED STATE", true);
 			}
 			page_ChemicalSearchResults.clickOnTabPatent();
-			Application.waitUntilFectchRecordProgressBarToDisappears();
+			Application.waitUntilFectchRecordProgressBarToDisappears();*/
 			if (!page_ChemicalSearchResults.tabPatentSearch().isDisplayedPublicationYearChartExpanded()) {
 				Application.Logger.addsubStep(LogStatus.PASS,
 						"PUBLICATION YEAR CHART REMAINS IN COLLAPSED STATE WHILE SWICTHING BETWEEN THE PATENT AND LITERATURE TABS AND SESSION IS STICKY",
@@ -5578,8 +5576,9 @@ public class ChemistrySolutionSearch {
 			Application.Logger.addStep("3.CLICK ON SEE ALL STRUCTURES LINK",
 					"FILTERCHEMICALSTRUCTUREMODAL IS DISPLAYED");
 			int resultsCount = page_ChemicalSearchResults.getResultsCount();
-			page_ChemicalSearchResults.tabPatentSearch().clickOnLinkSeeAllStructures();
 			Application.waitTime(2);
+			page_ChemicalSearchResults.tabPatentSearch().clickOnLinkSeeAllStructures();
+			Application.waitTime(4);
 			if (page_ChemicalSearchResults.tabPatentSearch().isDisplayedfilterChemicalStructureModal()) {
 				Application.Logger.addsubStep(LogStatus.PASS, "filterChemicalStructureModal is DISPLAYED ", false);
 			} else {
@@ -6742,7 +6741,7 @@ public boolean vaildateCompanyPeopleSearch(Controller Application, HashMap<Strin
 		}
 		Application.Logger.endStep();
 		
-		Application.Logger.addStep("6. VERIFY RESULT SET IS DISPLAYED FOR SEARCH ", "RESULT SET SHOULD BE DISPLAYED");
+		/*Application.Logger.addStep("6. VERIFY RESULT SET IS DISPLAYED FOR SEARCH ", "RESULT SET SHOULD BE DISPLAYED");
 		page_ChemicalSearchResults.clickOnTabLiterature();
 		Application.waitUntilFectchRecordProgressBarToDisappears();			
 		if (page_ChemicalSearchResults.checkIfResultsFound()) {
@@ -6766,7 +6765,7 @@ public boolean vaildateCompanyPeopleSearch(Controller Application, HashMap<Strin
 			Application.Logger.addsubStep(LogStatus.INFO,"LANDING PAGE PILLS: " + pillsAtLandingPage.size() + pillsAtLandingPage,false);
 			Application.Logger.addsubStep(LogStatus.INFO, "LITERATURE RESULT SET PAGE PILLS:: "+ pillsAtLitResultSetPage.size() + pillsAtLitResultSetPage, false);
 		}
-		Application.Logger.endStep();
+		Application.Logger.endStep();*/
 		
 	} catch (Exception e) {
 		Application.Logger.addException(e.getMessage());

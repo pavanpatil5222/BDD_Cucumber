@@ -54,7 +54,7 @@ public class Page_ChemicalSearchResults extends Controller{
 	@FindBy(css="body > div.cdk-overlay-container > div > div")
 	private WebElement personToastMsg;
 	
-	@FindBy(xpath="//app-result-paginator-bar/section/section[1]/span[1]/mat-checkbox/label/div/input")
+	@FindBy(xpath="//app-result-paginator-bar/section/section[1]/span[1]/mat-checkbox/label/span[1]/input")
 	private WebElement globalCheckBox;
 	
 	@FindBy(xpath="//div/div[1]/section[3]/section/button/span/span")
