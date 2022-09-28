@@ -835,7 +835,7 @@ public class Tab_PatentSearch extends Controller {
 	            String nextRange = paginationValue[1].trim();
 	            int j = Integer.parseInt(nextRange);
 	            String firstRange = paginationValue[0].trim();
-	            String[] firstRangeAfterSplit = firstRange.split("�");
+	            String[] firstRangeAfterSplit = firstRange.split("–");
 	            //String[] firstRangeAfterSplit = firstRange.split("â€“");
 	            String valueForFirstRange = firstRangeAfterSplit[1].trim();
 	            int i = Integer.parseInt(valueForFirstRange);
