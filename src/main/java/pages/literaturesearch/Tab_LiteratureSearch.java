@@ -944,11 +944,11 @@ public void clickOnLinkPdf() throws Exception {
 
 		}
 	} catch (Exception ex) {
-		throw new Exception(" Literature clickOnlink pdf is not working" + ex);
+		throw new Exception("clickOnlink pdf is not working" + ex);
 	}
 }
 
-public boolean moushoverOnPDFNotAvailable() throws Exception {
+public boolean mousehoverOnPdfNotAvailable() throws Exception {
 	try {
 		WebElement pdfLink = driver.findElement(By.xpath("(//button[@title='Original document not available']//span//mat-icon[@svgicon='pdf_grayed'])[1]"));
 		boolean result = pdfLink.getAttribute("svgicon").contains("pdf_grayed");
@@ -958,7 +958,7 @@ public boolean moushoverOnPDFNotAvailable() throws Exception {
 	}
 }
 
-public void clickOnRVLinkPdf() throws Exception {
+public void clickOnRvLinkPdf() throws Exception {
 	try {
 		WebElement pdfLink = driver.findElement(By.xpath("//a[@title='Fulltext at publisher']"));
 		pdfLink.click();
