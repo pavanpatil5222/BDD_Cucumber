@@ -934,7 +934,7 @@ public void clickOnFirstBubble() throws Exception {
 	}
 }
 
-public void clickOnLiteratureLinkPdf() throws Exception {
+public void clickOnLinkPdf() throws Exception {
 	try {
 		List<WebElement> listOfPdfLink = driver.findElements(By.cssSelector("section:nth-child(3) > div:nth-child(1) > div:nth-child(3) > button:nth-child(1) > span:nth-child(1) > a:nth-child(1)"));
 		for(WebElement firstLink:listOfPdfLink) {
@@ -948,7 +948,7 @@ public void clickOnLiteratureLinkPdf() throws Exception {
 	}
 }
 
-public boolean MoushoverOnPDFNotAvailable() throws Exception {
+public boolean moushoverOnPDFNotAvailable() throws Exception {
 	try {
 		WebElement pdfLink = driver.findElement(By.xpath("(//button[@title='Original document not available']//span//mat-icon[@svgicon='pdf_grayed'])[1]"));
 		boolean result = pdfLink.getAttribute("svgicon").contains("pdf_grayed");
@@ -958,7 +958,7 @@ public boolean MoushoverOnPDFNotAvailable() throws Exception {
 	}
 }
 
-public void clickOnLinkPdf() throws Exception {
+public void clickOnRVLinkPdf() throws Exception {
 	try {
 		WebElement pdfLink = driver.findElement(By.xpath("//a[@title='Fulltext at publisher']"));
 		pdfLink.click();
@@ -966,10 +966,6 @@ public void clickOnLinkPdf() throws Exception {
 		throw new Exception("clickOnlink pdf is not working" + ex);
 	}
 }
-
-
-
-
 
 public boolean isCollapsedCitingLiterature() throws Exception {
 	try {

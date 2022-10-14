@@ -2734,8 +2734,21 @@ public void clickOnAnnotationCloseIcon() throws Exception {
 	}
 }
 
-
 public void clickOnLinkPdf() throws Exception {
+	try {
+		List<WebElement> listOfPdfLink = driver.findElements(By.cssSelector("section > div > span:nth-child(4) > button > span > mat-icon"));
+		for(WebElement firstLink:listOfPdfLink) {
+			super.jsClick(firstLink);
+			controller.waitTime(3);
+			break;
+			
+		}
+		} catch (Exception ex) {
+		throw new Exception("Patent clickOnlink pdf is not working" + ex);
+	}
+}
+
+public void clickOnRVLinkPdf() throws Exception {
 	try {
 		List<WebElement> listOfPdfLink = driver.findElements(By.cssSelector("tbody > tr > td:nth-child(5) > button > span > mat-icon"));
 		for(WebElement firstLink:listOfPdfLink) {

@@ -20,6 +20,7 @@ import pages.chemicalsearch.Page_ChemicalSearchResults;
 import pages.chemicalsearch.Page_History;
 import pages.chemicalsearch.Page_SavedRecords;
 import pages.literaturesearch.Tab_LiteratureSearch;
+import pages.patentsearch.Tab_PatentSearch;
 import support.Controller;
 import utils.TestUtil;
 
@@ -35,6 +36,7 @@ public class ChemistrySolutionSearch {
 	Page_SavedRecords page_SavedRecords;
 	Page_History page_History;
 	Tab_LiteratureSearch Tab_LiteratureSearch;
+	Tab_PatentSearch Tab_PatentSearch;
 
 	/** CHEMEXP-739 */
 	@Test
@@ -1548,6 +1550,7 @@ public class ChemistrySolutionSearch {
 					"USER SHOULD BE TAKEN TO THE RESULTS SET PAGE AND PDF SHOULD GET GENERATED");
 			page_ChemicalSearchLandingPage = new Page_ChemicalSearchLandingPage(Application);
 			page_ChemicalSearchResults = new Page_ChemicalSearchResults(Application);
+			Tab_PatentSearch = new Tab_PatentSearch(Application);
 			String searchText = input.get("searchtext");
 			page_ChemicalSearchLandingPage.setSearchText(searchText);
 			page_ChemicalSearchLandingPage.clickOnSearchIcon();
@@ -1559,7 +1562,7 @@ public class ChemistrySolutionSearch {
 			Application.Logger.endStep();
 			
 			Application.Logger.addStep("2.Click on PDF", "PDF is not available message displays");
-			page_ChemicalSearchResults.clickOnPatentLinkPdf();
+			Tab_PatentSearch.clickOnLinkPdf();
 			Application.waitTime(12);
 			//Application.switchToOtherWindow(CurrentWindowHandleID);
 			Set<String> Ids = Application.driver.getWindowHandles();
@@ -1586,7 +1589,7 @@ public class ChemistrySolutionSearch {
 			Application.waitUntilFectchRecordProgressBarToDisappears();
 			page_ChemicalSearchResults.clickOnTabLiterature();
 			Application.waitUntilFectchRecordProgressBarToDisappears();
-			if(page_ChemicalSearchResults.tabLiteratureSearch().MoushoverOnPDFNotAvailable()==true)
+			if(page_ChemicalSearchResults.tabLiteratureSearch().moushoverOnPDFNotAvailable()==true)
 			{
 				Application.Logger.addsubStep(LogStatus.PASS,"PDF is not available", false);
 			}
@@ -1707,6 +1710,7 @@ public class ChemistrySolutionSearch {
 			page_ChemicalSearchLandingPage = new Page_ChemicalSearchLandingPage(Application);
 			page_ChemicalSearchResults = new Page_ChemicalSearchResults(Application);
 			Tab_LiteratureSearch = new Tab_LiteratureSearch(Application);
+			Tab_PatentSearch = new Tab_PatentSearch(Application);
 			String searchText = input.get("searchtext");
 			page_ChemicalSearchLandingPage.setSearchText(searchText);
 			page_ChemicalSearchLandingPage.clickOnSearchIcon();
@@ -1717,7 +1721,7 @@ public class ChemistrySolutionSearch {
 				throw new Exception("Results set is not loaded for the chemical search");
 			}
 			Application.waitTime(4);
-			page_ChemicalSearchResults.clickOnPatentLinkPdf();
+			Tab_PatentSearch.clickOnLinkPdf();
 			Application.waitTime(20);
 			
 			Set<String> Ids = Application.driver.getWindowHandles();
@@ -1740,7 +1744,7 @@ public class ChemistrySolutionSearch {
 		Application.driver.switchTo().window(MainID);
 		Application.waitTime(2);
 		page_ChemicalSearchResults.clickOnTabLiterature();
-		Tab_LiteratureSearch.clickOnLiteratureLinkPdf();
+		Tab_LiteratureSearch.clickOnLinkPdf();;
 		Application.waitTime(10);
 
 		Set<String> Ids1 = Application.driver.getWindowHandles();
@@ -7199,7 +7203,7 @@ public boolean vaildatePDFFromRecordView(Controller Application, HashMap<String,
 				"SEPERATE PDF WINDOW SHOULD BE OPENED ON CLICK OF THE PDF ICON");
 		page_ChemicalSearchResults.tabPatentSearch().clickOnPatentRecord(1);
 		Application.waitTime(3);
-		page_ChemicalSearchResults.tabPatentSearch().clickOnLinkPdf();
+		page_ChemicalSearchResults.tabPatentSearch().clickOnRVLinkPdf();
 		Application.waitTime(15);			
 		
 		Set<String> Ids = Application.driver.getWindowHandles();
@@ -7223,7 +7227,7 @@ public boolean vaildatePDFFromRecordView(Controller Application, HashMap<String,
 		page_ChemicalSearchResults.clickOnTabLiterature();
 		page_ChemicalSearchResults.tabLiteratureSearch().clickOnLiteratureRecord(1);
 		Application.waitTime(3);
-		page_ChemicalSearchResults.tabLiteratureSearch().clickOnLinkPdf();;
+		page_ChemicalSearchResults.tabLiteratureSearch().clickOnRVLinkPdf();
 		Application.waitTime(5);
 		Set<String> Ids1 = Application.driver.getWindowHandles();
 		ArrayList<String> al1 = new ArrayList<String>(Ids1);
