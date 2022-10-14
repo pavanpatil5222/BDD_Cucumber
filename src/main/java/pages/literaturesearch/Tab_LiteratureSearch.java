@@ -13,7 +13,7 @@ import com.relevantcodes.extentreports.LogStatus;
 import support.Controller;
 /**
  * 
- * @author Anand/Rashmi
+ * @author Anand/Rashmi/Pavan
  *
  */
 public class Tab_LiteratureSearch extends Controller{
@@ -171,7 +171,8 @@ public class Tab_LiteratureSearch extends Controller{
 	@FindBy(xpath="//button[@class='mat-focus-indicator decrement-btn mat-icon-button mat-button-base']")
     private WebElement publicationYearLeftArrow;
 	
-	@FindBy(xpath="//button[@class='mat-focus-indicator increment-btn mat-icon-button mat-button-base']")
+	//@FindBy(xpath="//button[@class='mat-focus-indicator increment-btn mat-icon-button mat-button-base']")
+	@FindBy(xpath = "//button//span//mat-icon[text()=' chevron_right ']")
     private WebElement publicationYearRightArrow;
 	
 	@FindBy(xpath="//div[contains(text(),'Publication year')]/ancestor::mat-expansion-panel-header")
@@ -179,6 +180,40 @@ public class Tab_LiteratureSearch extends Controller{
 	
 	@FindBy(xpath="//div[@class='publ-year-chart']")
     private WebElement publicationYearFilterDisable;
+	
+	@FindBy(xpath = "//mat-expansion-panel-header[@id='mat-expansion-panel-header-18']")
+	private WebElement citingLiteratureLinkAttribute;
+
+	@FindBy(xpath = "//mat-expansion-panel//mat-expansion-panel-header//span//mat-panel-title[contains(text(),' Citing literature ')]")
+	private WebElement citingLiteratureLinkCount;
+
+	@FindBy(xpath = "//span/mat-panel-title[contains(text(),' Citing literature ')]")
+	private WebElement citingLiteratureLink;
+
+	@FindBy(xpath = "//mat-expansion-panel-header[@id='mat-expansion-panel-header-19']")
+	private WebElement citedLiteratureLinkAttribute;
+
+	@FindBy(xpath = "//mat-expansion-panel//mat-expansion-panel-header//span//mat-panel-title[contains(text(),' Cited literature ')]")
+	private WebElement citedLiteratureLinkCount;
+
+	@FindBy(xpath = "//span/mat-panel-title[contains(text(),' Cited literature ')]")
+	private WebElement citedLiteratureLink;
+
+	@FindBy(xpath = "(//table[contains(@class, 'citation-family')])[1]//tbody[1]//tr[4]//td[1]//span[2]")
+	private WebElement citingTitle;
+
+	@FindBy(xpath = "(//table[contains(@class, 'citation-family')])[2]//tbody[1]//tr[4]//td[1]//span[2]")
+	private WebElement citedTitle;
+
+	@FindBy(xpath = "//app-record-view/section/div/div[1]/div[1]/div")
+	private WebElement LitRecordViewTitle;	
+	
+	@FindBy(xpath="(//div//button[@title='View as result set'])[1]")
+	private WebElement citingLiteratureViewAsResultSet;
+
+	@FindBy(xpath="(//div//button[@title='View as result set'])[2]")
+	private WebElement citedLiteratureViewAsResultSet;
+	
 		
 	public Tab_LiteratureSearch(Controller controller) {
 	super(controller);
@@ -597,7 +632,7 @@ public class Tab_LiteratureSearch extends Controller{
 	public void clickOnPYChartExpandCollapseIcon() throws Exception {
 		try {
 			controller.waitUntilElementIsDisplayed(linkPublicationYear);
-			linkPublicationYear.click();				
+			jsClick(linkPublicationYear);
 		} catch (Exception e) {
 			throw new Exception("clickOnPYChartExpandCollapseIcon is not working" + e);
 		}
@@ -606,9 +641,13 @@ public class Tab_LiteratureSearch extends Controller{
 	public void clickOnPYChartLeftArrow() throws Exception {
 		try {
 			controller.waitUntilElementIsDisplayed(publicationYearLeftArrow);
-			String color = controller.getElementAttribute(publicationYearLeftArrow, "style");
-			if(color.contains("black"))
-			publicationYearLeftArrow.click();				
+//			String color = controller.getElementAttribute(publicationYearLeftArrow, "style");
+//			if(color.contains("black"))
+//			publicationYearLeftArrow.click();
+			
+			Actions act = new Actions(driver);
+			act.click(publicationYearLeftArrow).perform();
+			
 		} catch (Exception e) {
 			throw new Exception("clickOnPYChartLeftArrow is not working" + e);
 		}
@@ -617,8 +656,8 @@ public class Tab_LiteratureSearch extends Controller{
 	public boolean isEnabledPYChartRightArrow() throws Exception {
 		try {
 			controller.waitUntilElementIsDisplayed(publicationYearRightArrow);
-			String color = controller.getElementAttribute(publicationYearRightArrow, "class");
-			if(color.contains("mat-focus-indicator increment-btn mat-icon-button mat-button-base"))
+			String color = controller.getElementAttribute(publicationYearRightArrow, "aria-hidden");
+			if(color.contains("true"))
 			{
 			return true;
 			}
@@ -653,7 +692,7 @@ public class Tab_LiteratureSearch extends Controller{
 	public boolean isDisabledPYChartRightArrow() throws Exception {
 		try {
 			controller.waitUntilElementIsDisplayed(publicationYearRightArrow);
-			String color = controller.getElementAttribute(publicationYearRightArrow, "disabled");
+			String color = controller.getElementAttribute(publicationYearRightArrow, "aria-hidden");
 			if(color.contains("true"))
 			{
 			return true;
@@ -894,4 +933,185 @@ public void clickOnFirstBubble() throws Exception {
 		throw new Exception("clickOnFirstBubble is not working" + ex);
 	}
 }
+
+public void clickOnLiteratureLinkPdf() throws Exception {
+	try {
+		List<WebElement> listOfPdfLink = driver.findElements(By.cssSelector("section:nth-child(3) > div:nth-child(1) > div:nth-child(3) > button:nth-child(1) > span:nth-child(1) > a:nth-child(1)"));
+		for(WebElement firstLink:listOfPdfLink) {
+			super.jsClick(firstLink);
+			controller.waitTime(3);
+			break;
+
+		}
+	} catch (Exception ex) {
+		throw new Exception(" Literature clickOnlink pdf is not working" + ex);
+	}
+}
+
+public boolean MoushoverOnPDFNotAvailable() throws Exception {
+	try {
+		WebElement pdfLink = driver.findElement(By.xpath("(//button[@title='Original document not available']//span//mat-icon[@svgicon='pdf_grayed'])[1]"));
+		boolean result = pdfLink.getAttribute("svgicon").contains("pdf_grayed");
+		return result;
+	} catch (Exception ex) {
+		throw new Exception("MousehoverOnlink pdf is not working" + ex);
+	}
+}
+
+public void clickOnLinkPdf() throws Exception {
+	try {
+		WebElement pdfLink = driver.findElement(By.xpath("//a[@title='Fulltext at publisher']"));
+		pdfLink.click();
+	} catch (Exception ex) {
+		throw new Exception("clickOnlink pdf is not working" + ex);
+	}
+}
+
+
+
+
+
+public boolean isCollapsedCitingLiterature() throws Exception {
+	try {
+		String collapse;
+		waitUntilElementIsDisplayed(citingLiteratureLinkAttribute);
+		collapse = controller.getElementAttribute(citingLiteratureLinkAttribute, "aria-expanded");
+		if (collapse.equals("false"))
+			return true;
+		else
+			return false;
+	} catch (Exception e) {
+		throw new Exception("isCollapsedCitingLiterature is not working" + e);
+	}
+}
+
+public boolean isCollapsedCitedLiterature() throws Exception {
+	try {
+		String collapse;
+		waitUntilElementIsDisplayed(citedLiteratureLinkAttribute);
+		collapse = controller.getElementAttribute(citedLiteratureLinkAttribute, "aria-expanded");
+		if (collapse.equals("false"))
+			return true;
+		else
+			return false;
+	} catch (Exception e) {
+		throw new Exception("isCollapsedCitingLiterature is not working" + e);
+	}
+}
+
+public void clickOnLinkCitingLiterature() throws Exception {
+	try {
+		int count;
+		waitUntilElementIsDisplayed(citingLiteratureLinkCount);
+		String totaltxt = getText(citingLiteratureLinkCount).trim();
+		totaltxt = totaltxt.replace("(", "").replaceAll("[\\D]", "");
+		totaltxt = totaltxt.replace(")", "").replaceAll("[\\D]", "");
+		count = Integer.parseInt(totaltxt);
+		if (count == 0) {
+			controller.Logger.Logger.log(LogStatus.INFO, "CITING LITERATURE SECTION IS IN DISABLED STATE");
+		} else {
+			jsClick(citingLiteratureLink);
+		}
+	} catch (Exception ex) {
+		throw new Exception("clickOnLinkCitingLiterature is not working" + ex);
+	}
+}
+
+public boolean isExpandedCitingLiterature() throws Exception {
+	try {
+		String collapse;
+		waitUntilElementIsDisplayed(citingLiteratureLinkAttribute);
+		collapse = controller.getElementAttribute(citingLiteratureLinkAttribute, "aria-expanded");
+		if (collapse.equals("true"))
+			return true;
+		else
+			return false;
+	} catch (Exception e) {
+		throw new Exception("isExpandedCitingLiterature is not working" + e);
+	}
+}
+
+public void clickOnLinkCitedLiterature() throws Exception {
+	try {
+		int count;
+		waitUntilElementIsDisplayed(citedLiteratureLinkCount);
+		String totaltxt = getText(citedLiteratureLinkCount).trim();
+		totaltxt = totaltxt.replace("(", "").replaceAll("[\\D]", "");
+		totaltxt = totaltxt.replace(")", "").replaceAll("[\\D]", "");
+		count = Integer.parseInt(totaltxt);
+		if (count == 0) {
+			controller.Logger.Logger.log(LogStatus.INFO, "CITING LITERATURE SECTION IS IN DISABLED STATE");
+		} else {
+			jsClick(citedLiteratureLink);
+		}
+	} catch (Exception ex) {
+		throw new Exception("clickOnLinkCitedLiterature is not working" + ex);
+	}
+}
+
+public boolean isExpandedCitedLiterature() throws Exception {
+	try {
+		String collapse;
+		waitUntilElementIsDisplayed(citedLiteratureLinkAttribute);
+		collapse = controller.getElementAttribute(citedLiteratureLinkAttribute, "aria-expanded");
+		if (collapse.equals("true"))
+			return true;
+		else
+			return false;
+	} catch (Exception e) {
+		throw new Exception("isExpandedCitedLiterature is not working" + e);
+	}
+}
+
+public String getTextCitingTitle() throws Exception {
+	waitUntilElementIsDisplayed(citingTitle);
+	return controller.getText(citingTitle);
+}
+
+public void clickOnCitingLiteratureTitle() throws Exception {
+	try {
+		waitUntilElementIsDisplayed(citingTitle);
+		jsClick(citingTitle);
+	} catch (Exception ex) {
+		throw new Exception("clickOnCitingLiteratureTitle is not working" + ex);
+	}
+}
+
+public String getTextLiteratureRecordViewTitle() throws Exception {
+	waitUntilElementIsDisplayed(LitRecordViewTitle);
+	return controller.getText(LitRecordViewTitle);
+}
+
+public String getTextCitedTitle() throws Exception {
+	waitUntilElementIsDisplayed(citedTitle);
+	return controller.getText(citedTitle);
+}
+
+public void clickOnCitedLiteratureTitle() throws Exception {
+	try {
+		waitUntilElementIsDisplayed(citedTitle);
+		jsClick(citedTitle);
+	} catch (Exception ex) {
+		throw new Exception("clickOnCitedLiteratureTitle is not working" + ex);
+	}
+}
+
+public void clickOnCitingLiteratureViewASResultSet() throws Exception {
+	try {
+		waitUntilElementIsDisplayed(citingLiteratureViewAsResultSet);
+		jsClick(citingLiteratureViewAsResultSet);
+	} catch (Exception ex) {
+		throw new Exception("clickOnCitingLiteratureViewASResultSet is not working" + ex);
+	}
+}
+
+public void clickOnCitedLiteratureViewASResultSet() throws Exception {
+	try {
+		waitUntilElementIsDisplayed(citedLiteratureViewAsResultSet);
+		jsClick(citedLiteratureViewAsResultSet);
+	} catch (Exception ex) {
+		throw new Exception("clickOnCitedLiteratureViewASResultSet is not working" + ex);
+	}
+}
+
 }

@@ -23,7 +23,8 @@ import support.Controller;
 public class Tab_PatentSearch extends Controller {
 
 
-	@FindBy(xpath = "//span[contains(.,'Customize')]")
+	//@FindBy(xpath = "//span[contains(.,'Customize')]")
+	@FindBy(xpath = "//span[text()=' Customize ']")
 	private WebElement linkCustomize;
 	
 	@FindBy(xpath = "//div[@class='chart']//*[name()='svg']//*[name()='circle']")
@@ -49,11 +50,12 @@ public class Tab_PatentSearch extends Controller {
 	
 	@FindBy(xpath="//mat-expansion-panel[6]/div/div/div/button")
     private WebElement citingPatentViewAsResultSet;
+	
 	@FindBy(xpath = "//section/div[2]/div[2]/mat-paginator/div/div/div/button[2]")
 	private WebElement imgViewerArrowNextPage;
+	
 	@FindBy(xpath = "//section/div[2]/div[2]/mat-paginator/div/div/div/button[1]")
 	private WebElement imgViewerArrowPrevPage;
-	
 	
 	@FindBy(css = "div:nth-child(2) > div:nth-child(2) > mat-paginator > div > div > div > div")
 	private WebElement paginatorRange;
@@ -614,7 +616,6 @@ public class Tab_PatentSearch extends Controller {
 
 	public void clickOnLinkFilters() throws Exception {
 		try {
-			// super.waitUntilElementIsDisplayed(btnClearAll);
 			super.jsClick(linkFilters);
 		} catch (Exception ex) {
 			throw new Exception("clickOnlink Filters is not working" + ex);
