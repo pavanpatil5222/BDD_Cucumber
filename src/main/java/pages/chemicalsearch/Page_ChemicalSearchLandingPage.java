@@ -444,12 +444,13 @@ public class Page_ChemicalSearchLandingPage extends Controller {
 	public void setTextSmileyTextBox(String value) throws Exception {
 		try {
 			waitUntilElementIsDisplayed(txtSmiley);
+			controller.waitTime(2);
 			click(txtSmiley);
 			setText(txtSmiley, value);
-			controller.waitTime(4);
+			controller.waitTime(10);
 			Actions action = new Actions(driver);
 			action.moveToElement(firstStructureName).click().build().perform();
-			controller.waitTime(4);
+			controller.waitTime(6);
 			} catch (Exception e) {
 			throw new Exception("setTextSmileyTextBox is not working.." + e);
 		}

@@ -1114,6 +1114,21 @@ public class Page_ChemicalSearchResults extends Controller{
 			}
 		}
 	 
+	 public void ClickOnPubYearFilterCheckbox() throws Exception
+	 {
+		 try
+		 {
+			WebElement Linkpubyear = driver.findElement(By.xpath("//div[text()='Publication year']"));
+			Linkpubyear.click();
+			WebElement pubyrcheckboc = driver.findElement(By.xpath("//label[@for='flt-3-0']"));
+			pubyrcheckboc.click();
+		 }
+		 catch(Exception ex)
+		 {
+			 throw new Exception("Click on publication year checkbox not working" + ex);
+		 }
+	 }
+	 
 	
 	 public void clickOnChemicalStructureFilterCheckbox(String filtersName,int chkboxPostion) throws Exception {
 			try {
@@ -1363,20 +1378,6 @@ public void selectTemplateFromTemplateDropDown(String templateName) throws Excep
 		driver.switchTo().defaultContent();
 	} catch (Exception e) {
 		throw new Exception("selectTemplateFromTemplateDropDown is not loaded respective template" + e);
-	}
-}
-
-public void clickOnLinkPdf() throws Exception {
-	try {
-		List<WebElement> listOfPdfLink = driver.findElements(By.cssSelector("section > div > span:nth-child(4) > button > span > mat-icon"));
-		for(WebElement firstLink:listOfPdfLink) {
-			super.jsClick(firstLink);
-			controller.waitTime(3);
-			break;
-			
-		}
-		} catch (Exception ex) {
-		throw new Exception("clickOnlink pdf is not working" + ex);
 	}
 }
 

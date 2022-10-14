@@ -23,7 +23,8 @@ import support.Controller;
 public class Tab_PatentSearch extends Controller {
 
 
-	@FindBy(xpath = "//span[contains(.,'Customize')]")
+	//@FindBy(xpath = "//span[contains(.,'Customize')]")
+	@FindBy(xpath = "//span[text()=' Customize ']")
 	private WebElement linkCustomize;
 	
 	@FindBy(xpath = "//div[@class='chart']//*[name()='svg']//*[name()='circle']")
@@ -49,11 +50,12 @@ public class Tab_PatentSearch extends Controller {
 	
 	@FindBy(xpath="//mat-expansion-panel[6]/div/div/div/button")
     private WebElement citingPatentViewAsResultSet;
+	
 	@FindBy(xpath = "//section/div[2]/div[2]/mat-paginator/div/div/div/button[2]")
 	private WebElement imgViewerArrowNextPage;
+	
 	@FindBy(xpath = "//section/div[2]/div[2]/mat-paginator/div/div/div/button[1]")
 	private WebElement imgViewerArrowPrevPage;
-	
 	
 	@FindBy(css = "div:nth-child(2) > div:nth-child(2) > mat-paginator > div > div > div > div")
 	private WebElement paginatorRange;
@@ -614,7 +616,6 @@ public class Tab_PatentSearch extends Controller {
 
 	public void clickOnLinkFilters() throws Exception {
 		try {
-			// super.waitUntilElementIsDisplayed(btnClearAll);
 			super.jsClick(linkFilters);
 		} catch (Exception ex) {
 			throw new Exception("clickOnlink Filters is not working" + ex);
@@ -2733,8 +2734,21 @@ public void clickOnAnnotationCloseIcon() throws Exception {
 	}
 }
 
-
 public void clickOnLinkPdf() throws Exception {
+	try {
+		List<WebElement> listOfPdfLink = driver.findElements(By.cssSelector("section > div > span:nth-child(4) > button > span > mat-icon"));
+		for(WebElement firstLink:listOfPdfLink) {
+			super.jsClick(firstLink);
+			controller.waitTime(3);
+			break;
+			
+		}
+		} catch (Exception ex) {
+		throw new Exception("clickOnlink pdf is not working" + ex);
+	}
+}
+
+public void clickOnRvLinkPdf() throws Exception {
 	try {
 		List<WebElement> listOfPdfLink = driver.findElements(By.cssSelector("tbody > tr > td:nth-child(5) > button > span > mat-icon"));
 		for(WebElement firstLink:listOfPdfLink) {
