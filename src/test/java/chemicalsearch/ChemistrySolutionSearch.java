@@ -7546,7 +7546,7 @@ public boolean validateSearchistoryFuntionality(Controller Application, HashMap<
 				Application.Logger.addsubStep(LogStatus.FAIL, "CITED LITERATURE SECTION IS NOT EXPANDED ON CLICK", true);
 			}
 			Application.Logger.endStep();
-			Application.Logger.addStep(
+		/*	Application.Logger.addStep(
 					"6.VERIFY THAT CLICK ON CITING TITLE FROM CITING LITERATURE SECTION PAINTS THE RECORD VIEW FOR THE SELECTED TITLE",
 					"RECORD VIEW SHOULD BE PAINTED BACK FOR THE SELECTED CITING TITLE");
 			if (page_ChemicalSearchResults.tabLiteratureSearch().isExpandedCitingLiterature()) {
@@ -7598,7 +7598,7 @@ public boolean validateSearchistoryFuntionality(Controller Application, HashMap<
 				Application.Logger.addsubStep(LogStatus.FAIL,
 						"CITED LITERATURE TITLE IS NOT AVAILABLE IN CITED PATENT SECTION", false);
 			}
-			Application.Logger.endStep();
+			Application.Logger.endStep();*/
 			Application.Logger.addStep(
 					"8.VERIFY THE CITING LITERATURE SECTION REMAINS IN EXPANDED STATE WHILE ACCESSING ANOTHER LITERATURE RECORD",
 					"CITING LITERATURE SECTION SHOULD BE IN EXPANDED STATE");
