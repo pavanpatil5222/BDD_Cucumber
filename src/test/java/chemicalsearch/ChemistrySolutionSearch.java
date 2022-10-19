@@ -7485,7 +7485,7 @@ public boolean validateSearchistoryFuntionality(Controller Application, HashMap<
 }
 
 
-//Literature Citations
+// CHEMEXP-2167
 	@Test
 	public boolean validateLiteratureCitations(Controller Application, HashMap<String, String> input) {
 		page_ChemicalSearchLandingPage = new Page_ChemicalSearchLandingPage(Application);
@@ -7629,7 +7629,7 @@ public boolean validateSearchistoryFuntionality(Controller Application, HashMap<
 	}
 	
 	
-	//Literature ViewAsResultSet
+// CHEMEXP-2168
 		@Test
 		public boolean validateLiteratureViewAsResultsSet(Controller Application, HashMap<String, String> input) {
 			page_ChemicalSearchLandingPage = new Page_ChemicalSearchLandingPage(Application);
